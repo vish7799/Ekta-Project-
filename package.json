@@ -1,0 +1,23 @@
+{
+  "name": "ekta-electrical-works-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EKTA ELECTRICAL WORKS - Corporate Website Platform, REST API & Admin CMS",
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:admin": "npm --prefix admin run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "build:admin": "npm --prefix admin run build"
+  },
+  "keywords": [
+    "electrical-engineering",
+    "corporate-website",
+    "express",
+    "react",
+    "mongodb",
+    "cms"
+  ],
+  "author": "EKTA ELECTRICAL WORKS Technical Team",
+  "license": "UNLICENSED"
+}

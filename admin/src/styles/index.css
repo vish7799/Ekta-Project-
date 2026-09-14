@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-admin-950 text-admin-100 antialiased;
+  }
+}
+
+@layer components {
+  .admin-input {
+    @apply w-full rounded border border-admin-700 bg-admin-950 px-3 py-2 text-sm text-white placeholder:text-admin-500 focus:border-amber-500 focus:outline-none;
+  }
+
+  p.whitespace-pre-wrap {
+    max-height: 12rem;
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+  }
+}

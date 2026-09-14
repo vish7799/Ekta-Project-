@@ -4,6 +4,7 @@
   "private": true,
   "description": "EKTA ELECTRICAL WORKS - Corporate Website Platform, REST API & Admin CMS",
   "scripts": {
+    "start": "npm --prefix backend start",
     "dev:backend": "npm --prefix backend run dev",
     "dev:frontend": "npm --prefix frontend run dev",
     "dev:admin": "npm --prefix admin run dev",

@@ -30,7 +30,7 @@ cd ../admin && npm install
 From the root project directory, launch servers independently or via orchestrator scripts:
 
 ```bash
-# Launch Backend REST API (runs on http://localhost:5000)
+# Launch Backend REST API (runs locally on http://localhost:5000)
 npm run dev:backend
 
 # Launch Public Frontend (runs on http://localhost:3000)
@@ -45,7 +45,7 @@ npm run dev:admin
 ## Testing API Endpoints
 
 You can verify the backend REST API health by opening:
-`http://localhost:5000/api/v1/health`
+`https://ekta-project-backend.onrender.com/api/v1/health`
 
 Sample JSON Output:
 ```json

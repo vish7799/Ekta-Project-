@@ -2,7 +2,7 @@
 
 ## Base URL
 All API v1 endpoints are served under:
-`http://localhost:5000/api/v1`
+`https://ekta-project-backend.onrender.com/api/v1`
 
 ---
 

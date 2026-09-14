@@ -15,7 +15,7 @@ EKTA ELECTRICAL WORKS platform is built as a production-grade, decoupled three-a
                    v                                               v
 +------------------------------------------------------------------------------------+
 |                                Express REST API                                    |
-|                             http://localhost:5000                                  |
+|                    https://ekta-project-backend.onrender.com                       |
 |         Middleware: Helmet | CORS | RateLimiter | MongoSanitize | JWT Auth          |
 +------------------------------------------------------------------------------------+
                                            |

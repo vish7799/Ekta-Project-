@@ -96,9 +96,6 @@ export const Header = () => {
                 <span className="font-display text-base font-extrabold tracking-tight text-ekta-text leading-none sm:text-lg">
                   {settings.companyName}
                 </span>
-                <span className="rounded bg-brand-green/10 px-1 py-0.5 text-[10px] font-mono font-semibold text-brand-green">
-                  CLASS-A
-                </span>
               </div>
               <span className="mt-1 text-[10px] font-mono uppercase tracking-widest text-ekta-muted">
                 Industrial Power Engineering

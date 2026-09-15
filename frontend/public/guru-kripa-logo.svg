@@ -1,116 +1,97 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
   <title id="title">Guru Kripa EEW logo</title>
-  <desc id="desc">Industrial Guru Kripa logo with India map and EEW monogram.</desc>
+  <desc id="desc">Circular Guru Kripa EEW logo with India map and growth trend in saffron and green.</desc>
 
-  <defs>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <rect width="40" height="40" fill="#f2f2f2"/>
-      <path d="M40 0H0V40" fill="none" stroke="#0e0e0e" stroke-width="2"/>
-    </pattern>
-  </defs>
+  <circle cx="450" cy="450" r="420" fill="#000000" stroke="#ffffff" stroke-width="12"/>
 
-  <rect width="900" height="900" fill="url(#grid)"/>
-  <rect x="20" y="20" width="860" height="860" fill="none" stroke="#111111" stroke-width="8"/>
-
-  <g transform="translate(10 10)">
-    <text x="440" y="120" text-anchor="middle" font-size="105" font-weight="900" font-family="Arial Black, Impact, sans-serif" fill="#111111" letter-spacing="2">GURU KRIPA</text>
-
-    <path d="M65 202
-      L95 118
-      L145 112
-      L170 90
-      L205 89
-      L233 108
-      L257 95
-      L283 109
-      L302 110
-      L334 83
-      L356 95
-      L385 87
-      L405 96
-      L426 81
-      L459 91
-      L490 110
-      L518 110
-      L545 124
-      L579 140
-      L610 160
-      L650 163
-      L682 189
-      L706 193
-      L713 229
-      L742 248
-      L746 285
-      L737 303
-      L748 336
-      L741 365
-      L714 395
-      L725 424
-      L714 456
-      L698 472
-      L702 504
-      L678 526
-      L664 548
-      L630 556
-      L608 576
-      L569 575
-      L545 560
-      L524 570
-      L508 566
-      L484 582
-      L455 581
-      L430 570
-      L413 580
-      L387 576
-      L364 585
-      L340 576
-      L314 579
-      L289 568
-      L270 576
-      L247 568
-      L228 555
-      L209 560
-      L188 547
-      L165 550
-      L145 535
-      L127 532
-      L118 513
-      L103 506
-      L95 483
-      L72 470
-      L68 438
-      L49 415
-      L58 383
-      L44 352
-      L52 329
-      L40 295
-      L48 269
-      L33 243
-      L46 223
-      L63 208
-      Z"
-      fill="#f8f8f8"
+  <g transform="translate(60 30)">
+    <path d="M192 108
+      L246 100
+      L267 135
+      L290 118
+      L302 157
+      L323 130
+      L349 140
+      L367 172
+      L394 162
+      L432 180
+      L445 188
+      L451 214
+      L497 206
+      L527 219
+      L562 205
+      L592 218
+      L627 210
+      L638 224
+      L655 222
+      L676 246
+      L700 252
+      L712 273
+      L721 286
+      L732 285
+      L745 299
+      L734 325
+      L748 347
+      L736 367
+      L707 377
+      L720 394
+      L697 413
+      L704 442
+      L688 459
+      L669 466
+      L647 457
+      L627 465
+      L611 483
+      L557 488
+      L543 471
+      L520 477
+      L495 468
+      L472 486
+      L439 482
+      L423 474
+      L400 475
+      L384 465
+      L360 482
+      L334 474
+      L315 454
+      L292 454
+      L273 442
+      L250 450
+      L224 445
+      L202 434
+      L184 440
+      L163 428
+      L154 403
+      L141 398
+      L133 371
+      L112 365
+      L109 340
+      L90 322
+      L104 293
+      L81 272
+      L90 247
+      L88 218
+      L104 201
+      L115 183
+      L144 178
+      L153 156
+      L169 148
+      L184 132
+      L192 108 Z"
+      fill="#f9f9f9"
       stroke="#111111"
       stroke-width="8"
       stroke-linejoin="round"/>
 
-    <g>
-      <path d="M180 402 L595 402 L530 485 L386 485 L356 548 L180 548 Z" fill="#d71920" stroke="#111111" stroke-width="8"/>
-      <path d="M180 548 L356 548 L462 642 L180 642 Z" fill="#15a34a" stroke="#111111" stroke-width="8"/>
-      <path d="M180 552 L335 552 L482 642 L180 642 Z" fill="#111111" opacity="0.94"/>
+    <g opacity="0.95">
+      <path d="M200 455 L628 455 L558 545 L398 545 L370 610 L200 610 Z" fill="#d71920" stroke="#111111" stroke-width="8"/>
+      <path d="M200 610 L370 610 L488 712 L200 712 Z" fill="#14a44d" stroke="#111111" stroke-width="8"/>
+      <path d="M200 610 L350 610 L494 710 L200 710 Z" fill="#111111" opacity="0.96"/>
     </g>
 
-    <g>
-      <rect x="0" y="170" width="860" height="470" fill="#f4f4f4" stroke="#111111" stroke-width="8"/>
-      <g stroke="#111111" stroke-width="4" fill="none" opacity="0.9">
-        <path d="M0 170H860V640H0Z"/>
-        <path d="M0 240H860M0 310H860M0 380H860M0 450H860M0 520H860M0 590H860M150 170V640M300 170V640M450 170V640M600 170V640M750 170V640"/>
-      </g>
-    </g>
-
-    <g>
-      <path d="M90 700 L760 700 L880 845 L0 845 Z" fill="#111111"/>
-      <text x="440" y="812" text-anchor="middle" font-size="250" font-weight="900" font-family="Arial Black, Impact, sans-serif" fill="#ffffff" letter-spacing="-18">EEW</text>
+    <g opacity="0.98">
+      <path d="M150 650 L750 650 L770 770 L130 770 Z" fill="#111111"/>
+      <text x="450" y="756" text-anchor="middle" font-size="270" font-weight="900" font-family="Arial Black, Impact, sans-serif" fill="#ffffff" letter-spacing="-18">EEW</text>
     </g>
   </g>
 </svg>

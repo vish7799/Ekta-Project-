@@ -8,6 +8,17 @@ dotenv.config({
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+const normalizeOrigin = (origin) => String(origin || '').trim().replace(/\/$/, '');
+
+const configuredCorsOrigins = [
+  ...(process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',')
+    : []),
+  process.env.PUBLIC_SITE_URL,
+  process.env.FRONTEND_URL,
+  process.env.ADMIN_URL,
+].map(normalizeOrigin).filter(Boolean);
+
 if (
   isProduction &&
   (!process.env.MONGODB_URI ||
@@ -41,20 +52,8 @@ const config = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
 
   // CORS
-  corsOrigin: [
-    ...(process.env.CORS_ORIGIN
-      ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim()).filter(Boolean)
-      : []),
-    process.env.FRONTEND_URL,
-    process.env.ADMIN_URL,
-  ].filter(Boolean).length > 0
-    ? [
-        ...(process.env.CORS_ORIGIN
-          ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim()).filter(Boolean)
-          : []),
-        process.env.FRONTEND_URL,
-        process.env.ADMIN_URL,
-      ].filter(Boolean)
+  corsOrigin: configuredCorsOrigins.length > 0
+    ? configuredCorsOrigins
     : isProduction
       ? []
       : [

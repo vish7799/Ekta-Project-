@@ -12,6 +12,8 @@ const routes = require('./routes');
 
 const app = express();
 
+const normalizeOrigin = (origin) => String(origin || '').trim().replace(/\/$/, '');
+
 const publicSiteUrl =
   process.env.PUBLIC_SITE_URL || 'http://localhost:3000';
 
@@ -45,7 +47,7 @@ app.use(
       }
 
       // Production: allow only explicitly configured origins
-      if (config.corsOrigin.includes(origin)) {
+      if (config.corsOrigin.includes(normalizeOrigin(origin))) {
         return callback(null, true);
       }
 

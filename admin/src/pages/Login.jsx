@@ -35,7 +35,7 @@ export const Login = () => {
             alt="EKTA ELECTRICAL WORKS logo"
             className="mx-auto mb-4 h-16 w-16 rounded-full border border-amber-500/30 bg-white object-contain shadow-lg shadow-amber-500/10 sm:h-20 sm:w-20"
           />
-          <h1 className="text-lg font-black uppercase tracking-[0.18em] text-white sm:text-xl">Guru Kripa</h1>
+          <h1 className="text-lg font-black uppercase tracking-[0.18em] text-white sm:text-xl">EKTA ELECTRICAL WORKS</h1>
           <p className="mt-2 text-xs text-admin-400">EEW CMS Console</p>
         </div>
 

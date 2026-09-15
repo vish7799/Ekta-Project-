@@ -5,7 +5,7 @@
 
 export const COMPANY_INFO = {
   name: 'EKTA ELECTRICAL WORKS',
-  legalName: 'EKTA ELECTRICAL WORKS (Guru Kripa / EEW)',
+  legalName: 'EKTA ELECTRICAL WORKS (EEW)',
   tagline: 'Dedicated Electrical Contractor Having 38+ Years of Engineering Excellence',
   license: 'Class-A Licensed Government Electrical Contractor & Power Systems Integrator',
   established: 1983,

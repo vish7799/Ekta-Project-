@@ -1,7 +1,7 @@
 # EKTA ELECTRICAL WORKS - Authoritative Company Profile & Verified Records
 
 ## 1. Corporate Profile
-- **Company Name**: EKTA ELECTRICAL WORKS (Guru Kripa / EEW)
+- **Company Name**: EKTA ELECTRICAL WORKS (EEW)
 - **Established**: 1983 (38+ Years of Engineering Excellence)
 - **GST Identification Number (GSTIN)**: `07AOLPK2329B2Z8`
 - **Class Authorization**: Class-A Government Electrical Contractor & Power Systems Integrator

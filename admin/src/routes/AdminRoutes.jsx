@@ -8,6 +8,7 @@ import { ProjectsManager } from '../pages/ProjectsManager';
 import { EnquiriesManager } from '../pages/EnquiriesManager';
 import { ClientsManager } from '../pages/ClientsManager';
 import { IndustriesManager } from '../pages/IndustriesManager';
+import { TestimonialsManager } from '../pages/TestimonialsManager';
 import { SettingsManager } from '../pages/SettingsManager';
 
 const ProtectedRoute = ({ children }) => {
@@ -61,6 +62,7 @@ export const AdminRoutes = () => {
         }
       />
       <Route path="/industries" element={<ProtectedRoute><IndustriesManager /></ProtectedRoute>} />
+      <Route path="/testimonials" element={<ProtectedRoute><TestimonialsManager /></ProtectedRoute>} />
       <Route
         path="/enquiries"
         element={

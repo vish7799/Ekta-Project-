@@ -86,7 +86,7 @@ export const Header = () => {
             <img
               src="/guru-kripa-logo.svg"
               alt="Guru Kripa EEW logo"
-              className="h-10 w-10 rounded-md border border-ekta-border bg-white object-cover shadow-sm transition-transform duration-200 group-hover:scale-105 sm:h-12 sm:w-12"
+              className="h-10 w-10 rounded-md border border-ekta-border bg-white object-contain shadow-sm transition-transform duration-200 group-hover:scale-105 sm:h-12 sm:w-12"
             />
             <div className="hidden min-w-0 sm:flex sm:flex-col">
               <div className="flex items-center gap-1.5">

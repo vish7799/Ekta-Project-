@@ -35,7 +35,7 @@ export const AdminSidebar = ({ isOpen = true, onClose = () => {} }) => {
               <img
                 src="/guru-kripa-logo.svg"
                 alt="Guru Kripa EEW logo"
-                className="h-12 w-12 rounded-md border border-amber-500/40 bg-white object-cover shadow-sm"
+                className="h-12 w-12 rounded-md border border-amber-500/40 bg-white object-contain shadow-sm"
               />
               <div className="min-w-0 flex-1">
                 <h1 className="truncate text-[11px] font-black uppercase tracking-[0.2em] text-white">Guru Kripa</h1>

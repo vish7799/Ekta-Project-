@@ -82,20 +82,22 @@ export const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Brand Identity / Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-sm bg-brand-green flex items-center justify-center text-white font-bold shadow-sm transition-transform duration-200 group-hover:scale-105">
-              <span className="font-mono text-sm tracking-tighter font-extrabold">EEW</span>
-            </div>
-            <div className="flex flex-col">
+          <Link to="/" className="group flex items-center gap-3 min-w-0">
+            <img
+              src="/guru-kripa-logo.svg"
+              alt="Guru Kripa EEW logo"
+              className="h-10 w-10 rounded-md border border-ekta-border bg-white object-cover shadow-sm transition-transform duration-200 group-hover:scale-105 sm:h-12 sm:w-12"
+            />
+            <div className="hidden min-w-0 sm:flex sm:flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="font-display text-lg font-extrabold tracking-tight text-ekta-text leading-none">
+                <span className="font-display text-base font-extrabold tracking-tight text-ekta-text leading-none sm:text-lg">
                   EKTA <span className="text-brand-green">ELECTRICAL</span>
                 </span>
-                <span className="text-[10px] font-mono px-1 py-0.5 rounded bg-brand-green/10 text-brand-green font-semibold">
+                <span className="rounded bg-brand-green/10 px-1 py-0.5 text-[10px] font-mono font-semibold text-brand-green">
                   CLASS-A
                 </span>
               </div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-ekta-muted mt-1">
+              <span className="mt-1 text-[10px] font-mono uppercase tracking-widest text-ekta-muted">
                 Industrial Power Engineering
               </span>
             </div>

@@ -49,10 +49,12 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
           {/* Column 1: Company Profile (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
-            <Link to="/" className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-sm bg-[#0E7A4A] flex items-center justify-center text-white font-mono font-bold text-sm">
-                EEW
-              </div>
+            <Link to="/" className="flex items-center gap-3">
+              <img
+                src="/guru-kripa-logo.svg"
+                alt="Guru Kripa EEW logo"
+                className="h-10 w-10 rounded-md border border-[#26332D] bg-white object-cover"
+              />
               <div className="flex flex-col">
                 <span className="font-display text-lg font-bold tracking-tight text-white">
                   EKTA <span className="text-[#0E7A4A]">ELECTRICAL</span>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Shield, Lock, Mail, AlertCircle } from 'lucide-react';
+import { Lock, Mail, AlertCircle } from 'lucide-react';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -27,53 +27,55 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-admin-950 px-4">
-      <div className="max-w-md w-full bg-admin-900 border border-admin-800 rounded-lg p-8 shadow-2xl">
-        <div className="text-center mb-8">
-          <div className="w-12 h-12 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 flex items-center justify-center mx-auto mb-4">
-            <Shield className="w-6 h-6" />
-          </div>
-          <h1 className="text-xl font-bold text-white tracking-wider">EKTA ELECTRICAL CMS</h1>
-          <p className="text-xs text-admin-400 mt-1">Authorized Administrator Authentication</p>
+    <div className="flex min-h-screen items-center justify-center bg-admin-950 px-4 py-8 sm:px-6">
+      <div className="w-full max-w-md rounded-xl border border-admin-800 bg-admin-900 p-5 shadow-2xl shadow-slate-950/40 sm:p-8">
+        <div className="mb-8 text-center">
+          <img
+            src="/guru-kripa-logo.svg"
+            alt="Guru Kripa EEW logo"
+            className="mx-auto mb-4 h-16 w-16 rounded-lg border border-amber-500/30 bg-white object-cover"
+          />
+          <h1 className="text-lg font-black uppercase tracking-[0.18em] text-white sm:text-xl">Guru Kripa</h1>
+          <p className="mt-2 text-xs text-admin-400">EEW CMS Console</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 rounded bg-rose-500/10 border border-rose-500/30 flex items-start space-x-3 text-rose-400 text-xs">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="mb-6 flex items-start space-x-3 rounded border border-rose-500/30 bg-rose-500/10 p-4 text-xs text-rose-400">
+            <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300 mb-2">
+            <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-admin-300">
               Admin Email
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-admin-500 absolute left-3 top-3" />
+              <Mail className="absolute left-3 top-3 h-4 w-4 text-admin-500" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-admin-950 border border-admin-700 rounded pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full rounded border border-admin-700 bg-admin-950 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-admin-500 focus:border-amber-500 focus:outline-none"
                 placeholder="admin@ektaelectrical.com"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300 mb-2">
+            <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-admin-300">
               Password
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-admin-500 absolute left-3 top-3" />
+              <Lock className="absolute left-3 top-3 h-4 w-4 text-admin-500" />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-admin-950 border border-admin-700 rounded pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full rounded border border-admin-700 bg-admin-950 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-admin-500 focus:border-amber-500 focus:outline-none"
                 placeholder="••••••••"
               />
             </div>
@@ -82,7 +84,7 @@ export const Login = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-amber-500 hover:bg-amber-600 text-admin-950 font-bold py-2.5 rounded text-sm transition-colors shadow-lg shadow-amber-500/10 disabled:opacity-50"
+            className="w-full rounded bg-amber-500 py-2.5 text-sm font-bold text-admin-950 transition-colors hover:bg-amber-600 disabled:opacity-50"
           >
             {submitting ? 'Authenticating...' : 'Sign In to Console'}
           </button>

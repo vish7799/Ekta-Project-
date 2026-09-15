@@ -1,25 +1,36 @@
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Menu } from 'lucide-react';
 
 const PUBLIC_SITE_URL =
-  import.meta.env.VITE_PUBLIC_SITE_URL || 'http://localhost:3000';
+  import.meta.env.VITE_PUBLIC_SITE_URL || 'https://frontend-ifg7x4ls6-vish7799s-projects.vercel.app/';
 
-export const AdminHeader = ({ title = 'Dashboard' }) => {
+export const AdminHeader = ({ title = 'Dashboard', onToggleSidebar }) => {
   return (
-    <header className="h-16 bg-admin-900/60 border-b border-admin-800 flex items-center justify-between px-8 sticky top-0 z-40 backdrop-blur-md">
-      <h1 className="text-lg font-bold text-white tracking-tight">
-        {title}
-      </h1>
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-admin-800 bg-admin-900/70 px-4 backdrop-blur-md sm:px-6 lg:px-8">
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={onToggleSidebar}
+          className="rounded border border-admin-700 bg-admin-950 p-2 text-admin-300 transition-colors hover:border-admin-600 hover:text-white lg:hidden"
+          aria-label="Toggle sidebar"
+        >
+          <Menu className="h-4 w-4" />
+        </button>
+        <h1 className="text-base font-bold tracking-tight text-white sm:text-lg">
+          {title}
+        </h1>
+      </div>
 
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-3">
         <a
           href={PUBLIC_SITE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xs text-amber-400 hover:text-amber-300 flex items-center font-mono border border-amber-500/30 px-3 py-1.5 rounded bg-amber-500/10"
+          className="inline-flex items-center rounded border border-amber-500/30 bg-amber-500/10 px-2.5 py-1.5 text-[10px] font-mono text-amber-400 transition-colors hover:text-amber-300 sm:text-xs"
         >
-          View Public Website
-          <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
+          <span className="hidden sm:inline">View Public Website</span>
+          <span className="sm:hidden">Website</span>
+          <ExternalLink className="ml-1.5 h-3.5 w-3.5" />
         </a>
       </div>
     </header>

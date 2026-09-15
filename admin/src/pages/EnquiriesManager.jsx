@@ -181,10 +181,12 @@ export const EnquiriesManager = () => {
         {error && !selectedEnquiry && <p className="text-sm text-rose-400">{error}</p>}
         <div className="bg-admin-900 border border-admin-800 rounded-lg overflow-hidden">
           {loading ? <div className="p-8 text-center text-admin-400 text-sm">Loading enquiries list...</div> : enquiries.length > 0 ? (
-            <table className="w-full text-left text-sm text-admin-300">
+            <div className="overflow-x-auto">
+            <table className="min-w-[900px] w-full text-left text-sm text-admin-300">
               <thead className="bg-admin-950 text-xs font-semibold uppercase tracking-wider text-admin-400 border-b border-admin-800"><tr><th className="px-6 py-3">Client / Company</th><th className="px-6 py-3">Subject</th><th className="px-6 py-3">Phone / Email</th><th className="px-6 py-3">Status</th><th className="px-6 py-3 text-right">View</th></tr></thead>
               <tbody className="divide-y divide-admin-800">{enquiries.map((item) => <tr key={item._id} className="hover:bg-admin-800/40"><td className="px-6 py-4"><div className="font-semibold text-white">{item.fullName}</div><div className="text-xs text-admin-400">{item.companyName || 'Individual'}</div></td><td className="px-6 py-4 font-medium text-amber-400">{item.subject}</td><td className="px-6 py-4 text-xs font-mono text-admin-300"><div>{item.email}</div><div>{item.phone}</div></td><td className="px-6 py-4"><span className={`px-2 py-0.5 rounded text-xs font-mono uppercase border ${statusClasses[item.status] || statusClasses.new}`}>{item.status}</span></td><td className="px-6 py-4 text-right"><button onClick={() => openDetails(item)} className="text-xs text-admin-400 hover:text-white p-1" aria-label={`View enquiry from ${item.fullName}`}><Eye className="w-4 h-4" /></button></td></tr>)}</tbody>
             </table>
+            </div>
           ) : <div className="p-12 text-center text-admin-400"><Mail className="w-10 h-10 text-admin-600 mx-auto mb-3" /><p className="text-sm font-semibold text-admin-300">No Enquiries Found</p><p className="text-xs text-admin-500 mt-1">Try changing the search or status filter.</p></div>}
         </div>
 

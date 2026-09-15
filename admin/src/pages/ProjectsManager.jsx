@@ -164,7 +164,8 @@ export const ProjectsManager = () => {
           {loading ? (
             <div className="p-8 text-center text-admin-400 text-sm">Loading projects data...</div>
           ) : projects.length > 0 ? (
-            <table className="w-full text-left text-sm text-admin-300">
+            <div className="overflow-x-auto">
+            <table className="min-w-[720px] w-full text-left text-sm text-admin-300">
               <thead className="bg-admin-950 text-xs font-semibold uppercase tracking-wider text-admin-400 border-b border-admin-800">
                 <tr>
                   <th className="px-6 py-3">Project Title</th>
@@ -192,6 +193,7 @@ export const ProjectsManager = () => {
                 ))}
               </tbody>
             </table>
+            </div>
           ) : (
             <div className="p-12 text-center text-admin-400">
               <FolderGit2 className="w-10 h-10 text-admin-600 mx-auto mb-3" />

@@ -123,7 +123,8 @@ export const ServicesManager = () => {
           {loading ? (
             <div className="p-8 text-center text-admin-400 text-sm">Loading services data...</div>
           ) : services.length > 0 ? (
-            <table className="w-full text-left text-sm text-admin-300">
+            <div className="overflow-x-auto">
+            <table className="min-w-[640px] w-full text-left text-sm text-admin-300">
               <thead className="bg-admin-950 text-xs font-semibold uppercase tracking-wider text-admin-400 border-b border-admin-800">
                 <tr>
                   <th className="px-6 py-3">Title</th>
@@ -151,6 +152,7 @@ export const ServicesManager = () => {
                 ))}
               </tbody>
             </table>
+            </div>
           ) : (
             <div className="p-12 text-center text-admin-400">
               <Zap className="w-10 h-10 text-admin-600 mx-auto mb-3" />

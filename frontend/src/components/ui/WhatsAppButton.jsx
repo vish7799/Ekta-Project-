@@ -1,8 +1,10 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
+import { useSiteSettings } from '../../context/SiteSettingsContext';
 
 export const WhatsAppButton = () => {
-  const phoneNumber = '919899442333';
+  const settings = useSiteSettings();
+  const phoneNumber = String(settings.primaryPhone || '').replace(/\D/g, '');
   const defaultMessage = encodeURIComponent(
     'Hello EKTA ELECTRICAL WORKS, I would like to inquire about your electrical contracting services.'
   );

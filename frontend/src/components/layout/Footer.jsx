@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, MapPin, Phone, Mail, ArrowRight, ExternalLink } from 'lucide-react';
 import { COMPANY_INFO, CORE_SERVICES } from '../../data/companyData';
+import { useSiteSettings, toTelHref } from '../../context/SiteSettingsContext';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const settings = useSiteSettings();
 
   return (
     <footer className="bg-[#0B0F0D] text-[#CBD5E1] border-t border-[#26332D]">
@@ -57,7 +59,7 @@ export const Footer = () => {
               />
               <div className="flex flex-col">
                 <span className="font-display text-lg font-bold tracking-tight text-white">
-                  EKTA <span className="text-[#0E7A4A]">ELECTRICAL</span>
+                  {settings.companyName}
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#94A3B8]">
                   Engineering Works (Est. 1983)
@@ -66,7 +68,7 @@ export const Footer = () => {
             </Link>
 
             <p className="text-sm text-[#94A3B8] leading-relaxed">
-              {COMPANY_INFO.license}. Over four decades of specialized high-voltage infrastructure, substation engineering, switchboard fabrication, and industrial automation.
+              {settings.tagline || COMPANY_INFO.license}. Over four decades of specialized high-voltage infrastructure, substation engineering, switchboard fabrication, and industrial automation.
             </p>
 
             <div className="pt-2 flex flex-col space-y-2 text-xs font-mono text-[#CBD5E1]">
@@ -150,23 +152,23 @@ export const Footer = () => {
               <li className="flex items-start space-x-2.5">
                 <MapPin className="w-4 h-4 text-[#0E7A4A] shrink-0 mt-0.5" />
                 <span className="text-[#94A3B8] leading-relaxed">
-                  {COMPANY_INFO.address.street}, {COMPANY_INFO.address.city} - {COMPANY_INFO.address.postalCode}
+                  {settings.corporateAddress}
                 </span>
               </li>
               <li className="flex items-start space-x-2.5">
                 <Phone className="w-4 h-4 text-[#0E7A4A] shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
                   <a
-                    href="tel:+919899442333"
+                    href={toTelHref(settings.primaryPhone)}
                     className="block text-white hover:text-[#14B8A6] font-mono"
                   >
-                    Naresh Kumar: +91 9899442333
+                    {settings.primaryPhone}
                   </a>
                   <a
-                    href="tel:+919811589108"
+                    href={toTelHref(settings.emergencyPhone)}
                     className="block text-[#94A3B8] hover:text-white font-mono"
                   >
-                    (Er.) Poonam Dogra: +91 9811589108
+                    {settings.emergencyPhone}
                   </a>
                 </div>
               </li>
@@ -174,10 +176,10 @@ export const Footer = () => {
                 <Mail className="w-4 h-4 text-[#0E7A4A] shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
                   <a
-                    href="mailto:Ektaa.electrical@gmail.com"
+                    href={`mailto:${settings.email}`}
                     className="block text-[#94A3B8] hover:text-white"
                   >
-                    Ektaa.electrical@gmail.com
+                    {settings.email}
                   </a>
                 </div>
               </li>

@@ -6,7 +6,7 @@ import { Badge } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { LightboxModal } from '../components/ui/LightboxModal';
-import { VERIFIED_PROJECTS, COMPANY_INFO } from '../data/companyData';
+import { COMPANY_INFO } from '../data/companyData';
 import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 
 export const ProjectDetail = () => {
@@ -17,21 +17,11 @@ export const ProjectDetail = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
-    const localMatch = VERIFIED_PROJECTS.find((p) => p.slug === slug || p.id === slug);
-
     fetchApi(`/projects/slug/${slug}`)
       .then((res) => {
-        if (res.data) {
-          setProject(res.data);
-        } else if (localMatch) {
-          setProject(localMatch);
-        }
+        setProject(res.data || null);
       })
-      .catch(() => {
-        if (localMatch) {
-          setProject(localMatch);
-        }
-      })
+      .catch(() => setProject(null))
       .finally(() => setLoading(false));
   }, [slug]);
 

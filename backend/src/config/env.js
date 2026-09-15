@@ -41,11 +41,20 @@ const config = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
 
   // CORS
-  corsOrigin: process.env.CORS_ORIGIN
-    ? process.env.CORS_ORIGIN
-        .split(',')
-        .map((origin) => origin.trim())
-        .filter(Boolean)
+  corsOrigin: [
+    ...(process.env.CORS_ORIGIN
+      ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim()).filter(Boolean)
+      : []),
+    process.env.FRONTEND_URL,
+    process.env.ADMIN_URL,
+  ].filter(Boolean).length > 0
+    ? [
+        ...(process.env.CORS_ORIGIN
+          ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim()).filter(Boolean)
+          : []),
+        process.env.FRONTEND_URL,
+        process.env.ADMIN_URL,
+      ].filter(Boolean)
     : isProduction
       ? []
       : [

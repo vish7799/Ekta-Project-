@@ -10,14 +10,12 @@ import { CORE_SERVICES } from '../data/companyData';
 import { fetchApi } from '../api/apiClient';
 
 export const Services = () => {
-  const [services, setServices] = useState(CORE_SERVICES);
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
     fetchApi('/services')
       .then((res) => {
-        if (res.data && res.data.length > 0) {
-          setServices(res.data);
-        }
+        setServices(res.data || []);
       })
       .catch(() => {
         // Keep verified company data fallback

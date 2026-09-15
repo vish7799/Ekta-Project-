@@ -7,8 +7,10 @@ import { SectionHeading } from '../components/ui/SectionHeading';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { COMPANY_INFO, CORE_SERVICES } from '../data/companyData';
 import { fetchApi } from '../api/apiClient';
+import { useSiteSettings, toTelHref } from '../context/SiteSettingsContext';
 
 export const Contact = () => {
+  const settings = useSiteSettings();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -121,7 +123,7 @@ export const Contact = () => {
                       Corporate Headquarters
                     </h3>
                     <p className="text-sm text-ekta-secondary leading-relaxed">
-                      {COMPANY_INFO.address.street}, {COMPANY_INFO.address.city} - {COMPANY_INFO.address.postalCode}, {COMPANY_INFO.address.country}
+                      {settings.corporateAddress}
                     </p>
                     <div className="mt-3 pt-3 border-t border-ekta-border text-xs font-mono space-y-1">
                       <div className="text-brand-orange font-bold">
@@ -146,19 +148,19 @@ export const Contact = () => {
                       <div>
                         <span className="text-xs text-ekta-muted block">Managing Director & Senior Lead:</span>
                         <a
-                          href="tel:+919899442333"
+                          href={toTelHref(settings.primaryPhone)}
                           className="text-brand-green font-bold hover:underline"
                         >
-                          Naresh Kumar: +91 9899442333
+                          {settings.primaryPhone}
                         </a>
                       </div>
                       <div className="pt-2 border-t border-ekta-border">
                         <span className="text-xs text-ekta-muted block">Project Engineer & Consultant:</span>
                         <a
-                          href="tel:+919811589108"
+                          href={toTelHref(settings.emergencyPhone)}
                           className="text-ekta-text font-bold hover:underline"
                         >
-                          (Er.) Poonam Dogra: +91 9811589108
+                          {settings.emergencyPhone}
                         </a>
                       </div>
                     </div>
@@ -175,16 +177,16 @@ export const Contact = () => {
                     </h3>
                     <div className="space-y-1 text-xs font-mono">
                       <a
-                        href="mailto:Ektaa.electrical@gmail.com"
+                        href={`mailto:${settings.email}`}
                         className="block text-ekta-text hover:text-brand-green"
                       >
-                        Ektaa.electrical@gmail.com
+                        {settings.email}
                       </a>
                       <a
-                        href="mailto:Nareshkumar4442@yahoo.com"
+                        href={`mailto:${settings.email}`}
                         className="block text-ekta-muted hover:text-brand-green"
                       >
-                        Nareshkumar4442@yahoo.com
+                        {settings.email}
                       </a>
                     </div>
                   </div>
@@ -199,7 +201,7 @@ export const Contact = () => {
                       Desk Operations & Emergency Callout
                     </h3>
                     <p className="text-xs text-ekta-secondary leading-relaxed">
-                      {COMPANY_INFO.hours}
+                      {settings.businessHours}
                     </p>
                     <div className="mt-2 text-[11px] font-mono text-brand-orange">
                       24/7 Breakdown Rapid Dispatch for Hospitals & Data Centers

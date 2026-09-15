@@ -12,10 +12,10 @@ import { fetchApi } from '../api/apiClient';
 const normalizeIndustry = (industry, index) => ({ ...industry, id: industry.slug || industry.id, number: industry.number || String(index + 1).padStart(2, '0'), title: industry.title || industry.name, description: industry.description || industry.shortDescription, specs: industry.specs || (industry.solutionsProvided || []).join(', ') });
 
 export const Industries = () => {
-  const [industries, setIndustries] = useState(INDUSTRIES_SERVED);
+  const [industries, setIndustries] = useState([]);
 
   useEffect(() => {
-    fetchApi('/industries').then((res) => { if (res.data?.length) setIndustries(res.data.map(normalizeIndustry)); }).catch(() => {});
+    fetchApi('/industries').then((res) => setIndustries((res.data || []).map(normalizeIndustry))).catch(() => {});
   }, []);
 
   return (

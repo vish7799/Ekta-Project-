@@ -5,7 +5,7 @@ import { SEOHead } from '../components/ui/SEOHead';
 import { Badge } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
-import { CORE_SERVICES, COMPANY_INFO } from '../data/companyData';
+import { COMPANY_INFO } from '../data/companyData';
 import { fetchApi } from '../api/apiClient';
 
 export const ServiceDetail = () => {
@@ -14,22 +14,11 @@ export const ServiceDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Find in verified local dataset first as base
-    const localMatch = CORE_SERVICES.find((s) => s.slug === slug || s.id === slug);
-
     fetchApi(`/services/slug/${slug}`)
       .then((res) => {
-        if (res.data) {
-          setService(res.data);
-        } else if (localMatch) {
-          setService(localMatch);
-        }
+        setService(res.data || null);
       })
-      .catch(() => {
-        if (localMatch) {
-          setService(localMatch);
-        }
-      })
+      .catch(() => setService(null))
       .finally(() => setLoading(false));
   }, [slug]);
 

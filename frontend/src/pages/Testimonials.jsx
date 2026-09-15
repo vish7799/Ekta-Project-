@@ -1,40 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ShieldCheck, ArrowRight, Quote } from 'lucide-react';
 import { SEOHead } from '../components/ui/SEOHead';
 import { Button } from '../components/ui/Button';
 import { Card, Badge } from '../components/ui/Card';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
-import { VERIFIED_TESTIMONIALS } from '../data/companyData';
+import { fetchApi } from '../api/apiClient';
 
 export const Testimonials = () => {
-  const extendedTestimonials = [
-    ...VERIFIED_TESTIMONIALS,
-    {
-      id: 't-4',
-      quote: 'The internal electrical fit-out, switchboards, and DALI architectural lighting across our multi-city flagship showrooms was completed by EKTA ELECTRICAL WORKS with outstanding precision. Never a flicker or power drop.',
-      author: 'Head of National Retail Fit-Outs',
-      organization: 'Kajaria Ceramics Commercial Division',
-      project: 'Pan-India Showrooms Electrification',
-      verified: true,
-    },
-    {
-      id: 't-5',
-      quote: 'For our 370-unit residential society in Dehradun, EKTA ELECTRICAL WORKS installed the complete 11kV substation yard, dual-metering systems, and rising main busbars. Their statutory clearance assistance was impeccable.',
-      author: 'Senior Project Director',
-      organization: 'Pacific State Infrastructure Committee',
-      project: '370 Flats Turnkey Substation & Distribution',
-      verified: true,
-    },
-    {
-      id: 't-6',
-      quote: 'Reliability in banking power distribution is non-negotiable. EEW standardized our branch distribution boards, UPS isolation circuits, and earth pits across dozens of locations with zero compliance defect.',
-      author: 'Regional Facilities & Security Head',
-      organization: 'IndusInd Bank Regional Operations',
-      project: 'Regional Commercial Branches Electrification',
-      verified: true,
-    },
-  ];
+  const [extendedTestimonials, setExtendedTestimonials] = useState([]);
+
+  useEffect(() => {
+    fetchApi('/testimonials')
+      .then((response) => setExtendedTestimonials((response.data || []).map((testimonial) => ({
+        id: testimonial._id,
+        quote: testimonial.statement,
+        author: testimonial.designation || testimonial.clientName,
+        organization: testimonial.companyName,
+        project: testimonial.projectRef?.title || 'Engineering project reference',
+        verified: true,
+      }))))
+      .catch(() => setExtendedTestimonials([]));
+  }, []);
 
   return (
     <>

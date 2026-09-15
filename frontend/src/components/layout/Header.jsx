@@ -4,11 +4,13 @@ import { Menu, X, PhoneCall, ShieldCheck, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ThemeSwitcher } from '../ui/ThemeSwitcher';
 import { COMPANY_INFO } from '../../data/companyData';
+import { useSiteSettings, toTelHref } from '../../context/SiteSettingsContext';
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const settings = useSiteSettings();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,15 +61,15 @@ export const Header = () => {
 
           <div className="flex items-center space-x-5">
             <a
-              href="tel:+919899442333"
+              href={toTelHref(settings.primaryPhone)}
               className="hover:text-brand-green flex items-center transition-colors"
             >
               <PhoneCall className="w-3 h-3 mr-1.5 text-brand-green" />
-              Direct Line: +91 9899442333
+              Direct Line: {settings.primaryPhone}
             </a>
             <span className="text-ekta-muted">|</span>
             <a
-              href="https://wa.me/919899442333"
+              href={`https://wa.me/${String(settings.primaryPhone || '').replace(/\D/g, '')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-brand-teal hover:underline font-medium"
@@ -91,7 +93,7 @@ export const Header = () => {
             <div className="hidden min-w-0 sm:flex sm:flex-col">
               <div className="flex items-center gap-1.5">
                 <span className="font-display text-base font-extrabold tracking-tight text-ekta-text leading-none sm:text-lg">
-                  EKTA <span className="text-brand-green">ELECTRICAL</span>
+                  {settings.companyName}
                 </span>
                 <span className="rounded bg-brand-green/10 px-1 py-0.5 text-[10px] font-mono font-semibold text-brand-green">
                   CLASS-A
@@ -195,11 +197,11 @@ export const Header = () => {
               </Button>
 
               <a
-                href="tel:+919899442333"
+                href={toTelHref(settings.primaryPhone)}
                 className="w-full flex items-center justify-center py-2.5 px-4 text-xs font-mono font-medium rounded-sm border border-ekta-border bg-ekta-elevated text-ekta-text hover:bg-ekta-surface transition-colors"
               >
                 <PhoneCall className="w-3.5 h-3.5 mr-2 text-brand-green" />
-                CALL DESK: +91 9899442333
+                CALL DESK: {settings.primaryPhone}
               </a>
             </div>
           </div>

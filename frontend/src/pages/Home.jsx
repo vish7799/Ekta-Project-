@@ -30,8 +30,10 @@ import {
   VERIFIED_TESTIMONIALS,
 } from '../data/companyData';
 import { fetchApi } from '../api/apiClient';
+import { useSiteSettings, toTelHref } from '../context/SiteSettingsContext';
 
 export const Home = () => {
+  const settings = useSiteSettings();
   const [cmsServices, setCmsServices] = useState([]);
   const [cmsProjects, setCmsProjects] = useState([]);
   const [cmsClients, setCmsClients] = useState([]);
@@ -40,32 +42,26 @@ export const Home = () => {
   useEffect(() => {
     fetchApi('/services')
       .then((res) => {
-        if (res.data && res.data.length > 0) {
-          setCmsServices(res.data);
-        }
+        setCmsServices(res.data || []);
       })
       .catch(() => {});
 
     fetchApi('/projects')
       .then((res) => {
-        if (res.data && res.data.length > 0) {
-          setCmsProjects(res.data);
-        }
+        setCmsProjects(res.data || []);
       })
       .catch(() => {});
 
     fetchApi('/clients')
       .then((res) => {
-        if (res.data && res.data.length > 0) {
-          setCmsClients(res.data);
-        }
+        setCmsClients(res.data || []);
       })
       .catch(() => {});
   }, []);
 
-  const displayServices = cmsServices.length > 0 ? cmsServices : CORE_SERVICES;
-  const displayProjects = cmsProjects.length > 0 ? cmsProjects : VERIFIED_PROJECTS;
-  const displayClients = cmsClients.length > 0 ? cmsClients : VERIFIED_CLIENTS;
+  const displayServices = cmsServices;
+  const displayProjects = cmsProjects;
+  const displayClients = cmsClients;
 
   const featuredService = displayServices[0];
   const supportingServices = displayServices.slice(1, 5);
@@ -180,11 +176,11 @@ export const Home = () => {
                   <div className="mt-5 pt-4 border-t border-ekta-border flex items-center justify-between">
                     <span className="text-[11px] text-ekta-muted">Direct Engineering Desk</span>
                     <a
-                      href="tel:+919899442333"
+                      href={toTelHref(settings.primaryPhone)}
                       className="text-xs font-mono text-brand-green font-bold hover:underline flex items-center"
                     >
                       <PhoneCall className="w-3 h-3 mr-1" />
-                      +91 9899442333
+                      {settings.primaryPhone}
                     </a>
                   </div>
                 </div>

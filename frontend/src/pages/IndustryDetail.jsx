@@ -5,7 +5,7 @@ import { SEOHead } from '../components/ui/SEOHead';
 import { Badge } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
-import { INDUSTRIES_SERVED, COMPANY_INFO } from '../data/companyData';
+import { COMPANY_INFO } from '../data/companyData';
 import { fetchApi } from '../api/apiClient';
 
 export const IndustryDetail = () => {
@@ -14,21 +14,11 @@ export const IndustryDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const localMatch = INDUSTRIES_SERVED.find((i) => i.id === slug);
-
     fetchApi(`/industries/slug/${slug}`)
       .then((res) => {
-        if (res.data) {
-          setIndustry({ ...res.data, id: res.data.slug, title: res.data.name, description: res.data.shortDescription, specs: (res.data.solutionsProvided || []).join(', ') });
-        } else if (localMatch) {
-          setIndustry(localMatch);
-        }
+        setIndustry(res.data ? { ...res.data, id: res.data.slug, title: res.data.name, description: res.data.shortDescription, specs: (res.data.solutionsProvided || []).join(', ') } : null);
       })
-      .catch(() => {
-        if (localMatch) {
-          setIndustry(localMatch);
-        }
-      })
+      .catch(() => setIndustry(null))
       .finally(() => setLoading(false));
   }, [slug]);
 

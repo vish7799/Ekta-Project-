@@ -11,16 +11,14 @@ import { VERIFIED_PROJECTS } from '../data/companyData';
 import { fetchApi } from '../api/apiClient';
 
 export const Projects = () => {
-  const [projects, setProjects] = useState(VERIFIED_PROJECTS);
+  const [projects, setProjects] = useState([]);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
     fetchApi('/projects')
       .then((res) => {
-        if (res.data && res.data.length > 0) {
-          setProjects(res.data);
-        }
+        setProjects(res.data || []);
       })
       .catch(() => {});
   }, []);

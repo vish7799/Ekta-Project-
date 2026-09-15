@@ -1,63 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ShieldCheck, Building2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { SEOHead } from '../components/ui/SEOHead';
 import { Button } from '../components/ui/Button';
 import { Card, Badge } from '../components/ui/Card';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
+import { fetchApi } from '../api/apiClient';
 
 export const Clients = () => {
-  const sectors = [
-    {
-      category: 'Healthcare & Hospitals',
-      clients: [
-        { name: 'Max Super Speciality Hospital', location: 'Shalimar Bagh, New Delhi', scope: '33kV HT Substation, Transformers & Critical ICU Distribution' },
-        { name: 'Max Covid Hospital', location: 'Saket, New Delhi', scope: 'Rapid Oxygen & Emergency Ventilator Power Distribution' },
-        { name: 'Covid-19 Healthcare Hospital', location: 'Bhagwati Nagar, Jammu & Kashmir', scope: 'Turnkey Hospital Electrification & DG Backup' },
-        { name: 'AIIMS Hospital Consultancy', location: 'Delhi & Bhopal (DTU Team)', scope: 'Substation Assessment & Grounding Grid Consultancy' },
-      ],
-    },
-    {
-      category: 'Data Centres & Telecommunications',
-      clients: [
-        { name: 'Bharti Airtel Data Centre', location: 'Guwahati, Assam', scope: 'Electrical work for the data centre' },
-        { name: 'DD News Studios', location: 'Delhi & Mumbai', scope: 'Broadcast Studio Clean Power & Acoustic Isolation Transformers' },
-        { name: 'Media One Broadcasting Hub', location: 'National Capital Region', scope: 'UPS Redundancy, Studio DBs & Noise Filtration' },
-        { name: 'Home Shop 18 Network', location: 'Film City, Noida', scope: 'High-Density Studio Switchboards & Power Cabling' },
-      ],
-    },
-    {
-      category: 'Logistics Parks & Warehousing',
-      clients: [
-        { name: 'TVS Logistics Parks (Pataudi Hub)', location: 'Haryana', scope: 'Multi-Bay Electrification, AMF Synchronizing Panels' },
-        { name: 'TVS Logistics Parks (Lucknow & Sohna)', location: 'Uttar Pradesh & Haryana', scope: 'Warehouse electrical work and power distribution' },
-        { name: 'Industry Buying Mega Facility', location: 'Ghitorni, Delhi NCR', scope: 'Warehouse Busducts, High-Bay LED & DG Backup' },
-      ],
-    },
-    {
-      category: 'Banking & Financial Institutions',
-      clients: [
-        { name: 'IndusInd Bank Regional Hubs', location: 'Kota, Bikaner, Dehradun, Indore, Chandigarh', scope: 'Standardized Branch Power, UPS Isolators & Earth Grids' },
-        { name: 'Federal Bank Commercial Branches', location: 'Karol Bagh & Pitampura, Delhi', scope: 'Commercial Power Panels & Server Room Security Circuits' },
-      ],
-    },
-    {
-      category: 'Retail Networks & Flagship Showrooms',
-      clients: [
-        { name: 'Kajaria Tiles Flagship Showrooms', location: 'Rewari & Pan-India', scope: 'Architectural Lighting, DALI Control DBs & Chiller Power' },
-        { name: 'Reliance Trends Megastore', location: 'Kerala', scope: 'Turnkey Retail Fit-Out, HVAC Power & Distribution Boards' },
-        { name: 'Grotto Showrooms & Purple Retail', location: 'Delhi NCR', scope: 'Commercial Panel Installation & Display Electrification' },
-      ],
-    },
-    {
-      category: 'Housing Societies & Residential Sub-Townships',
-      clients: [
-        { name: 'Pacific State Township (370 Flats)', location: 'Dehradun, Uttarakhand', scope: '11kV Complete Substation, Rising Mains & Prepaid Meters' },
-        { name: 'Air Men & Sailors Co-op Group Housing', location: 'Rohini Sector-9, New Delhi', scope: 'Substation Erection, LT Distribution & Pump Wiring' },
-        { name: 'Saket & Rama Krishna Co-op Societies', location: 'Delhi NCR', scope: 'HT Cable Laying, Transformer Maintenance & Panel Upgrades' },
-      ],
-    },
-  ];
+  const [sectors, setSectors] = useState([]);
+
+  useEffect(() => {
+    fetchApi('/clients')
+      .then((response) => {
+        const grouped = (response.data || []).reduce((groups, client) => {
+          const category = client.industrySector || 'Other Clients';
+          const group = groups.find((item) => item.category === category);
+          const record = {
+            name: client.name,
+            location: client.location || 'Location not specified',
+            scope: client.scope || 'Electrical engineering services',
+          };
+          if (group) group.clients.push(record);
+          else groups.push({ category, clients: [record] });
+          return groups;
+        }, []);
+        setSectors(grouped);
+      })
+      .catch(() => setSectors([]));
+  }, []);
 
   return (
     <>

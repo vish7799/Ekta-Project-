@@ -426,7 +426,7 @@ export const Home = () => {
       <section className="py-20 lg:py-28 border-b border-ekta-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            number="05"
+            number="04"
             eyebrow="STAKEHOLDER ENDORSEMENTS"
             title="Trusted by Chief Engineers & Facility Heads"
             description="Direct feedback from project directors, procurement executives, and senior engineering consultants."

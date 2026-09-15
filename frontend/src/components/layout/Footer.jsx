@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, MapPin, Phone, Mail, ArrowRight, ExternalLink } from 'lucide-react';
 import { COMPANY_INFO, CORE_SERVICES } from '../../data/companyData';
 import { useSiteSettings, toTelHref } from '../../context/SiteSettingsContext';
+import { fetchApi } from '../../api/apiClient';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
   const settings = useSiteSettings();
+  const [services, setServices] = useState(CORE_SERVICES);
+
+  useEffect(() => {
+    fetchApi('/services')
+      .then((response) => setServices(response.data || []))
+      .catch(() => {});
+  }, []);
 
   return (
     <footer className="bg-[#0B0F0D] text-[#CBD5E1] border-t border-[#26332D]">
@@ -88,7 +96,7 @@ export const Footer = () => {
               Core Engineering Services
             </div>
             <ul className="space-y-2 text-xs">
-              {CORE_SERVICES.slice(0, 6).map((service) => (
+              {services.slice(0, 6).map((service) => (
                 <li key={service.id}>
                   <Link
                     to={`/services/${service.slug}`}

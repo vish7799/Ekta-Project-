@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import { adminFetchApi } from '../api/adminApiClient';
 
 const AuthContext = createContext(null);
+const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000;
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
@@ -25,6 +26,39 @@ export const AuthProvider = ({ children }) => {
     } else {
       setLoading(false);
     }
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) return undefined;
+
+    let inactivityTimer;
+    let activityThrottleTimer;
+
+    const scheduleLogout = () => {
+      window.clearTimeout(inactivityTimer);
+      inactivityTimer = window.setTimeout(() => {
+        logout();
+      }, INACTIVITY_TIMEOUT_MS);
+    };
+
+    const handleActivity = () => {
+      if (activityThrottleTimer) return;
+
+      activityThrottleTimer = window.setTimeout(() => {
+        activityThrottleTimer = undefined;
+        scheduleLogout();
+      }, 1000);
+    };
+
+    const activityEvents = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'];
+    activityEvents.forEach((eventName) => window.addEventListener(eventName, handleActivity));
+    scheduleLogout();
+
+    return () => {
+      window.clearTimeout(inactivityTimer);
+      window.clearTimeout(activityThrottleTimer);
+      activityEvents.forEach((eventName) => window.removeEventListener(eventName, handleActivity));
+    };
   }, [token]);
 
   const login = async (email, password) => {

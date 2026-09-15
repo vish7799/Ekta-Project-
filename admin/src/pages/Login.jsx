@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Lock, Mail, AlertCircle } from 'lucide-react';
+import { Lock, Mail, AlertCircle, Eye, EyeOff } from 'lucide-react';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const { login } = useAuth();
@@ -71,13 +72,21 @@ export const Login = () => {
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-admin-500" />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded border border-admin-700 bg-admin-950 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-admin-500 focus:border-amber-500 focus:outline-none"
+                className="w-full rounded border border-admin-700 bg-admin-950 py-2.5 pl-10 pr-10 text-sm text-white placeholder:text-admin-500 focus:border-amber-500 focus:outline-none"
                 placeholder="••••••••"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword((current) => !current)}
+                className="absolute right-3 top-2.5 text-admin-500 hover:text-admin-200"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
             </div>
           </div>
 

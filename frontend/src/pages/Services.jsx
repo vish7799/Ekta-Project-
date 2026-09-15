@@ -7,7 +7,7 @@ import { Card, Badge } from '../components/ui/Card';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { CORE_SERVICES } from '../data/companyData';
-import { fetchApi } from '../api/apiClient';
+import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 
 export const Services = () => {
   const [services, setServices] = useState([]);
@@ -61,6 +61,9 @@ export const Services = () => {
               <ScrollReveal key={service.id || index} animation="fade-up" delay={index * 60}>
                 <Card className="min-w-0 h-full flex flex-col justify-between overflow-hidden p-8 group hover:border-brand-green/50">
                   <div>
+                    {service.featuredImage?.filePath && (
+                      <img src={resolveMediaUrl(service.featuredImage.filePath)} alt={service.title} className="mb-6 h-40 w-full rounded object-cover" />
+                    )}
                     <h2 className="break-all text-xl font-bold text-ekta-text mb-3 group-hover:text-brand-green transition-colors">
                       {service.title}
                     </h2>

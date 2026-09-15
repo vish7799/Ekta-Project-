@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AdminLayout } from '../components/layout/AdminLayout';
 import { Plus, Zap, RefreshCw, X, Trash2 } from 'lucide-react';
-import { adminFetchApi } from '../api/adminApiClient';
+import { adminFetchApi, API_BASE_URL, resolveMediaUrl } from '../api/adminApiClient';
 
 const emptyService = {
   title: '',
@@ -9,6 +9,7 @@ const emptyService = {
   shortDescription: '',
   fullDescription: '',
   keyFeatures: '',
+  featuredImage: null,
   displayOrder: 0,
   status: 'draft',
 };
@@ -21,6 +22,7 @@ export const ServicesManager = () => {
   const [form, setForm] = useState(emptyService);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState('');
 
   const loadServices = () => {
@@ -39,11 +41,26 @@ export const ServicesManager = () => {
     setError('');
     setEditor(service);
     setEditorOpen(true);
+    setImageFile(null);
     setForm(service ? {
       ...emptyService,
       ...service,
       keyFeatures: (service.keyFeatures || []).join('\n'),
     } : emptyService);
+  };
+
+  const uploadServiceImage = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('altText', `${form.title || 'Service'} image`);
+    const response = await fetch(`${API_BASE_URL}/media/upload`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${localStorage.getItem('ekta_admin_token')}` },
+      body: formData,
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Unable to upload service image.');
+    return data.data;
   };
 
   const closeEditor = () => {
@@ -58,17 +75,23 @@ export const ServicesManager = () => {
     setSaving(true);
     setError('');
 
-    const payload = {
-      title: form.title,
-      shortDescription: form.shortDescription,
-      fullDescription: form.fullDescription,
-      keyFeatures: form.keyFeatures.split('\n').map((item) => item.trim()).filter(Boolean),
-      displayOrder: Number(form.displayOrder) || 0,
-      status: form.status,
-    };
-    if (form.slug) payload.slug = form.slug;
-
     try {
+      let featuredImage = form.featuredImage?._id || form.featuredImage || null;
+      if (imageFile) {
+        const uploadedImage = await uploadServiceImage(imageFile);
+        featuredImage = uploadedImage._id;
+      }
+      const payload = {
+        title: form.title,
+        shortDescription: form.shortDescription,
+        fullDescription: form.fullDescription,
+        keyFeatures: form.keyFeatures.split('\n').map((item) => item.trim()).filter(Boolean),
+        featuredImage,
+        displayOrder: Number(form.displayOrder) || 0,
+        status: form.status,
+      };
+      if (form.slug) payload.slug = form.slug;
+
       await adminFetchApi(editor?._id ? `/services/${editor._id}` : '/services', {
         method: editor?._id ? 'PUT' : 'POST',
         body: JSON.stringify(payload),
@@ -175,6 +198,12 @@ export const ServicesManager = () => {
             <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300">Short Description<input required value={form.shortDescription} onChange={(event) => setForm({ ...form, shortDescription: event.target.value })} placeholder="Short service overview" className="admin-input mt-2" /></label>
             <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300">Full Description<textarea value={form.fullDescription} onChange={(event) => setForm({ ...form, fullDescription: event.target.value })} placeholder="Detailed service description" rows="4" className="admin-input mt-2" /></label>
             <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300">Key Features<textarea value={form.keyFeatures} onChange={(event) => setForm({ ...form, keyFeatures: event.target.value })} placeholder="Enter one feature per line" rows="4" className="admin-input mt-2" /></label>
+            <div className="space-y-3 rounded border border-admin-800 bg-admin-950 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-admin-300">Service Image</p>
+              {form.featuredImage?.filePath && <img src={resolveMediaUrl(form.featuredImage.filePath)} alt="Current service" className="h-32 w-full rounded object-cover" />}
+              <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => setImageFile(event.target.files?.[0] || null)} className="block w-full text-xs text-admin-300" />
+              {imageFile && <p className="text-xs text-amber-400">New image selected: {imageFile.name}</p>}
+            </div>
             <div className="grid grid-cols-2 gap-4">
               <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300">Display Order<input type="number" value={form.displayOrder} onChange={(event) => setForm({ ...form, displayOrder: event.target.value })} placeholder="0" className="admin-input mt-2" /></label>
               <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300">Publication Status<select value={form.status} onChange={(event) => setForm({ ...form, status: event.target.value })} className="admin-input mt-2"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></label>

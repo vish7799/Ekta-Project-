@@ -6,7 +6,7 @@ import { Badge } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { COMPANY_INFO } from '../data/companyData';
-import { fetchApi } from '../api/apiClient';
+import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 
 export const ServiceDetail = () => {
   const { slug } = useParams();
@@ -81,6 +81,9 @@ export const ServiceDetail = () => {
           <p className="text-base sm:text-lg text-ekta-secondary max-w-3xl leading-relaxed">
             {service.shortDescription}
           </p>
+          {service.featuredImage?.filePath && (
+            <img src={resolveMediaUrl(service.featuredImage.filePath)} alt={service.title} className="mt-8 h-64 w-full max-w-3xl rounded object-cover" />
+          )}
         </div>
       </section>
 

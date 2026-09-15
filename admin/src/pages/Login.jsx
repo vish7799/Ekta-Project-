@@ -31,8 +31,8 @@ export const Login = () => {
       <div className="w-full max-w-md rounded-xl border border-admin-800 bg-admin-900 p-5 shadow-2xl shadow-slate-950/40 sm:p-8">
         <div className="mb-8 text-center">
           <img
-            src="/guru-kripa-logo.svg"
-            alt="Guru Kripa EEW logo"
+            src="/logo.png"
+            alt="EKTA ELECTRICAL WORKS logo"
             className="mx-auto mb-4 h-16 w-16 rounded-full border border-amber-500/30 bg-white object-contain shadow-lg shadow-amber-500/10 sm:h-20 sm:w-20"
           />
           <h1 className="text-lg font-black uppercase tracking-[0.18em] text-white sm:text-xl">Guru Kripa</h1>

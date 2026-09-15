@@ -90,7 +90,26 @@ export const About = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 space-y-6">
+              <div className="ekta-card p-5 border border-ekta-border flex items-center gap-4 bg-ekta-surface tech-corner-marks">
+                <img
+                  src="/logo.png"
+                  alt="EKTA ELECTRICAL WORKS Corporate Seal"
+                  className="h-20 w-20 rounded-full border border-ekta-border bg-white object-contain p-1 shadow-sm shrink-0"
+                />
+                <div>
+                  <div className="text-xs font-mono text-brand-green font-semibold uppercase tracking-wider">
+                    Official Corporate Seal
+                  </div>
+                  <h4 className="font-bold text-sm sm:text-base text-ekta-text mt-0.5">
+                    EKTA ELECTRICAL WORKS (EEW)
+                  </h4>
+                  <p className="text-xs text-ekta-secondary mt-1 leading-relaxed">
+                    Class-A Certified Indian Electrical Contracting & Engineering Emblem since 1983.
+                  </p>
+                </div>
+              </div>
+
               <div className="ekta-card p-8 border-t-4 border-t-brand-green tech-corner-marks">
                 <h3 className="text-lg font-bold text-ekta-text mb-4">Core Operational Principles</h3>
                 <ul className="space-y-3.5 text-sm text-ekta-secondary">

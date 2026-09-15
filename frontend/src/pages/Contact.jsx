@@ -94,6 +94,25 @@ export const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             {/* Left 5 Cols: Contact Information */}
             <div className="lg:col-span-5 space-y-6">
+              <div className="ekta-card p-5 border border-ekta-border flex items-center gap-4 bg-ekta-surface tech-corner-marks">
+                <img
+                  src="/logo.png"
+                  alt="EKTA ELECTRICAL WORKS Logo"
+                  className="h-16 w-16 rounded-full border border-ekta-border bg-white object-contain p-1 shadow-sm shrink-0"
+                />
+                <div>
+                  <h3 className="font-bold text-sm text-ekta-text">
+                    EKTA ELECTRICAL WORKS
+                  </h3>
+                  <p className="text-xs font-mono text-brand-green mt-0.5">
+                    Class-A Licensed Contractor (Est. 1983)
+                  </p>
+                  <p className="text-xs text-ekta-muted mt-1">
+                    Direct Liaisoning & Project Engineering Desk
+                  </p>
+                </div>
+              </div>
+
               <div className="ekta-card p-6 border-l-4 border-l-brand-green">
                 <div className="flex items-start space-x-3.5">
                   <MapPin className="w-5 h-5 text-brand-green shrink-0 mt-1" />

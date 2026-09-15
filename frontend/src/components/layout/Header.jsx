@@ -84,8 +84,8 @@ export const Header = () => {
           {/* Brand Identity / Logo */}
           <Link to="/" className="group flex items-center gap-3 min-w-0">
             <img
-              src="/guru-kripa-logo.svg"
-              alt="Guru Kripa EEW logo"
+              src="/logo.png"
+              alt="EKTA ELECTRICAL WORKS logo"
               className="h-10 w-10 shrink-0 rounded-full border border-ekta-border bg-white object-contain shadow-sm transition-transform duration-200 group-hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
             />
             <div className="hidden min-w-0 sm:flex sm:flex-col">

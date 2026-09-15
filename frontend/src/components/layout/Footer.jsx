@@ -51,8 +51,8 @@ export const Footer = () => {
           <div className="lg:col-span-4 space-y-4">
             <Link to="/" className="flex items-center gap-3">
               <img
-                src="/guru-kripa-logo.svg"
-                alt="Guru Kripa EEW logo"
+                src="/logo.png"
+                alt="EKTA ELECTRICAL WORKS logo"
                 className="h-10 w-10 shrink-0 rounded-full border border-[#26332D] bg-white object-contain shadow-sm sm:h-12 sm:w-12"
               />
               <div className="flex flex-col">

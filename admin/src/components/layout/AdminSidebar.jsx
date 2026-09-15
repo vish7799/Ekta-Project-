@@ -33,8 +33,8 @@ export const AdminSidebar = ({ isOpen = true, onClose = () => {} }) => {
           <div>
             <div className="flex h-20 items-center gap-3 border-b border-admin-800 px-4 sm:px-5">
               <img
-                src="/guru-kripa-logo.svg"
-                alt="Guru Kripa EEW logo"
+                src="/logo.png"
+                alt="EKTA ELECTRICAL WORKS logo"
                 className="h-10 w-10 shrink-0 rounded-full border border-amber-500/40 bg-white object-contain shadow-sm sm:h-12 sm:w-12"
               />
               <div className="min-w-0 flex-1">

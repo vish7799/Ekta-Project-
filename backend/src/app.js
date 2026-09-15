@@ -46,8 +46,12 @@ app.use(
         return callback(null, true);
       }
 
-      // Production: allow only explicitly configured origins
-      if (config.corsOrigin.includes(normalizeOrigin(origin))) {
+      // Production: allow configured origins and the project's Vercel deployments.
+      const normalizedOrigin = normalizeOrigin(origin);
+      if (
+        config.corsOrigin.includes(normalizedOrigin) ||
+        (config.env === 'production' && /^https:\/\/([a-z0-9-]+\.)*vercel\.app$/i.test(normalizedOrigin))
+      ) {
         return callback(null, true);
       }
 

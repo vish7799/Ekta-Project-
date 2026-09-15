@@ -53,7 +53,7 @@ export const Footer = () => {
               <img
                 src="/guru-kripa-logo.svg"
                 alt="Guru Kripa EEW logo"
-                className="h-10 w-10 rounded-md border border-[#26332D] bg-white object-contain"
+                className="h-10 w-10 shrink-0 rounded-full border border-[#26332D] bg-white object-contain shadow-sm sm:h-12 sm:w-12"
               />
               <div className="flex flex-col">
                 <span className="font-display text-lg font-bold tracking-tight text-white">

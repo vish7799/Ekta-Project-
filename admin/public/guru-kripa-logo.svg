@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+  <title id="title">Guru Kripa EEW logo</title>
+  <desc id="desc">Circular Guru Kripa EEW logo with India map and growth trend in saffron and green.</desc>
+  <defs>
+    <clipPath id="logoCircle"><circle cx="450" cy="450" r="408" /></clipPath>
+    <pattern id="logoGrid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M 42 0 L 0 0 0 42" fill="none" stroke="#111111" stroke-width="3" />
+    </pattern>
+  </defs>
+  <circle cx="450" cy="450" r="420" fill="#ffffff" />
+  <circle cx="450" cy="450" r="408" fill="url(#logoGrid)" clip-path="url(#logoCircle)" />
+  <circle cx="450" cy="450" r="420" fill="none" stroke="#000000" stroke-width="18" />
+  <g transform="translate(60 30)">
+    <path d="M192 108 L246 100 L267 135 L290 118 L302 157 L323 130 L349 140 L367 172 L394 162 L432 180 L445 188 L451 214 L497 206 L527 219 L562 205 L592 218 L627 210 L638 224 L655 222 L676 246 L700 252 L712 273 L721 286 L732 285 L745 299 L734 325 L748 347 L736 367 L707 377 L720 394 L697 413 L704 442 L688 459 L669 466 L647 457 L627 465 L611 483 L557 488 L543 471 L520 477 L495 468 L472 486 L439 482 L423 474 L400 475 L384 465 L360 482 L334 474 L315 454 L292 454 L273 442 L250 450 L224 445 L202 434 L184 440 L163 428 L154 403 L141 398 L133 371 L112 365 L109 340 L90 322 L104 293 L81 272 L90 247 L88 218 L104 201 L115 183 L144 178 L153 156 L169 148 L184 132 L192 108 Z" fill="#ffffff" stroke="#111111" stroke-width="8" stroke-linejoin="round" />
+    <path d="M200 455 L628 455 L558 545 L398 545 L370 610 L200 610 Z" fill="#ed1c24" stroke="#111111" stroke-width="8" />
+    <path d="M200 610 L370 610 L488 712 L200 712 Z" fill="#08a651" stroke="#111111" stroke-width="8" />
+    <path d="M150 650 L750 650 L770 770 L130 770 Z" fill="#111111" />
+    <text x="450" y="756" text-anchor="middle" font-size="270" font-weight="900" font-family="Arial Black, Impact, sans-serif" fill="#ffffff" letter-spacing="-18">EEW</text>
+  </g>
+</svg>

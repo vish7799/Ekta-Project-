@@ -2,7 +2,18 @@
   <title id="title">Guru Kripa EEW logo</title>
   <desc id="desc">Circular Guru Kripa EEW logo with India map and growth trend in saffron and green.</desc>
 
-  <circle cx="450" cy="450" r="420" fill="#000000" stroke="#ffffff" stroke-width="12"/>
+  <defs>
+    <clipPath id="logoCircle">
+      <circle cx="450" cy="450" r="408" />
+    </clipPath>
+    <pattern id="logoGrid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M 42 0 L 0 0 0 42" fill="none" stroke="#111111" stroke-width="3" />
+    </pattern>
+  </defs>
+
+  <circle cx="450" cy="450" r="420" fill="#ffffff" />
+  <circle cx="450" cy="450" r="408" fill="url(#logoGrid)" clip-path="url(#logoCircle)" />
+  <circle cx="450" cy="450" r="420" fill="none" stroke="#000000" stroke-width="18" />
 
   <g transform="translate(60 30)">
     <path d="M192 108

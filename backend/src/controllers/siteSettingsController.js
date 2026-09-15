@@ -9,6 +9,7 @@ const SITE_SETTINGS_FIELDS = [
   'primaryPhone',
   'emergencyPhone',
   'email',
+  'secondaryEmail',
   'businessHours',
   'socialLinks',
   'seoDefaults',

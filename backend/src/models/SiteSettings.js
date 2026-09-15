@@ -32,6 +32,11 @@ const SiteSettingsSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    secondaryEmail: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     businessHours: {
       type: String,
       trim: true,

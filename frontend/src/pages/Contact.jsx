@@ -183,10 +183,10 @@ export const Contact = () => {
                         {settings.email}
                       </a>
                       <a
-                        href={`mailto:${settings.email}`}
+                        href={`mailto:${settings.secondaryEmail || COMPANY_INFO.emails[1]}`}
                         className="block text-ekta-muted hover:text-brand-green"
                       >
-                        {settings.email}
+                        {settings.secondaryEmail || COMPANY_INFO.emails[1]}
                       </a>
                     </div>
                   </div>

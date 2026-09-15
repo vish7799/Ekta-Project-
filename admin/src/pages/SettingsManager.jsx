@@ -11,6 +11,7 @@ export const SettingsManager = () => {
     primaryPhone: '+91 (0) 1234 567 890',
     emergencyPhone: '+91 (0) 9876 543 210',
     email: 'contact@ektaelectrical.com',
+    secondaryEmail: '',
   });
   const [loading, setLoading] = useState(true);
   const [savedMsg, setSavedMsg] = useState(false);
@@ -90,12 +91,36 @@ export const SettingsManager = () => {
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300 mb-2">
+                Emergency / Secondary Phone
+              </label>
+              <input
+                type="text"
+                value={settings.emergencyPhone || ''}
+                onChange={(e) => setSettings({ ...settings, emergencyPhone: e.target.value })}
+                className="w-full bg-admin-950 border border-admin-700 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300 mb-2">
                 Official Email Address
               </label>
               <input
                 type="email"
                 value={settings.email || ''}
                 onChange={(e) => setSettings({ ...settings, email: e.target.value })}
+                className="w-full bg-admin-950 border border-admin-700 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300 mb-2">
+                Secondary Email Address
+              </label>
+              <input
+                type="email"
+                value={settings.secondaryEmail || ''}
+                onChange={(e) => setSettings({ ...settings, secondaryEmail: e.target.value })}
                 className="w-full bg-admin-950 border border-admin-700 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
               />
             </div>

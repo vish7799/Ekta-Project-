@@ -184,10 +184,10 @@ export const Footer = () => {
                 <Mail className="w-4 h-4 text-[#0E7A4A] shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
                   <a
-                    href={`mailto:${settings.email}`}
+                    href={`mailto:${settings.secondaryEmail || COMPANY_INFO.emails[1]}`}
                     className="block text-[#94A3B8] hover:text-white"
                   >
-                    {settings.email}
+                    {settings.secondaryEmail || COMPANY_INFO.emails[1]}
                   </a>
                 </div>
               </li>

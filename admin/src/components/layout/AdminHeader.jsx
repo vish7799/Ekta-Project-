@@ -2,7 +2,7 @@ import React from 'react';
 import { ExternalLink, Menu } from 'lucide-react';
 
 const PUBLIC_SITE_URL =
-  import.meta.env.VITE_PUBLIC_SITE_URL || 'https://frontend-ifg7x4ls6-vish7799s-projects.vercel.app/';
+  import.meta.env.VITE_PUBLIC_SITE_URL || 'https://frontend-five-sepia-67.vercel.app/';
 
 export const AdminHeader = ({ title = 'Dashboard', onToggleSidebar }) => {
   return (

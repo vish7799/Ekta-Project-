@@ -20,6 +20,14 @@ const ClientSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    location: {
+      type: String,
+      trim: true,
+    },
+    scope: {
+      type: String,
+      trim: true,
+    },
     displayOrder: {
       type: Number,
       default: 0,

@@ -34,6 +34,7 @@ import { fetchApi } from '../api/apiClient';
 export const Home = () => {
   const [cmsServices, setCmsServices] = useState([]);
   const [cmsProjects, setCmsProjects] = useState([]);
+  const [cmsClients, setCmsClients] = useState([]);
 
   // Fetch optional CMS data, falling back smoothly to verified company records
   useEffect(() => {
@@ -52,10 +53,19 @@ export const Home = () => {
         }
       })
       .catch(() => {});
+
+    fetchApi('/clients')
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          setCmsClients(res.data);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const displayServices = cmsServices.length > 0 ? cmsServices : CORE_SERVICES;
   const displayProjects = cmsProjects.length > 0 ? cmsProjects : VERIFIED_PROJECTS;
+  const displayClients = cmsClients.length > 0 ? cmsClients : VERIFIED_CLIENTS;
 
   const featuredService = displayServices[0];
   const supportingServices = displayServices.slice(1, 5);
@@ -225,14 +235,14 @@ export const Home = () => {
 
         <div className="relative w-full overflow-hidden flex items-center">
           <div className="flex space-x-8 animate-marquee-slow whitespace-nowrap py-2">
-            {VERIFIED_CLIENTS.concat(VERIFIED_CLIENTS).map((client, index) => (
+            {displayClients.concat(displayClients).map((client, index) => (
               <div
-                key={`${client.name}-${index}`}
+                key={`${client._id || client.name}-${index}`}
                 className="inline-flex items-center space-x-2.5 px-4 py-2 rounded-sm border border-ekta-border bg-ekta-elevated/40 text-xs font-mono text-ekta-secondary hover:border-brand-green/40 hover:text-ekta-text transition-colors"
               >
                 <span className="w-2 h-2 rounded-full bg-brand-green/60" />
                 <span className="font-semibold text-ekta-text">{client.name}</span>
-                <span className="text-ekta-muted">({client.sector})</span>
+                <span className="text-ekta-muted">({client.sector || client.industrySector || 'Enterprise'})</span>
               </div>
             ))}
           </div>

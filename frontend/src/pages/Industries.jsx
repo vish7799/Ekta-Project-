@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, ShieldCheck, Building2, Server, Factory, Store, Landmark } from 'lucide-react';
 import { SEOHead } from '../components/ui/SEOHead';
@@ -7,8 +7,17 @@ import { Card, Badge } from '../components/ui/Card';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { INDUSTRIES_SERVED } from '../data/companyData';
+import { fetchApi } from '../api/apiClient';
+
+const normalizeIndustry = (industry, index) => ({ ...industry, id: industry.slug || industry.id, number: industry.number || String(index + 1).padStart(2, '0'), title: industry.title || industry.name, description: industry.description || industry.shortDescription, specs: industry.specs || (industry.solutionsProvided || []).join(', ') });
 
 export const Industries = () => {
+  const [industries, setIndustries] = useState(INDUSTRIES_SERVED);
+
+  useEffect(() => {
+    fetchApi('/industries').then((res) => { if (res.data?.length) setIndustries(res.data.map(normalizeIndustry)); }).catch(() => {});
+  }, []);
+
   return (
     <>
       <SEOHead
@@ -36,7 +45,7 @@ export const Industries = () => {
       {/* Alternating Industry Sections */}
       <section className="py-20 border-b border-ekta-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-          {INDUSTRIES_SERVED.map((ind, idx) => {
+          {industries.map((ind, idx) => {
             const isEven = idx % 2 === 1;
             return (
               <ScrollReveal

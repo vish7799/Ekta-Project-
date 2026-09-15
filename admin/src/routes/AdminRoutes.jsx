@@ -6,6 +6,8 @@ import { Dashboard } from '../pages/Dashboard';
 import { ServicesManager } from '../pages/ServicesManager';
 import { ProjectsManager } from '../pages/ProjectsManager';
 import { EnquiriesManager } from '../pages/EnquiriesManager';
+import { ClientsManager } from '../pages/ClientsManager';
+import { IndustriesManager } from '../pages/IndustriesManager';
 import { SettingsManager } from '../pages/SettingsManager';
 
 const ProtectedRoute = ({ children }) => {
@@ -50,6 +52,15 @@ export const AdminRoutes = () => {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/clients"
+        element={
+          <ProtectedRoute>
+            <ClientsManager />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/industries" element={<ProtectedRoute><IndustriesManager /></ProtectedRoute>} />
       <Route
         path="/enquiries"
         element={

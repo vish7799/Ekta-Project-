@@ -7,6 +7,8 @@ const CLIENT_FIELDS = [
   'logo',
   'websiteUrl',
   'industrySector',
+  'location',
+  'scope',
   'displayOrder',
   'status',
 ];

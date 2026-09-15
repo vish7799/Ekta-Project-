@@ -19,7 +19,7 @@ export const IndustryDetail = () => {
     fetchApi(`/industries/slug/${slug}`)
       .then((res) => {
         if (res.data) {
-          setIndustry(res.data);
+          setIndustry({ ...res.data, id: res.data.slug, title: res.data.name, description: res.data.shortDescription, specs: (res.data.solutionsProvided || []).join(', ') });
         } else if (localMatch) {
           setIndustry(localMatch);
         }

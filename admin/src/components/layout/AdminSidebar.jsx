@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Zap, FolderGit2, Mail, Settings, LogOut, Shield, X } from 'lucide-react';
+import { LayoutDashboard, Zap, FolderGit2, Building2, Factory, Mail, Settings, LogOut, Shield, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 export const AdminSidebar = ({ isOpen = true, onClose = () => {} }) => {
@@ -10,6 +10,8 @@ export const AdminSidebar = ({ isOpen = true, onClose = () => {} }) => {
     { name: 'Dashboard', path: '/', icon: LayoutDashboard },
     { name: 'Services', path: '/services', icon: Zap },
     { name: 'Projects', path: '/projects', icon: FolderGit2 },
+    { name: 'Clients', path: '/clients', icon: Building2 },
+    { name: 'Industries', path: '/industries', icon: Factory },
     { name: 'Enquiries', path: '/enquiries', icon: Mail },
     { name: 'Site Settings', path: '/settings', icon: Settings },
   ];

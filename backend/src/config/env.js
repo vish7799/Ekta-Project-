@@ -88,7 +88,7 @@ const config = {
   // File uploads
   uploads: {
     maxSizeBytes: parseInt(
-      process.env.MAX_FILE_SIZE_BYTES || '5242880',
+      process.env.MAX_FILE_SIZE_BYTES || '209715200',
       10
     ),
 

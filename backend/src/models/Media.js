@@ -37,7 +37,7 @@ const MediaSchema = new mongoose.Schema(
       type: Number,
       required: true,
       min: [1, 'File size must be greater than zero'],
-      max: [5242880, 'File size cannot exceed 5 MB'],
+      max: [209715200, 'File size cannot exceed 200 MB'],
     },
 
     filePath: {

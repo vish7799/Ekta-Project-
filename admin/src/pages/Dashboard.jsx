@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AdminLayout } from '../components/layout/AdminLayout';
-import { Zap, FolderGit2, Building2, Factory, Mail, Users, CheckCircle2, Clock } from 'lucide-react';
+import { Zap, FolderGit2, Building2, Factory, Mail } from 'lucide-react';
 import { adminFetchApi } from '../api/adminApiClient';
 
 export const Dashboard = () => {
@@ -101,41 +101,6 @@ export const Dashboard = () => {
           </Link>
         </div>
 
-        {/* System Architecture Status */}
-        <div className="bg-admin-900 border border-admin-800 rounded-lg p-6">
-          <h2 className="text-base font-bold text-white mb-4">CMS Architectural Health Status</h2>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between py-2 border-b border-admin-800">
-              <div className="flex items-center space-x-3">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <span className="text-sm text-admin-200">Express REST API Middleware</span>
-              </div>
-              <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
-                ACTIVE / PROTECTED
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between py-2 border-b border-admin-800">
-              <div className="flex items-center space-x-3">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <span className="text-sm text-admin-200">Role-Based Access Control (RBAC)</span>
-              </div>
-              <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
-                JWT ENFORCED
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between py-2">
-              <div className="flex items-center space-x-3">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <span className="text-sm text-admin-200">NoSQL Injection & Rate Limiting</span>
-              </div>
-              <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
-                HELMET & SANITIZED
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
     </AdminLayout>
   );

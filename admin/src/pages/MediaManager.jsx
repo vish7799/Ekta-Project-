@@ -122,7 +122,7 @@ export const MediaManager = () => {
           <div className="rounded-lg border border-admin-800 bg-admin-900 p-12 text-center text-xs text-admin-400"><RefreshCw className="mr-2 inline h-4 w-4 animate-spin text-amber-500" /> Loading media library...</div>
         ) : !selectedFolder ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {[...folderNames, 'Unused Images'].map((folderName) => (
+            {folderNames.map((folderName) => (
               <button key={folderName} onClick={() => setSelectedFolder(folderName)} className="rounded-lg border border-admin-800 bg-admin-900 p-5 text-left transition-colors hover:border-amber-500/50">
                 <Folder className="h-9 w-9 text-amber-500" />
                 <p className="mt-4 truncate text-sm font-bold text-white" title={folderName}>{folderName}</p>

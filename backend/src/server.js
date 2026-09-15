@@ -1,11 +1,37 @@
 const app = require('./app');
 const config = require('./config/env');
 const connectDB = require('./config/db');
+const User = require('./models/User');
 
 let server;
 
+const provisionAdminUser = async () => {
+  if (config.env !== 'production') return;
+
+  const email = process.env.ADMIN_EMAIL?.toLowerCase().trim();
+  const password = process.env.ADMIN_PASSWORD;
+
+  if (!email || !password) return;
+  if (password.length < 12) {
+    throw new Error('ADMIN_PASSWORD must be at least 12 characters long.');
+  }
+
+  const existingAdmin = await User.findOne({ email });
+  if (existingAdmin) return;
+
+  await User.create({
+    name: 'EKTA Administrator',
+    email,
+    password,
+    role: 'admin',
+    status: 'active',
+  });
+
+  console.log(`[Auth] Provisioned admin user: ${email}`);
+};
+
 // Do not accept traffic until the database is ready.
-connectDB().then(() => {
+connectDB().then(provisionAdminUser).then(() => {
   server = app.listen(config.port, () => {
     console.log(`==================================================`);
     console.log(`EKTA ELECTRICAL WORKS - REST API Server Running`);

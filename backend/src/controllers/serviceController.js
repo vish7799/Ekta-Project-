@@ -10,6 +10,7 @@ const SERVICE_FIELDS = [
   'fullDescription',
   'icon',
   'featuredImage',
+  'gallery',
   'keyFeatures',
   'specifications',
   'displayOrder',
@@ -34,6 +35,7 @@ const getPublishedServices = async (req, res, next) => {
   try {
     const services = await Service.find({ status: 'published' })
       .populate('featuredImage')
+      .populate('gallery')
       .sort({ displayOrder: 1, createdAt: -1 });
 
     return sendResponse(
@@ -53,7 +55,7 @@ const getServiceBySlug = async (req, res, next) => {
     const service = await Service.findOne({
       slug: req.params.slug,
       status: 'published',
-    }).populate('featuredImage');
+    }).populate('featuredImage').populate('gallery');
 
     if (!service) {
       return next(new ApiError(404, 'Service not found'));
@@ -75,6 +77,7 @@ const getAllServicesAdmin = async (req, res, next) => {
   try {
     const services = await Service.find()
       .populate('featuredImage')
+      .populate('gallery')
       .sort({ displayOrder: 1, createdAt: -1 });
 
     return sendResponse(

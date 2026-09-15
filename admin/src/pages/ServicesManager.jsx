@@ -10,6 +10,7 @@ const emptyService = {
   fullDescription: '',
   keyFeatures: '',
   featuredImage: null,
+  gallery: [],
   displayOrder: 0,
   status: 'draft',
 };
@@ -23,6 +24,7 @@ export const ServicesManager = () => {
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const [galleryFiles, setGalleryFiles] = useState([]);
   const [error, setError] = useState('');
 
   const loadServices = () => {
@@ -42,6 +44,7 @@ export const ServicesManager = () => {
     setEditor(service);
     setEditorOpen(true);
     setImageFile(null);
+    setGalleryFiles([]);
     setForm(service ? {
       ...emptyService,
       ...service,
@@ -77,9 +80,14 @@ export const ServicesManager = () => {
 
     try {
       let featuredImage = form.featuredImage?._id || form.featuredImage || null;
+      const gallery = (form.gallery || []).map((item) => item._id || item).filter(Boolean);
       if (imageFile) {
         const uploadedImage = await uploadServiceImage(imageFile);
         featuredImage = uploadedImage._id;
+      }
+      for (const file of galleryFiles) {
+        const uploadedImage = await uploadServiceImage(file);
+        gallery.push(uploadedImage._id);
       }
       const payload = {
         title: form.title,
@@ -87,6 +95,7 @@ export const ServicesManager = () => {
         fullDescription: form.fullDescription,
         keyFeatures: form.keyFeatures.split('\n').map((item) => item.trim()).filter(Boolean),
         featuredImage,
+        gallery,
         displayOrder: Number(form.displayOrder) || 0,
         status: form.status,
       };
@@ -203,6 +212,9 @@ export const ServicesManager = () => {
               {form.featuredImage?.filePath && <img src={resolveMediaUrl(form.featuredImage.filePath)} alt="Current service" className="h-32 w-full rounded object-cover" />}
               <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => setImageFile(event.target.files?.[0] || null)} className="block w-full text-xs text-admin-300" />
               {imageFile && <p className="text-xs text-amber-400">New image selected: {imageFile.name}</p>}
+              {form.gallery?.length > 0 && <div className="grid grid-cols-4 gap-2">{form.gallery.map((image) => <img key={image._id || image} src={resolveMediaUrl(image.filePath || image)} alt="Service gallery" className="h-16 w-full rounded object-cover" />)}</div>}
+              <label className="block text-xs text-admin-400">Additional service images<input type="file" multiple accept="image/jpeg,image/png,image/webp" onChange={(event) => setGalleryFiles(Array.from(event.target.files || []))} className="mt-2 block w-full text-xs text-admin-300" /></label>
+              {galleryFiles.length > 0 && <p className="text-xs text-amber-400">{galleryFiles.length} additional image(s) selected</p>}
             </div>
             <div className="grid grid-cols-2 gap-4">
               <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300">Display Order<input type="number" value={form.displayOrder} onChange={(event) => setForm({ ...form, displayOrder: event.target.value })} placeholder="0" className="admin-input mt-2" /></label>

@@ -84,6 +84,13 @@ export const ServiceDetail = () => {
           {service.featuredImage?.filePath && (
             <img src={resolveMediaUrl(service.featuredImage.filePath)} alt={service.title} className="mt-8 h-64 w-full max-w-3xl rounded object-cover" />
           )}
+          {service.gallery?.length > 0 && (
+            <div className="mt-6 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-3">
+              {service.gallery.map((image, index) => (
+                <img key={image._id || index} src={resolveMediaUrl(image.filePath || image)} alt={`${service.title} gallery ${index + 1}`} className="h-32 w-full rounded object-cover" />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

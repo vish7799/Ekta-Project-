@@ -34,6 +34,12 @@ const ServiceSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Media',
     },
+    gallery: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Media',
+      },
+    ],
     keyFeatures: [{ type: String, trim: true }],
     specifications: [
       {

@@ -61,8 +61,8 @@ export const Services = () => {
               <ScrollReveal key={service.id || index} animation="fade-up" delay={index * 60}>
                 <Card className="min-w-0 h-full flex flex-col justify-between overflow-hidden p-8 group hover:border-brand-green/50">
                   <div>
-                    {service.featuredImage?.filePath && (
-                      <img src={resolveMediaUrl(service.featuredImage.filePath)} alt={service.title} className="mb-6 h-40 w-full rounded object-cover" />
+                    {(service.featuredImage?.filePath || service.gallery?.[0]) && (
+                      <img src={resolveMediaUrl(service.featuredImage?.filePath || service.gallery[0].filePath || service.gallery[0])} alt={service.featuredImage?.altText || service.title} className="mb-6 h-40 w-full rounded object-cover" />
                     )}
                     <h2 className="break-all text-xl font-bold text-ekta-text mb-3 group-hover:text-brand-green transition-colors">
                       {service.title}

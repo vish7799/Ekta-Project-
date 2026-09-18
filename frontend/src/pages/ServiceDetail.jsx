@@ -44,6 +44,12 @@ export const ServiceDetail = () => {
     );
   }
 
+  const serviceImages = [
+    ...(service.featuredImage?.filePath ? [service.featuredImage] : []),
+    ...(service.gallery || []),
+  ];
+  const primaryImage = serviceImages[0];
+
   return (
     <>
       <SEOHead
@@ -81,12 +87,12 @@ export const ServiceDetail = () => {
           <p className="text-base sm:text-lg text-ekta-secondary max-w-3xl leading-relaxed">
             {service.shortDescription}
           </p>
-          {service.featuredImage?.filePath && (
-            <img src={resolveMediaUrl(service.featuredImage.filePath)} alt={service.title} className="mt-8 h-64 w-full max-w-3xl rounded object-cover" />
+          {primaryImage && (
+            <img src={resolveMediaUrl(primaryImage.filePath || primaryImage)} alt={primaryImage.altText || service.title} className="mt-8 h-64 w-full max-w-3xl rounded object-cover" />
           )}
-          {service.gallery?.length > 0 && (
+          {serviceImages.length > 1 && (
             <div className="mt-6 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-3">
-              {service.gallery.map((image, index) => (
+              {serviceImages.slice(1).map((image, index) => (
                 <img key={image._id || index} src={resolveMediaUrl(image.filePath || image)} alt={`${service.title} gallery ${index + 1}`} className="h-32 w-full rounded object-cover" />
               ))}
             </div>

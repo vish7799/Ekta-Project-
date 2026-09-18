@@ -8,7 +8,7 @@ import { SectionHeading } from '../components/ui/SectionHeading';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { LightboxModal } from '../components/ui/LightboxModal';
 import { VERIFIED_PROJECTS } from '../data/companyData';
-import { fetchApi } from '../api/apiClient';
+import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 
 export const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -56,6 +56,13 @@ export const Projects = () => {
               <ScrollReveal key={project.id || idx} animation="fade-up" delay={idx * 70}>
                 <Card className="h-full flex flex-col justify-between p-8 group">
                   <div>
+                    {(project.featuredImage?.filePath || project.gallery?.[0]) && (
+                      <img
+                        src={resolveMediaUrl(project.featuredImage?.filePath || project.gallery[0].filePath || project.gallery[0])}
+                        alt={project.featuredImage?.altText || project.title}
+                        className="mb-6 h-40 w-full rounded object-cover"
+                      />
+                    )}
                     <div className="flex items-center justify-between mb-4">
                       <Badge variant="teal">{project.category || project.industry?.name || 'Industrial Project'}</Badge>
                       <span className="font-mono text-xs font-bold text-brand-orange">

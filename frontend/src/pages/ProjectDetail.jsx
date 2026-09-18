@@ -55,6 +55,7 @@ export const ProjectDetail = () => {
     alt: image.altText || project.title,
     caption: image.caption,
   }));
+  const primaryImage = projectImages[0];
 
   const showPreviousImage = () => {
     setActiveImageIndex((current) => (
@@ -122,7 +123,7 @@ export const ProjectDetail = () => {
                   {project.description || project.summary}
                 </p>
 
-                {project.featuredImage?.filePath && (
+                {primaryImage && (
                   <button
                     type="button"
                     onClick={() => {
@@ -133,8 +134,8 @@ export const ProjectDetail = () => {
                     aria-label={`Open project image gallery with ${projectImages.length} images`}
                   >
                     <img
-                      src={resolveMediaUrl(project.featuredImage.filePath)}
-                      alt={project.featuredImage.altText || project.title}
+                      src={primaryImage.src}
+                      alt={primaryImage.alt}
                       className="h-72 w-full rounded object-cover"
                     />
                     <span className="absolute bottom-3 right-3 rounded bg-black/75 px-3 py-1.5 text-xs font-mono text-white">

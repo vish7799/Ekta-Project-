@@ -11,14 +11,14 @@ const MediaSchema = new mongoose.Schema(
 
     fileName: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
       trim: true,
       maxlength: [255, 'Filename cannot exceed 255 characters'],
-      match: [
-        /^ekta-\d+-\d+\.(jpg|jpeg|png|webp|pdf)$/i,
-        'Invalid media filename format',
-      ],
+      validate: {
+        validator: (value) => !value || /^[^\\/\\]+$/.test(value),
+        message: 'Invalid media filename format',
+      },
     },
 
     mimeType: {
@@ -45,10 +45,31 @@ const MediaSchema = new mongoose.Schema(
       required: true,
       trim: true,
       maxlength: [300, 'File path cannot exceed 300 characters'],
-      match: [
-        /^\/uploads\/ekta-\d+-\d+\.(jpg|jpeg|png|webp|pdf)$/i,
-        'Invalid media file path',
-      ],
+      validate: {
+        validator: (value) => (
+          /^\/uploads\/ekta-\d+-\d+\.(jpg|jpeg|png|webp|pdf)$/i.test(value)
+          || /^https:\/\/res\.cloudinary\.com\//i.test(value)
+        ),
+        message: 'Invalid media file path',
+      },
+    },
+
+    storageProvider: {
+      type: String,
+      enum: ['local', 'cloudinary'],
+      default: 'local',
+      index: true,
+    },
+
+    cloudinaryPublicId: {
+      type: String,
+      trim: true,
+      maxlength: 255,
+    },
+
+    cloudinaryResourceType: {
+      type: String,
+      enum: ['image', 'raw', 'video', 'auto'],
     },
 
     altText: {

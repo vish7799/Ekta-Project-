@@ -9,7 +9,7 @@ const { protect } = require('../middleware/authMiddleware');
 const { authorize } = require('../middleware/roleMiddleware');
 
 // Storage strategy
-const storage = multer.diskStorage({
+const diskStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, config.uploads.uploadDir);
   },
@@ -19,6 +19,13 @@ const storage = multer.diskStorage({
     cb(null, `ekta-${uniqueSuffix}${ext}`);
   },
 });
+
+const memoryStorage = multer.memoryStorage();
+const useCloudinary = Boolean(
+  config.cloudinary.cloudName &&
+  config.cloudinary.apiKey &&
+  config.cloudinary.apiSecret
+);
 
 // File filter (MIME & extension security check)
 const fileFilter = (req, file, cb) => {
@@ -33,7 +40,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-  storage,
+  storage: useCloudinary ? memoryStorage : diskStorage,
   limits: { fileSize: config.uploads.maxSizeBytes },
   fileFilter,
 });

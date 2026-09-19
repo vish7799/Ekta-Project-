@@ -4,18 +4,49 @@ const { sendResponse } = require('../utils/apiResponse');
 const config = require('../config/env');
 const fs = require('fs');
 const path = require('path');
+const cloudinary = require('cloudinary').v2;
 
 const UPLOAD_DIR = config.uploads.uploadDir;
+const useCloudinary = Boolean(
+  config.cloudinary.cloudName &&
+  config.cloudinary.apiKey &&
+  config.cloudinary.apiSecret
+);
+
+if (useCloudinary) {
+  cloudinary.config({
+    cloud_name: config.cloudinary.cloudName,
+    api_key: config.cloudinary.apiKey,
+    api_secret: config.cloudinary.apiSecret,
+  });
+}
+
+const uploadToCloudinary = (file) => new Promise((resolve, reject) => {
+  const uploadStream = cloudinary.uploader.upload_stream(
+    {
+      folder: 'ekta-electrical-works',
+      resource_type: 'auto',
+      public_id: `ekta-${Date.now()}-${Math.round(Math.random() * 1e9)}`,
+    },
+    (error, result) => (error ? reject(error) : resolve(result))
+  );
+
+  uploadStream.end(file.buffer);
+});
 
 const uploadMedia = async (req, res, next) => {
   let uploadedFilePath = null;
+  let cloudinaryPublicId = null;
+  let cloudinaryResourceType = null;
 
   try {
     if (!req.file) {
       return next(new ApiError(400, 'No file uploaded.'));
     }
 
-    uploadedFilePath = path.join(UPLOAD_DIR, req.file.filename);
+    if (!useCloudinary) {
+      uploadedFilePath = path.join(UPLOAD_DIR, req.file.filename);
+    }
 
     const { altText = '', caption = '' } = req.body;
 
@@ -39,12 +70,28 @@ const uploadMedia = async (req, res, next) => {
       );
     }
 
+    let fileName = req.file.filename;
+    let filePath = `/uploads/${req.file.filename}`;
+    let storageProvider = 'local';
+
+    if (useCloudinary) {
+      const cloudinaryFile = await uploadToCloudinary(req.file);
+      cloudinaryPublicId = cloudinaryFile.public_id;
+      fileName = path.basename(cloudinaryFile.public_id);
+      filePath = cloudinaryFile.secure_url;
+      storageProvider = 'cloudinary';
+      cloudinaryResourceType = cloudinaryFile.resource_type;
+    }
+
     const media = await Media.create({
       originalName: req.file.originalname,
-      fileName: req.file.filename,
+      fileName,
       mimeType: req.file.mimetype,
       sizeBytes: req.file.size,
-      filePath: `/uploads/${req.file.filename}`,
+      filePath,
+      storageProvider,
+      cloudinaryPublicId,
+      cloudinaryResourceType,
       altText: altText.trim(),
       caption: caption.trim(),
       uploadedBy: req.user._id,
@@ -57,6 +104,14 @@ const uploadMedia = async (req, res, next) => {
       media
     );
   } catch (error) {
+    if (cloudinaryPublicId) {
+      try {
+        await cloudinary.uploader.destroy(cloudinaryPublicId, { resource_type: cloudinaryResourceType || 'image' });
+      } catch (cleanupError) {
+        console.error('[Cloudinary Cleanup Error]:', cleanupError);
+      }
+    }
+
     // Remove the physical file if database creation fails.
     if (uploadedFilePath && fs.existsSync(uploadedFilePath)) {
       try {
@@ -97,6 +152,17 @@ const deleteMedia = async (req, res, next) => {
     if (!media) {
       return next(
         new ApiError(404, 'Media asset not found.')
+      );
+    }
+
+    if (media.storageProvider === 'cloudinary' && media.cloudinaryPublicId) {
+      await cloudinary.uploader.destroy(media.cloudinaryPublicId, { resource_type: media.cloudinaryResourceType || 'image' });
+      await Media.findByIdAndDelete(media._id);
+
+      return sendResponse(
+        res,
+        200,
+        'Media asset deleted successfully'
       );
     }
 

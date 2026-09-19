@@ -1,10 +1,11 @@
 const Media = require('../models/Media');
 const ApiError = require('../utils/apiError');
 const { sendResponse } = require('../utils/apiResponse');
+const config = require('../config/env');
 const fs = require('fs');
 const path = require('path');
 
-const UPLOAD_DIR = path.resolve(__dirname, '../../uploads');
+const UPLOAD_DIR = config.uploads.uploadDir;
 
 const uploadMedia = async (req, res, next) => {
   let uploadedFilePath = null;

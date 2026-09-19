@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
 const path = require('path');
+const fs = require('fs');
 
 // Load environment variables from .env
 dotenv.config({
@@ -29,6 +30,12 @@ if (
     'Production requires MONGODB_URI and a JWT_SECRET with at least 32 characters.'
   );
 }
+
+const uploadDir = path.resolve(
+  process.env.UPLOAD_DIR || path.resolve(__dirname, '../../uploads')
+);
+
+fs.mkdirSync(uploadDir, { recursive: true });
 
 const config = {
   env: process.env.NODE_ENV || 'development',
@@ -104,10 +111,7 @@ const config = {
           'application/pdf',
         ],
 
-    uploadDir: path.resolve(
-      __dirname,
-      '../../uploads'
-    ),
+    uploadDir,
   },
 
   // Email

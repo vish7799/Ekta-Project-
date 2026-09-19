@@ -179,7 +179,7 @@ app.get('/sitemap.xml', (req, res) => {
 // ----------------------------------------------------
 app.use(
   '/uploads',
-  express.static(path.resolve(__dirname, '../uploads'))
+  express.static(config.uploads.uploadDir)
 );
 
 // ----------------------------------------------------

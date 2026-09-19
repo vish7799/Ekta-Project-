@@ -11,23 +11,23 @@ export const About = () => {
   const milestones = [
     {
       year: '1983',
-      title: 'Company Foundation',
-      description: 'Established in New Delhi under the engineering leadership of Naresh Kumar, providing specialized electrical contracting for industrial workshops and commercial institutions.',
+      title: 'Foundation',
+      description: 'Started in New Delhi with a focus on practical industrial and commercial electrical contracting.',
     },
     {
-      year: '1998',
-      title: 'Electrical Contracting Experience',
-      description: 'The company profile records 38 years of electrical contracting experience across housing, commercial, exhibition, healthcare, showroom, and warehouse works.',
+      year: '1990s+',
+      title: 'Growth',
+      description: 'Expanded across housing, healthcare, retail, warehouse, and exhibition electrical works.',
     },
     {
-      year: '2010',
-      title: 'Expansion into Diverse Works',
-      description: 'The documented work includes hospitals, showrooms, offices, exhibitions, housing societies, warehouses, electrical interiors, and consultancy assignments.',
+      year: '2000s+',
+      title: 'Scale',
+      description: 'Handled larger infrastructure, switchgear, and high-load site execution projects.',
     },
     {
-      year: '2020 – Present',
-      title: 'Recent Project Experience',
-      description: 'Recent profile entries include TVS warehouses, Max Hospital Shalimar Bagh, National Testing House, Industry Buying, JayaShree Polymers, and TDI Infrastructure.',
+      year: 'Today',
+      title: 'Execution',
+      description: 'Active in substations, power distribution, testing, and maintenance across critical facilities.',
     },
   ];
 
@@ -35,7 +35,7 @@ export const About = () => {
     <>
       <SEOHead
         title="About EKTA ELECTRICAL WORKS | 38+ Years of Electrical Contracting"
-        description="Learn about EKTA ELECTRICAL WORKS, a dedicated electrical contractor established in 1983 with 38+ years of experience."
+        description="Learn about EKTA ELECTRICAL WORKS, a Class-A electrical contractor established in 1983."
       />
 
       {/* Page Header */}
@@ -49,7 +49,7 @@ export const About = () => {
               Engineering Heritage & Technical Rigor
             </h1>
             <p className="text-base sm:text-lg text-ekta-secondary max-w-3xl leading-relaxed">
-              EKTA ELECTRICAL WORKS is a dedicated electrical contractor established in 1983. The company profile records 38+ years of experience in electrical installation, interior works, exhibition works, solar panel installation, cable laying, panel work, and related services.
+              Electrical contracting and infrastructure support since 1983, focused on safe execution and continuity.
             </p>
           </ScrollReveal>
         </div>
@@ -64,10 +64,10 @@ export const About = () => {
                 01 // STATUTORY INTEGRITY & CREDENTIALS
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-ekta-text leading-tight">
-                Grounded in Safety Standards, Licensed by Government Authorities
+                Licensed. Safety-led. Execution-focused.
               </h2>
               <p className="text-ekta-secondary leading-relaxed">
-                Operating under strict compliance with the Central Electricity Authority (CEA) Regulations, Indian Electricity Rules, and National Electrical Code of India (NEC 2023). Every project is overseen by licensed electrical supervisors with calibrated diagnostic tools.
+                Compliance, safety, and practical execution across industrial and commercial systems.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -84,8 +84,8 @@ export const About = () => {
                   <div className="font-bold text-sm text-brand-green mt-1">Class-A Licensed (Govt. of NCT Delhi)</div>
                 </div>
                 <div className="p-4 rounded-sm border border-ekta-border bg-ekta-surface">
-                  <div className="text-xs font-mono text-ekta-muted">HEADQUARTERS COORDINATES</div>
-                  <div className="font-mono font-bold text-sm text-ekta-text mt-1">{COMPANY_INFO.coordinates}</div>
+                  <div className="text-xs font-mono text-ekta-muted">HEADQUARTERS</div>
+                  <div className="font-mono font-bold text-sm text-ekta-text mt-1">New Delhi, India</div>
                 </div>
               </div>
             </div>
@@ -95,6 +95,8 @@ export const About = () => {
                 <img
                   src="/logo.png"
                   alt="EKTA ELECTRICAL WORKS Corporate Seal"
+                  loading="lazy"
+                  decoding="async"
                   className="h-20 w-20 rounded-full border border-ekta-border bg-white object-contain p-1 shadow-sm shrink-0"
                 />
                 <div>
@@ -105,25 +107,25 @@ export const About = () => {
                     EKTA ELECTRICAL WORKS (EEW)
                   </h4>
                   <p className="text-xs text-ekta-secondary mt-1 leading-relaxed">
-                    Class-A Certified Indian Electrical Contracting & Engineering Emblem since 1983.
+                    Class-A Indian electrical contracting since 1983.
                   </p>
                 </div>
               </div>
 
               <div className="ekta-card p-8 border-t-4 border-t-brand-green tech-corner-marks">
-                <h3 className="text-lg font-bold text-ekta-text mb-4">Core Operational Principles</h3>
+                <h3 className="text-lg font-bold text-ekta-text mb-4">Key Working Standards</h3>
                 <ul className="space-y-3.5 text-sm text-ekta-secondary">
                   <li className="flex items-start space-x-3">
                     <CheckCircle2 className="w-5 h-5 text-brand-green shrink-0 mt-0.5" />
-                    <span><strong>Zero-Incident Safety Policy:</strong> Mandatory PPE, lockout/tagout (LOTO) protocols, and daily safety briefings.</span>
+                    <span>Safety-first execution with active site controls.</span>
                   </li>
                   <li className="flex items-start space-x-3">
                     <CheckCircle2 className="w-5 h-5 text-brand-green shrink-0 mt-0.5" />
-                    <span><strong>Calibrated Diagnostic Tools:</strong> 5kV motorized megger testing, micro-ohm meters, and FLIR thermal imagers.</span>
+                    <span>Testing and commissioning using calibrated diagnostics.</span>
                   </li>
                   <li className="flex items-start space-x-3">
                     <CheckCircle2 className="w-5 h-5 text-brand-green shrink-0 mt-0.5" />
-                    <span><strong>Statutory Liaisoning:</strong> Complete facilitation of Chief Electrical Inspectorate (CEI) approvals and energization certificates.</span>
+                    <span>End-to-end coordination for compliance and energization.</span>
                   </li>
                 </ul>
               </div>
@@ -138,8 +140,8 @@ export const About = () => {
           <SectionHeading
             number="02"
             eyebrow="ENGINEERING LEADERSHIP"
-            title="Experienced Technical Directors"
-            description="Our project execution is led by seasoned power systems practitioners with hands-on site management and testing experience."
+            title="Hands-On Technical Oversight"
+            description="Direct leadership across site execution, testing, and client coordination."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
@@ -155,7 +157,7 @@ export const About = () => {
                   </div>
                 </div>
                 <p className="text-sm text-ekta-secondary leading-relaxed mb-6">
-                  Direct technical oversight across HT/LT substation commissioning, statutory compliance, client coordination, and high-voltage safety protocols.
+                  Substation execution, compliance checks, and safe project delivery.
                 </p>
                 <div className="pt-4 border-t border-ekta-border flex items-center justify-between">
                   <span className="text-xs font-mono text-ekta-muted">Direct Phone:</span>
@@ -179,8 +181,8 @@ export const About = () => {
           <SectionHeading
             number="03"
             eyebrow="CHRONOLOGY"
-            title="Four Decades of Engineering Milestones"
-            description="From early industrial workshops to multi-state healthcare and telecom infrastructure."
+            title="A Longstanding Electrical Execution Record"
+            description="From workshop works to multi-site infrastructure."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -201,10 +203,10 @@ export const About = () => {
       <section className="py-16 bg-ekta-surface text-center border-b border-ekta-border">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-ekta-text mb-4">
-            Discuss Your Technical Infrastructure Project
+            Discuss Your Electrical Project
           </h2>
           <p className="text-ekta-secondary mb-8 text-base">
-            Speak directly with our senior power engineers to schedule a statutory site survey.
+            Speak with our engineering team for a site review and recommendation.
           </p>
           <Button to="/contact" variant="primary" size="lg" icon={ArrowRight} iconPosition="right">
             Connect With Engineering Team

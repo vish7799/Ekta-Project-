@@ -6,7 +6,7 @@ import { Badge } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { LightboxModal } from '../components/ui/LightboxModal';
-import { COMPANY_INFO } from '../data/companyData';
+import { COMPANY_INFO, VERIFIED_PROJECTS } from '../data/companyData';
 import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 
 export const ProjectDetail = () => {
@@ -19,9 +19,9 @@ export const ProjectDetail = () => {
   useEffect(() => {
     fetchApi(`/projects/slug/${slug}`)
       .then((res) => {
-        setProject(res.data || null);
+        setProject(res.data || VERIFIED_PROJECTS.find((item) => item.slug === slug) || null);
       })
-      .catch(() => setProject(null))
+      .catch(() => setProject(VERIFIED_PROJECTS.find((item) => item.slug === slug) || null))
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -117,7 +117,7 @@ export const ProjectDetail = () => {
               {/* Scope & Execution */}
               <div className="ekta-card min-w-0 overflow-hidden p-8">
                 <h2 className="text-xl font-bold text-ekta-text mb-4">
-                  Scope of Work & Technical Execution
+                  Scope & Technical Execution
                 </h2>
                 <p className="mb-6 break-all text-sm sm:text-base text-ekta-secondary leading-relaxed">
                   {project.description || project.summary}
@@ -136,6 +136,8 @@ export const ProjectDetail = () => {
                     <img
                       src={primaryImage.src}
                       alt={primaryImage.alt}
+                      loading="eager"
+                      decoding="async"
                       className="h-72 w-full rounded object-cover"
                     />
                     <span className="absolute bottom-3 right-3 rounded bg-black/75 px-3 py-1.5 text-xs font-mono text-white">
@@ -147,7 +149,7 @@ export const ProjectDetail = () => {
                 {(project.scope || project.highlights)?.length > 0 && (
                   <div className="mt-6 pt-6 border-t border-ekta-border">
                     <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-ekta-text mb-4">
-                      Detailed Technical Deliverables:
+                      Technical Deliverables:
                     </h3>
                     <ul className="space-y-3">
                       {(project.scope || project.highlights).map((item, idx) => (
@@ -165,7 +167,7 @@ export const ProjectDetail = () => {
               {project.metrics && project.metrics.length > 0 && (
                 <div className="ekta-card p-8">
                   <h3 className="text-lg font-bold text-ekta-text mb-4 font-mono">
-                    VERIFIED TECHNICAL METRICS
+                    TECHNICAL METRICS
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     {project.metrics.map((m, idx) => (
@@ -204,7 +206,7 @@ export const ProjectDetail = () => {
 
                   <div>
                     <div className="text-ekta-muted">CONTRACTOR</div>
-                    <div className="font-semibold text-ekta-text mt-0.5">EKTA ELECTRICAL WORKS (Class-A)</div>
+                    <div className="font-semibold text-ekta-text mt-0.5">EKTA ELECTRICAL WORKS</div>
                   </div>
                 </div>
 

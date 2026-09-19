@@ -42,7 +42,7 @@ export const LightboxModal = ({
       {/* Top Header bar */}
       <div className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between text-white z-10">
         <div className="flex items-center space-x-3 font-mono text-xs text-stone-300">
-          <span className="text-emerald-400">ARCHIVE INSPECTION</span>
+          <span className="text-red-400">ARCHIVE INSPECTION</span>
           <span>//</span>
           <span>
             IMAGE {currentIndex + 1} OF {images.length}

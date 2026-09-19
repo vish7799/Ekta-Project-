@@ -15,10 +15,10 @@ export const Services = () => {
   useEffect(() => {
     fetchApi('/services')
       .then((res) => {
-        setServices(res.data || []);
+        setServices(res.data?.length ? res.data : CORE_SERVICES);
       })
       .catch(() => {
-        // Keep verified company data fallback
+        setServices(CORE_SERVICES);
       });
   }, []);
 
@@ -26,7 +26,7 @@ export const Services = () => {
     <>
       <SEOHead
         title="Industrial Electrical Engineering Services | EKTA ELECTRICAL WORKS"
-        description="Comprehensive electrical contracting: LT Panels, HT/LT Cable Laying up to 33kV, DG/AMF Systems, Rooftop Solar, and 24/7 Breakdown AMC."
+        description="LT panels, HT/LT cable laying up to 33kV, DG/AMF systems, solar, and 24/7 breakdown AMC."
       />
 
       {/* Page Header */}
@@ -40,7 +40,7 @@ export const Services = () => {
               Industrial Electrical Engineering Services
             </h1>
             <p className="text-base sm:text-lg text-ekta-secondary max-w-3xl leading-relaxed">
-              Complete turnkey design, procurement, erection, testing, and commissioning across high-voltage and low-voltage power distribution systems, executed under Class-A statutory licensing.
+              Turnkey design, erection, testing, and commissioning for HT/LT power systems under Class-A licensing.
             </p>
           </ScrollReveal>
         </div>
@@ -53,7 +53,7 @@ export const Services = () => {
             number="01"
             eyebrow="TECHNICAL DISCIPLINES"
             title="Engineered to Statutory Standards (IS & IEC)"
-            description="Every service encompasses design calculations, statutory documentation, physical erection, and calibrated instrument verification."
+            description="Design, statutory documentation, erection, and calibrated verification."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -62,7 +62,7 @@ export const Services = () => {
                 <Card className="min-w-0 h-full flex flex-col justify-between overflow-hidden p-8 group hover:border-brand-green/50">
                   <div>
                     {(service.featuredImage?.filePath || service.gallery?.[0]) && (
-                      <img src={resolveMediaUrl(service.featuredImage?.filePath || service.gallery[0].filePath || service.gallery[0])} alt={service.featuredImage?.altText || service.title} className="mb-6 h-40 w-full rounded object-cover" />
+                      <img src={resolveMediaUrl(service.featuredImage?.filePath || service.gallery[0].filePath || service.gallery[0])} alt={service.featuredImage?.altText || service.title} loading="lazy" decoding="async" className="mb-6 h-40 w-full rounded object-cover" />
                     )}
                     <h2 className="break-all text-xl font-bold text-ekta-text mb-3 group-hover:text-brand-green transition-colors">
                       {service.title}
@@ -81,7 +81,7 @@ export const Services = () => {
                       <span>Full Specifications</span>
                       <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover/link:translate-x-1" />
                     </Link>
-                    <span className="font-mono text-[10px] text-ekta-muted">Class-A Verified</span>
+                    <span className="font-mono text-[10px] text-ekta-muted">Service record</span>
                   </div>
                 </Card>
               </ScrollReveal>
@@ -94,10 +94,10 @@ export const Services = () => {
       <section className="py-16 bg-ekta-elevated text-center border-b border-ekta-border">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-ekta-text mb-4">
-            Need a Custom Electrical System Engineering Proposal?
+            Need a Custom Electrical Proposal?
           </h2>
           <p className="text-ekta-secondary mb-8 text-base">
-            Submit your single-line diagram (SLD), estimated load calculations, or tender document for rapid technical review.
+            Submit your SLD, load calculations, or tender document for technical review.
           </p>
           <Button to="/contact" variant="primary" size="lg" icon={ArrowRight} iconPosition="right">
             Submit Engineering Tender / Enquiry

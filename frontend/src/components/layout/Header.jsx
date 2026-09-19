@@ -1,29 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, PhoneCall, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ThemeSwitcher } from '../ui/ThemeSwitcher';
-import { COMPANY_INFO } from '../../data/companyData';
-import { useSiteSettings, toTelHref } from '../../context/SiteSettingsContext';
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const settings = useSiteSettings();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 12);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile drawer when route changes
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -31,8 +35,6 @@ export const Header = () => {
     { name: 'Services', path: '/services' },
     { name: 'Projects', path: '/projects' },
     { name: 'Industries', path: '/industries' },
-    { name: 'Clients', path: '/clients' },
-    { name: 'Testimonials', path: '/testimonials' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -40,168 +42,101 @@ export const Header = () => {
     <header
       className={`sticky top-0 z-40 w-full transition-colors duration-200 ${
         isScrolled
-          ? 'bg-ekta-surface/95 backdrop-blur-md border-b border-ekta-border shadow-sm'
-          : 'bg-ekta-surface/90 backdrop-blur-sm border-b border-ekta-border'
+          ? 'border-b border-ekta-border bg-ekta-surface/95 backdrop-blur-md shadow-sm'
+          : 'border-b border-ekta-border bg-ekta-surface/90 backdrop-blur-sm'
       }`}
     >
-      {/* Engineering Corporate Telemetry Strip */}
-      <div className="bg-ekta-elevated border-b border-ekta-border text-[11px] font-mono py-1 px-4 hidden md:block">
-        <div className="max-w-7xl mx-auto flex items-center justify-between text-ekta-secondary">
-          <div className="flex items-center space-x-4">
-            <span className="inline-flex items-center text-brand-green font-semibold">
-              <ShieldCheck className="w-3.5 h-3.5 mr-1 text-brand-green" />
-              Class-A Licensed Contractor (Est. 1983)
-            </span>
-            <span className="text-ekta-muted">|</span>
-            <span>
-              GSTIN: <strong className="text-ekta-text">{COMPANY_INFO.gstin}</strong>
-            </span>
-            <span className="text-ekta-muted">|</span>
-            <span className="text-ekta-muted">COORD: {COMPANY_INFO.coordinates}</span>
-          </div>
+      <div className="mx-auto max-w-7xl min-w-0 overflow-x-clip px-3 sm:px-5 lg:px-8">
+        <div className="flex h-16 items-center justify-between gap-2 sm:h-20 sm:gap-3">
+          <Link to="/" className="group flex min-w-0 max-w-[48vw] shrink items-center gap-2.5 sm:max-w-none sm:gap-3" aria-label="EKTA ELECTRICAL WORKS home">
+            <img
+              src="/logo.png"
+              alt="EKTA ELECTRICAL WORKS logo"
+              className="h-10 w-10 shrink-0 rounded-full border border-ekta-border bg-white object-contain shadow-sm transition-transform duration-200 group-hover:scale-105 sm:h-11 sm:w-11"
+            />
+            <div className="min-w-0">
+              <div className="truncate text-sm font-black tracking-tight text-ekta-text sm:text-base lg:text-lg">
+                EKTA ELECTRICAL WORKS
+              </div>
+            </div>
+          </Link>
 
-          <div className="flex items-center space-x-5">
-            <a
-              href={toTelHref(settings.primaryPhone)}
-              className="hover:text-brand-green flex items-center transition-colors"
+          <nav className="hidden min-w-0 flex-1 items-center justify-center lg:flex" aria-label="Main Navigation">
+            <div className="flex items-center gap-1">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.path}
+                  to={link.path}
+                  className={({ isActive }) =>
+                      `relative rounded-sm px-2.5 py-2 text-sm font-medium transition-colors ${
+                      isActive
+                        ? 'text-red-600 dark:text-red-400'
+                        : 'text-ekta-secondary hover:text-ekta-text'
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <span>{link.name}</span>
+                      {isActive && (
+                        <span className="absolute inset-x-2 -bottom-0.5 h-0.5 rounded-full bg-red-600 dark:bg-red-400" />
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              ))}
+            </div>
+          </nav>
+
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <ThemeSwitcher />
+            <Button to="/contact" variant="primary" size="sm" icon={ArrowRight} iconPosition="right" className="hidden whitespace-nowrap sm:inline-flex">
+              Get Quote
+            </Button>
+            <button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-ekta-border bg-ekta-elevated text-ekta-text transition-colors hover:bg-ekta-surface focus:outline-none focus:ring-1 focus:ring-red-500 lg:hidden"
+              aria-label="Toggle mobile menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
             >
-              <PhoneCall className="w-3 h-3 mr-1.5 text-brand-green" />
-              Direct Line: {settings.primaryPhone}
-            </a>
-            <span className="text-ekta-muted">|</span>
-            <a
-              href={`https://wa.me/${String(settings.primaryPhone || '').replace(/\D/g, '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brand-teal hover:underline font-medium"
-            >
-              24/7 Support
-            </a>
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Main Navbar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Brand Identity / Logo */}
-          <Link to="/" className="group flex items-center gap-3 min-w-0">
-            <img
-              src="/logo.png"
-              alt="EKTA ELECTRICAL WORKS logo"
-              className="h-10 w-10 shrink-0 rounded-full border border-ekta-border bg-white object-contain shadow-sm transition-transform duration-200 group-hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
-            />
-            <div className="hidden min-w-0 sm:flex sm:flex-col">
-              <div className="flex items-center gap-1.5">
-                <span className="font-display text-base font-extrabold tracking-tight text-ekta-text leading-none sm:text-lg">
-                  {settings.companyName}
-                </span>
-              </div>
-              <span className="mt-1 text-[10px] font-mono uppercase tracking-widest text-ekta-muted">
-                Industrial Power Engineering
-              </span>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1" aria-label="Main Navigation">
+      {isOpen && (
+        <div id="mobile-navigation" className="border-t border-ekta-border bg-ekta-surface lg:hidden">
+          <div className="mx-auto max-w-7xl space-y-2 px-3 py-4 sm:px-5">
             {navLinks.map((link) => (
               <NavLink
                 key={link.path}
                 to={link.path}
                 className={({ isActive }) =>
-                  `px-3 py-2 text-sm font-medium transition-all duration-150 relative rounded-sm ${
+                  `flex items-center justify-between rounded-sm px-3 py-2.5 text-base font-medium transition-colors ${
                     isActive
-                      ? 'text-brand-green font-semibold'
-                      : 'text-ekta-secondary hover:text-ekta-text hover:bg-ekta-elevated/60'
+                      ? 'bg-red-500/10 text-red-600 dark:text-red-400'
+                      : 'text-ekta-text hover:bg-ekta-elevated'
                   }`
                 }
               >
-                {({ isActive }) => (
-                  <>
-                    <span>{link.name}</span>
-                    {isActive && (
-                      <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-brand-green rounded-full" />
-                    )}
-                  </>
-                )}
+                <span>{link.name}</span>
+                <span className="text-xs text-ekta-muted">→</span>
               </NavLink>
             ))}
-          </nav>
 
-          {/* Actions & Theme Switcher */}
-          <div className="hidden lg:flex items-center space-x-3">
-            <ThemeSwitcher />
             <Button
               to="/contact"
               variant="primary"
               size="sm"
               icon={ArrowRight}
               iconPosition="right"
+              className="mt-2 w-full"
             >
-              GET A QUOTE
+              Get Quote
             </Button>
-          </div>
-
-          {/* Mobile Actions & Toggle */}
-          <div className="flex items-center space-x-2 lg:hidden">
-            <ThemeSwitcher />
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-ekta-secondary hover:text-ekta-text hover:bg-ekta-elevated rounded-sm focus:outline-none focus:ring-1 focus:ring-brand-green"
-              aria-label="Toggle mobile menu"
-              aria-expanded={isOpen}
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Drawer Navigation */}
-      {isOpen && (
-        <div className="lg:hidden bg-ekta-surface border-b border-ekta-border shadow-2xl animate-fade-in">
-          <div className="px-4 pt-3 pb-6 space-y-1">
-            <div className="px-3 py-2 text-[10px] font-mono uppercase tracking-widest text-ekta-muted border-b border-ekta-border mb-2">
-              Engineering Navigation
-            </div>
-
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.path}
-                to={link.path}
-                className={({ isActive }) =>
-                  `flex items-center justify-between px-3 py-2.5 text-base font-medium rounded-sm transition-colors ${
-                    isActive
-                      ? 'bg-brand-green/10 text-brand-green font-semibold'
-                      : 'text-ekta-text hover:bg-ekta-elevated'
-                  }`
-                }
-              >
-                <span>{link.name}</span>
-                <span className="font-mono text-xs text-ekta-muted">→</span>
-              </NavLink>
-            ))}
-
-            <div className="pt-4 border-t border-ekta-border space-y-2.5">
-              <Button
-                to="/contact"
-                variant="primary"
-                className="w-full"
-                icon={ArrowRight}
-                iconPosition="right"
-              >
-                REQUEST TECHNICAL QUOTE
-              </Button>
-
-              <a
-                href={toTelHref(settings.primaryPhone)}
-                className="w-full flex items-center justify-center py-2.5 px-4 text-xs font-mono font-medium rounded-sm border border-ekta-border bg-ekta-elevated text-ekta-text hover:bg-ekta-surface transition-colors"
-              >
-                <PhoneCall className="w-3.5 h-3.5 mr-2 text-brand-green" />
-                CALL DESK: {settings.primaryPhone}
-              </a>
-            </div>
           </div>
         </div>
       )}

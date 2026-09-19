@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Maximize2, ShieldCheck, MapPin, Building2, Zap } from 'lucide-react';
+import { ArrowRight, Activity, MapPin, ShieldCheck, Zap } from 'lucide-react';
 import { SEOHead } from '../components/ui/SEOHead';
 import { Button } from '../components/ui/Button';
 import { Card, Badge } from '../components/ui/Card';
@@ -9,6 +9,38 @@ import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { LightboxModal } from '../components/ui/LightboxModal';
 import { VERIFIED_PROJECTS } from '../data/companyData';
 import { fetchApi, resolveMediaUrl } from '../api/apiClient';
+
+const buildProjectVisual = (project, fallbackLabel = 'Project') => {
+  const key = (project.title || fallbackLabel).replace(/[^a-zA-Z0-9]/g, '').slice(0, 18) || 'project';
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480">
+      <defs>
+        <linearGradient id="bg-${key}" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stop-color="#0f172a"/>
+          <stop offset="100%" stop-color="#111827"/>
+        </linearGradient>
+        <linearGradient id="line-${key}" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0%" stop-color="#ef4444"/>
+          <stop offset="100%" stop-color="#60a5fa"/>
+        </linearGradient>
+      </defs>
+      <rect width="800" height="480" fill="url(#bg-${key})"/>
+      <g stroke="url(#line-${key})" stroke-width="4" fill="none">
+        <path d="M90 330H270V220H420V300H620" opacity="0.8"/>
+        <path d="M150 170L150 90M150 90H300M300 90V170M530 180V115H675M675 115V180" opacity="0.8"/>
+        <circle cx="150" cy="170" r="18"/>
+        <circle cx="420" cy="220" r="18"/>
+        <circle cx="620" cy="300" r="18"/>
+        <circle cx="675" cy="180" r="18"/>
+      </g>
+      <g fill="#e2e8f0" font-family="Arial, sans-serif" font-size="26" font-weight="700">
+        <text x="90" y="390">${project.category || 'Electrical'}</text>
+        <text x="90" y="430">${project.voltage || '415V / 11kV'}</text>
+      </g>
+    </svg>
+  `;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+};
 
 export const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -22,6 +54,14 @@ export const Projects = () => {
       })
       .catch(() => {});
   }, []);
+
+  const sourceProjects = projects.length ? projects : VERIFIED_PROJECTS;
+  const deliverySignals = [
+    { label: 'Design', value: 'Load + protection studies', icon: Zap },
+    { label: 'Install', value: 'HT/LT field execution', icon: Activity },
+    { label: 'Verify', value: 'Testing + compliance', icon: ShieldCheck },
+    { label: 'Commission', value: 'Handover + support', icon: ArrowRight },
+  ];
 
   return (
     <>
@@ -50,19 +90,40 @@ export const Projects = () => {
       {/* Projects List */}
       <section className="py-20 border-b border-ekta-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {deliverySignals.map(({ label, value, icon: Icon }, index) => (
+              <div key={label} className="flex items-center gap-3 border border-ekta-border bg-ekta-elevated px-4 py-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-red-500/10 text-red-600 dark:text-red-400">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="min-w-0">
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-ekta-muted">0{index + 1} // {label}</div>
+                  <div className="truncate text-xs font-semibold text-ekta-text">{value}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, idx) => (
+            {sourceProjects.map((project, idx) => {
+              const imageSrc = project.featuredImage?.filePath || project.gallery?.[0]?.filePath || project.gallery?.[0] || buildProjectVisual(project, project.title);
+              return (
               <ScrollReveal key={project.id || idx} animation="fade-up" delay={idx * 70}>
                 <Card className="h-full flex flex-col justify-between p-8 group">
                   <div>
-                    {(project.featuredImage?.filePath || project.gallery?.[0]) && (
-                      <img
-                        src={resolveMediaUrl(project.featuredImage?.filePath || project.gallery[0].filePath || project.gallery[0])}
-                        alt={project.featuredImage?.altText || project.title}
-                        className="mb-6 h-40 w-full rounded object-cover"
-                      />
-                    )}
+                    <img
+                      src={typeof imageSrc === 'string' && imageSrc.startsWith('data:image') ? imageSrc : resolveMediaUrl(imageSrc)}
+                      alt={project.featuredImage?.altText || project.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="mb-6 h-40 w-full rounded object-cover"
+                      onError={(event) => {
+                        if (event.currentTarget.dataset.fallbackApplied) return;
+                        event.currentTarget.dataset.fallbackApplied = 'true';
+                        event.currentTarget.src = buildProjectVisual(project, project.title);
+                      }}
+                    />
                     <div className="flex items-center justify-between mb-4">
                       <Badge variant="teal">{project.category || project.industry?.name || 'Industrial Project'}</Badge>
                       <span className="font-mono text-xs font-bold text-brand-orange">
@@ -113,7 +174,8 @@ export const Projects = () => {
                   </div>
                 </Card>
               </ScrollReveal>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

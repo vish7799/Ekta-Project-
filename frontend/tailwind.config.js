@@ -6,11 +6,11 @@ export default {
     extend: {
       colors: {
         brand: {
-          green: '#0E7A4A',
-          'dark-green': '#075E38',
-          teal: '#14B8A6',
-          orange: '#F59E0B',
-          'orange-hover': '#D97706',
+          green: '#D92D2D',
+          'dark-green': '#B71C1C',
+          teal: '#1E3A8A',
+          orange: '#0F172A',
+          'orange-hover': '#1D4ED8',
         },
         ekta: {
           bg: 'var(--bg-primary)',
@@ -38,9 +38,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Manrope', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Menlo', 'monospace'],
+        sans: ['Inter', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        display: ['Manrope', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        mono: ['JetBrains Mono', 'Cascadia Mono', 'Consolas', 'monospace'],
       },
       letterSpacing: {
         tightest: '-0.04em',
@@ -50,7 +50,7 @@ export default {
         'subtle-light': '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03)',
         'subtle-dark': '0 4px 20px -2px rgba(0, 0, 0, 0.5)',
         'card-lift': '0 12px 28px -6px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.08)',
-        'card-lift-dark': '0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 1px rgba(14, 122, 74, 0.3)',
+        'card-lift-dark': '0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 1px rgba(217, 45, 45, 0.3)',
       },
       animation: {
         'pulse-subtle': 'pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

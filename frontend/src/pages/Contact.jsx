@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, AlertCircle, ShieldCheck, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, AlertCircle, ShieldCheck, ArrowRight, ExternalLink } from 'lucide-react';
 import { SEOHead } from '../components/ui/SEOHead';
 import { Button } from '../components/ui/Button';
 import { Card, Badge } from '../components/ui/Card';
@@ -70,7 +70,7 @@ export const Contact = () => {
     <>
       <SEOHead
         title="Contact Engineering Team & Tender Enquiries | EKTA ELECTRICAL WORKS"
-        description="Contact EKTA ELECTRICAL WORKS senior power engineers for 33kV substation proposals, site surveys, and industrial electrical contracting tenders."
+        description="Contact our power engineers for 33kV proposals, site surveys, and electrical tenders."
       />
 
       {/* Header */}
@@ -84,7 +84,7 @@ export const Contact = () => {
               Contact Power Engineering Desk
             </h1>
             <p className="text-base sm:text-lg text-ekta-secondary max-w-3xl leading-relaxed">
-              Submit your single-line diagram (SLD), estimated peak load, or tender scope. Our licensed Class-A engineering team will review your specifications and schedule a statutory site survey.
+              Submit your SLD, peak load, or tender scope for engineering review and site survey scheduling.
             </p>
           </ScrollReveal>
         </div>
@@ -100,6 +100,8 @@ export const Contact = () => {
                 <img
                   src="/logo.png"
                   alt="EKTA ELECTRICAL WORKS Logo"
+                  loading="lazy"
+                  decoding="async"
                   className="h-16 w-16 rounded-full border border-ekta-border bg-white object-contain p-1 shadow-sm shrink-0"
                 />
                 <div>
@@ -110,7 +112,7 @@ export const Contact = () => {
                     Class-A Licensed Contractor (Est. 1983)
                   </p>
                   <p className="text-xs text-ekta-muted mt-1">
-                    Direct Liaisoning & Project Engineering Desk
+                    Direct Project Engineering Desk
                   </p>
                 </div>
               </div>
@@ -130,7 +132,7 @@ export const Contact = () => {
                         GSTIN: {COMPANY_INFO.gstin}
                       </div>
                       <div className="text-ekta-muted">
-                        Coordinates: {COMPANY_INFO.coordinates}
+                        New Delhi, India
                       </div>
                     </div>
                   </div>
@@ -142,7 +144,7 @@ export const Contact = () => {
                   <Phone className="w-5 h-5 text-brand-green shrink-0 mt-1" />
                   <div className="w-full">
                     <h3 className="text-sm font-bold text-ekta-text uppercase font-mono tracking-wider mb-2">
-                      Senior Engineers & Executives
+                      Engineering Desk
                     </h3>
                     <div className="space-y-2 text-sm font-mono">
                       <div>
@@ -173,7 +175,7 @@ export const Contact = () => {
                   <Mail className="w-5 h-5 text-brand-green shrink-0 mt-1" />
                   <div>
                     <h3 className="text-sm font-bold text-ekta-text uppercase font-mono tracking-wider mb-2">
-                      Official Engineering Email Lines
+                      Engineering Email
                     </h3>
                     <div className="space-y-1 text-xs font-mono">
                       <a
@@ -198,13 +200,13 @@ export const Contact = () => {
                   <Clock className="w-5 h-5 text-brand-orange shrink-0 mt-0.5" />
                   <div>
                     <h3 className="text-xs font-bold text-ekta-text uppercase font-mono tracking-wider mb-1">
-                      Desk Operations & Emergency Callout
+                      Desk Hours & Emergency Callout
                     </h3>
                     <p className="text-xs text-ekta-secondary leading-relaxed">
                       {settings.businessHours}
                     </p>
                     <div className="mt-2 text-[11px] font-mono text-brand-orange">
-                      24/7 Breakdown Rapid Dispatch for Hospitals & Data Centers
+                      24/7 breakdown dispatch for critical facilities
                     </div>
                   </div>
                 </div>
@@ -215,10 +217,10 @@ export const Contact = () => {
             <div className="lg:col-span-7">
               <div className="ekta-card p-8 sm:p-10 border-t-4 border-t-brand-green">
                 <h2 className="text-2xl font-bold text-ekta-text mb-2">
-                  Technical Survey & Project Quotation
+                  Technical Survey & Quotation
                 </h2>
                 <p className="text-xs sm:text-sm text-ekta-secondary mb-6 leading-relaxed">
-                  Provide your project parameters to receive an engineering proposal. Required fields are marked with an asterisk (*).
+                  Share your project parameters for an engineering proposal. Required fields are marked *.
                 </p>
 
                 {successMsg && (
@@ -413,9 +415,16 @@ export const Contact = () => {
                   Headquarters & Registered Contractor Office
                 </h3>
               </div>
-              <span className="font-mono text-xs text-ekta-muted hidden sm:inline">
-                Rohini Sector-22, New Delhi 110086
-              </span>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Rohini+Sector+22+Delhi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-1.5 text-xs font-mono text-brand-green hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+              >
+                New Delhi, India
+                <ExternalLink className="h-3.5 w-3.5" />
+                <span className="sr-only">Open location in Google Maps</span>
+              </a>
             </div>
 
             <div className="w-full h-96 rounded-sm overflow-hidden border border-ekta-border shadow-sm">

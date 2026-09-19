@@ -20,10 +20,10 @@ export const Layout = ({ children }) => {
   return (
     <ThemeProvider>
       <SiteSettingsProvider>
-        <div className="min-h-screen flex flex-col bg-ekta-bg text-ekta-text transition-colors duration-200 relative selection:bg-brand-green/20 selection:text-brand-green">
+        <div className="min-h-screen min-w-0 flex flex-col overflow-x-clip bg-ekta-bg text-ekta-text transition-colors duration-200 relative selection:bg-brand-green/20 selection:text-brand-green">
           <ScrollRestoration />
           <Header />
-          <main className="flex-grow">{children}</main>
+          <main className="min-w-0 flex-grow">{children}</main>
           <Footer />
           <WhatsAppButton />
           <ScrollToTop />

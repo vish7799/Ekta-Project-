@@ -25,9 +25,9 @@ export const ThemeSwitcher = ({ className = '' }) => {
   ];
 
   const currentIcon = resolvedTheme === 'dark' ? (
-    <Moon className="w-4 h-4 text-emerald-400" />
+    <Moon className="w-4 h-4 text-red-400" />
   ) : (
-    <Sun className="w-4 h-4 text-amber-500" />
+    <Sun className="w-4 h-4 text-blue-600" />
   );
 
   return (
@@ -38,7 +38,7 @@ export const ThemeSwitcher = ({ className = '' }) => {
         aria-label={`Switch display theme. Current: ${theme} mode`}
         aria-haspopup="true"
         aria-expanded={isOpen}
-        className="flex items-center gap-2 px-2.5 py-1.5 rounded-sm border border-ekta-border bg-ekta-surface hover:bg-ekta-elevated text-ekta-text text-xs font-mono font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-brand-green"
+        className="flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-sm border border-ekta-border bg-ekta-surface px-2.5 py-1.5 text-xs font-mono font-medium text-ekta-text transition-colors hover:bg-ekta-elevated focus:outline-none focus:ring-1 focus:ring-red-500 sm:min-w-0"
       >
         <span className="flex items-center justify-center w-4 h-4">{currentIcon}</span>
         <span className="hidden sm:inline capitalize">{theme}</span>
@@ -65,7 +65,7 @@ export const ThemeSwitcher = ({ className = '' }) => {
                 }}
                 className={`w-full flex items-center justify-between px-3 py-2 text-xs text-left transition-colors ${
                   isSelected
-                    ? 'bg-brand-green/10 text-brand-green font-semibold'
+                    ? 'bg-red-500/10 text-red-600 dark:text-red-400 font-semibold'
                     : 'text-ekta-text hover:bg-ekta-elevated'
                 }`}
               >
@@ -76,7 +76,7 @@ export const ThemeSwitcher = ({ className = '' }) => {
                     <div className="text-[10px] text-ekta-muted mt-0.5">{desc}</div>
                   </div>
                 </div>
-                {isSelected && <Check className="w-3.5 h-3.5 text-brand-green shrink-0" />}
+                {isSelected && <Check className="w-3.5 h-3.5 text-red-600 dark:text-red-400 shrink-0" />}
               </button>
             );
           })}

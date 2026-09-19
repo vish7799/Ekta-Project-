@@ -7,22 +7,31 @@ import { Card, Badge } from '../components/ui/Card';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { INDUSTRIES_SERVED } from '../data/companyData';
-import { fetchApi } from '../api/apiClient';
+import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 
-const normalizeIndustry = (industry, index) => ({ ...industry, id: industry.slug || industry.id, number: industry.number || String(index + 1).padStart(2, '0'), title: industry.title || industry.name, description: industry.description || industry.shortDescription, specs: industry.specs || (industry.solutionsProvided || []).join(', ') });
+const normalizeIndustry = (industry, index) => ({
+  ...industry,
+  id: industry.slug || industry.id,
+  number: industry.number || String(index + 1).padStart(2, '0'),
+  title: industry.title || industry.name,
+  description: industry.description || industry.shortDescription || industry.overview,
+  specs: industry.specs || (industry.solutionsProvided || []).join(', '),
+});
 
 export const Industries = () => {
   const [industries, setIndustries] = useState([]);
 
   useEffect(() => {
-    fetchApi('/industries').then((res) => setIndustries((res.data || []).map(normalizeIndustry))).catch(() => {});
+    fetchApi('/industries')
+      .then((res) => setIndustries((res.data?.length ? res.data : INDUSTRIES_SERVED).map(normalizeIndustry)))
+      .catch(() => setIndustries(INDUSTRIES_SERVED.map(normalizeIndustry)));
   }, []);
 
   return (
     <>
       <SEOHead
         title="Industries Served & Sector Engineering | EKTA ELECTRICAL WORKS"
-        description="Specialized high-voltage electrical engineering for Healthcare, Telecom Data Centers, Industrial Warehousing, Commercial Towers, and Banking Networks."
+        description="High-voltage electrical engineering for healthcare, data centers, warehousing, commercial, and banking facilities."
       />
 
       {/* Header */}
@@ -36,7 +45,7 @@ export const Industries = () => {
               Industries & Mission-Critical Sectors
             </h1>
             <p className="text-base sm:text-lg text-ekta-secondary max-w-3xl leading-relaxed">
-              Every facility type carries unique electrical load profiles, statutory mandates, and redundancy requirements. We engineer power networks tailored to specific operational demands.
+              Power networks tailored to each facility’s load, code, redundancy, and uptime requirements.
             </p>
           </ScrollReveal>
         </div>
@@ -61,12 +70,18 @@ export const Industries = () => {
                   {/* Technical Spec Box (5 cols) */}
                   <div className={`lg:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
                     <div className="p-6 rounded-sm bg-ekta-elevated border border-ekta-border font-mono text-xs space-y-4">
+                      {ind.featuredImage?.filePath && (
+                        <img
+                          src={resolveMediaUrl(ind.featuredImage.filePath)}
+                          alt={ind.featuredImage.altText || ind.title}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-36 w-full rounded object-cover"
+                        />
+                      )}
                       <div className="flex items-center justify-between border-b border-ekta-border pb-3">
                         <span className="text-brand-green font-bold text-sm">
                           SECTOR PROFILE // {ind.number}
-                        </span>
-                        <span className="px-2 py-0.5 rounded bg-brand-green/10 text-brand-green text-[10px] font-semibold">
-                          CLASS-A LICENSED
                         </span>
                       </div>
 
@@ -85,7 +100,7 @@ export const Industries = () => {
                       </div>
 
                       <div className="pt-2 border-t border-ekta-border text-[10px] text-ekta-muted">
-                        Statutory compliance verified with State Discoms & CEI.
+                        State Discom and CEI compliance requirements.
                       </div>
                     </div>
                   </div>
@@ -132,10 +147,10 @@ export const Industries = () => {
       <section className="py-16 bg-ekta-elevated text-center border-b border-ekta-border">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-ekta-text mb-4">
-            Operating in a Specialized Industrial Sector?
+            Operating in a Specialized Sector?
           </h2>
           <p className="text-ekta-secondary mb-8 text-base">
-            Our engineering team assesses fault current ratings, harmonic distortions, and statutory clearances for your specific plant or facility.
+            We assess fault levels, harmonics, and statutory clearances for your facility.
           </p>
           <Button to="/contact" variant="primary" size="lg" icon={ArrowRight} iconPosition="right">
             Request Specialized Sector Consultation

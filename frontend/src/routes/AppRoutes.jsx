@@ -9,7 +9,6 @@ import { ProjectDetail } from '../pages/ProjectDetail';
 import { Industries } from '../pages/Industries';
 import { IndustryDetail } from '../pages/IndustryDetail';
 import { Clients } from '../pages/Clients';
-import { Testimonials } from '../pages/Testimonials';
 import { Contact } from '../pages/Contact';
 import { NotFound } from '../pages/NotFound';
 
@@ -25,7 +24,6 @@ export const AppRoutes = () => {
       <Route path="/industries" element={<Industries />} />
       <Route path="/industries/:slug" element={<IndustryDetail />} />
       <Route path="/clients" element={<Clients />} />
-      <Route path="/testimonials" element={<Testimonials />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

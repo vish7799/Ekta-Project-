@@ -12,7 +12,11 @@ import {
   Sparkles,
   Building2,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Gauge,
+  CircuitBoard,
+  Cable,
+  HardDrive,
 } from 'lucide-react';
 import { SEOHead } from '../components/ui/SEOHead';
 import { Button } from '../components/ui/Button';
@@ -29,7 +33,7 @@ import {
   INDUSTRIES_SERVED,
   VERIFIED_TESTIMONIALS,
 } from '../data/companyData';
-import { fetchApi } from '../api/apiClient';
+import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 import { useSiteSettings, toTelHref } from '../context/SiteSettingsContext';
 
 export const Home = () => {
@@ -37,6 +41,7 @@ export const Home = () => {
   const [cmsServices, setCmsServices] = useState([]);
   const [cmsProjects, setCmsProjects] = useState([]);
   const [cmsClients, setCmsClients] = useState([]);
+  const [cmsTestimonials, setCmsTestimonials] = useState([]);
 
   // Fetch optional CMS data, falling back smoothly to verified company records
   useEffect(() => {
@@ -57,20 +62,41 @@ export const Home = () => {
         setCmsClients(res.data || []);
       })
       .catch(() => {});
+
+    fetchApi('/testimonials')
+      .then((res) => {
+        setCmsTestimonials(res.data || []);
+      })
+      .catch(() => {});
   }, []);
 
-  const displayServices = cmsServices;
-  const displayProjects = cmsProjects;
-  const displayClients = cmsClients;
+  const displayServices = cmsServices.length ? cmsServices : CORE_SERVICES;
+  const displayProjects = cmsProjects.length ? cmsProjects : VERIFIED_PROJECTS;
+  const displayClients = cmsClients.length ? cmsClients : VERIFIED_CLIENTS;
+  const displayTestimonials = cmsTestimonials.length
+    ? cmsTestimonials.map((testimonial) => ({
+        id: testimonial._id,
+        quote: testimonial.statement,
+        author: testimonial.designation || testimonial.clientName,
+        organization: testimonial.companyName,
+        project: testimonial.projectRef?.title || 'Engineering project reference',
+      }))
+    : VERIFIED_TESTIMONIALS;
 
   const featuredService = displayServices[0];
   const supportingServices = displayServices.slice(1, 5);
+  const engineeringFlow = [
+    { step: '01', title: 'Design', icon: CircuitBoard, text: 'Load studies, one-line design, and switchgear sizing.' },
+    { step: '02', title: 'Install', icon: Cable, text: 'Cable routing, busbars, panels, and field execution.' },
+    { step: '03', title: 'Test', icon: Gauge, text: 'Megger checks, protection testing, and QA sign-off.' },
+    { step: '04', title: 'Operate', icon: HardDrive, text: 'Commissioning, uptime support, and emergency response.' },
+  ];
 
   return (
     <>
       <SEOHead
         title="EKTA ELECTRICAL WORKS | Turnkey Industrial Electrical Infrastructure & Power Engineering"
-        description="Dedicated electrical contractor established in 1983 with 38+ years of experience in electrical installation, panel work, cable laying, solar panels, interiors, and exhibition works."
+        description="Class-A electrical contractor established in 1983, delivering industrial power, distribution, testing, and maintenance."
       />
 
       {/* 01 // HERO SECTION */}
@@ -87,13 +113,13 @@ export const Home = () => {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-green" />
               </span>
               <span className="text-brand-green font-bold uppercase tracking-wider">
-                Class-A Licensed Contractor
+                Electrical Contractor
               </span>
               <span className="text-ekta-muted">•</span>
               <span>EST. 1983</span>
               <span className="text-ekta-muted hidden sm:inline">•</span>
               <span className="text-ekta-muted hidden sm:inline">
-                COORD: {COMPANY_INFO.coordinates}
+                LOCATION: New Delhi, India
               </span>
             </div>
           </ScrollReveal>
@@ -112,7 +138,7 @@ export const Home = () => {
 
               <ScrollReveal animation="fade-up" duration={600} delay={200}>
                 <p className="mt-6 text-lg sm:text-xl text-ekta-secondary max-w-2xl leading-relaxed font-normal">
-                  Electrical contracting, panel installation, cable laying, solar panel work, interiors, exhibitions, and electrical modernization since 1983.
+                  Industrial electrical contracting, power distribution, testing, and maintenance for mission-critical facilities.
                 </p>
               </ScrollReveal>
 
@@ -146,7 +172,7 @@ export const Home = () => {
                       SYSTEM CAPABILITIES
                     </span>
                     <span className="font-mono text-[10px] text-ekta-muted">
-                      ISO // CEA SAFETY
+                      SAFETY STANDARDS
                     </span>
                   </div>
 
@@ -218,7 +244,7 @@ export const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono uppercase tracking-widest text-ekta-muted">
-              Verified Engineering Credentials & Client Infrastructure
+              Client & Project References
             </span>
             <Link
               to="/clients"
@@ -245,14 +271,44 @@ export const Home = () => {
         </div>
       </section>
 
+      {/* 04 // ENGINEERING PROCESS VISUAL FLOW */}
+      <section className="py-20 lg:py-28 border-b border-ekta-border bg-ekta-elevated">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            number="01"
+            eyebrow="EXECUTION FLOW"
+            title="From Design to Commissioning"
+            description="A four-stage delivery method focused on safety, compliance, and uptime."
+            align="center"
+          />
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {engineeringFlow.map(({ step, title, text, icon: Icon }, index) => (
+              <ScrollReveal key={title} animation="fade-up" delay={index * 80}>
+                <div className="ekta-card h-full p-6 border-t-4 border-t-red-600">
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="font-mono text-[11px] uppercase tracking-widest text-ekta-muted">{step}</span>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-red-500/10 text-red-600 dark:text-red-400">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-ekta-text mb-2">{title}</h3>
+                  <p className="text-sm leading-relaxed text-ekta-secondary">{text}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 04 // ASYMMETRIC SERVICES COMPONENT SYSTEM */}
       <section className="py-20 lg:py-28 border-b border-ekta-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             number="01"
             eyebrow="CAPABILITIES ARCHITECTURE"
-            title="Comprehensive Electrical Solutions for Every Need"
-            description="From high-voltage substation erection and custom switchboard fabrication to complex factory automation and uninterrupted power systems."
+            title="Electrical Systems Built for Continuity"
+            description="Substations, switchgear, cable networks, automation, and emergency power."
             align="split"
             linkText="View All 10 Engineering Services"
             linkTo="/services"
@@ -292,20 +348,50 @@ export const Home = () => {
           <SectionHeading
             number="02"
             eyebrow="ENGINEERING TRACK RECORD"
-            title="Executed Turnkey Projects & Infrastructure"
-            description="Verified case studies in high-voltage substations, regional data center power grids, and large-scale industrial warehouse electrification."
+            title="Executed Turnkey Projects"
+            description="Selected turnkey work across critical facilities and commercial sites."
             align="split"
             linkText="View Complete Project Archive"
             linkTo="/projects"
           />
 
-          {/* Projects Grid with Asymmetric Sizing */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {displayProjects.slice(0, 6).map((project, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {displayProjects.slice(0, 4).map((project, idx) => {
+              const projectImage = project.featuredImage?.filePath || project.gallery?.[0]?.filePath || project.gallery?.[0];
+              return (
               <ScrollReveal key={project.id || idx} animation="fade-up" delay={idx * 80}>
-                <Card className="h-full flex flex-col justify-between p-6 group">
-                  <div>
-                    <h3 className="text-xl font-bold text-ekta-text mb-2 group-hover:text-brand-green transition-colors">
+                <Card className="h-full flex flex-col justify-between overflow-hidden p-0 group">
+                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-red-600/10 via-slate-900 to-blue-900">
+                    <div className="absolute inset-0 opacity-80" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px)', backgroundSize: '18px 18px' }} />
+                    {projectImage && (
+                      <img
+                        src={resolveMediaUrl(projectImage)}
+                        alt={project.featuredImage?.altText || project.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 z-10 h-full w-full object-cover"
+                        onError={(event) => {
+                          event.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    )}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="relative h-20 w-20 rounded-full border border-red-400/70 bg-slate-950/60 shadow-[0_0_25px_rgba(239,68,68,0.3)]">
+                        <div className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full border border-slate-500" />
+                        <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-400" />
+                        <div className="absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-slate-400/70" />
+                      </div>
+                    </div>
+                    <div className="absolute left-4 top-4 inline-flex items-center rounded-sm border border-white/15 bg-slate-950/70 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white">{project.voltage || '415V'}</div>
+                  </div>
+
+                  <div className="p-6">
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <span className="font-mono text-[10px] uppercase tracking-widest text-red-600 dark:text-red-400">{project.category || 'Infrastructure'}</span>
+                      <span className="font-mono text-[10px] text-ekta-muted">{project.year || '2025'}</span>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-ekta-text mb-2 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
                       {project.title}
                     </h3>
 
@@ -315,7 +401,7 @@ export const Home = () => {
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-ekta-border">
+                  <div className="border-t border-ekta-border px-6 py-4">
                     <Link
                       to={`/projects/${project.slug}`}
                       className="text-xs font-semibold text-brand-green hover:underline inline-flex items-center group/link"
@@ -326,7 +412,8 @@ export const Home = () => {
                   </div>
                 </Card>
               </ScrollReveal>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -337,8 +424,8 @@ export const Home = () => {
           <SectionHeading
             number="03"
             eyebrow="SECTOR EXPERTISE"
-            title="Mission-Critical Industry Engineering"
-            description="Every facility type carries unique statutory codes, redundancy mandates, and electrical demand profiles. We tailor power systems to exact industry operations."
+            title="Industry-Specific Power Design"
+            description="Power systems matched to each facility’s code, load, and uptime needs."
             align="center"
           />
 
@@ -362,9 +449,6 @@ export const Home = () => {
                         <div className="flex items-center justify-between border-b border-ekta-border pb-3">
                           <span className="text-brand-green font-bold text-sm">
                             SECTOR PROFILE // {ind.number}
-                          </span>
-                          <span className="px-2 py-0.5 rounded bg-brand-green/10 text-brand-green text-[10px]">
-                            ACTIVE DEPLOYMENTS
                           </span>
                         </div>
 
@@ -422,19 +506,19 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* 08 // VERIFIED TESTIMONIALS / CLIENT FEEDBACK */}
+      {/* 08 // CLIENT FEEDBACK */}
       <section className="py-20 lg:py-28 border-b border-ekta-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             number="04"
             eyebrow="STAKEHOLDER ENDORSEMENTS"
-            title="Trusted by Chief Engineers & Facility Heads"
-            description="Direct feedback from project directors, procurement executives, and senior engineering consultants."
+            title="Trusted by Facility and Project Leaders"
+            description="Feedback from engineering and procurement stakeholders."
             align="left"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {VERIFIED_TESTIMONIALS.map((t, idx) => (
+            {displayTestimonials.map((t, idx) => (
               <ScrollReveal key={t.id} animation="fade-up" delay={idx * 100}>
                 <Card className="h-full flex flex-col justify-between p-8 border-t-2 border-t-brand-green">
                   <div>
@@ -472,7 +556,7 @@ export const Home = () => {
             </h2>
 
             <p className="text-base sm:text-lg text-ekta-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
-              Partner with EKTA ELECTRICAL WORKS for electrical installation, modernization, panel work, cable laying, solar panel installation, and exhibition works backed by 38+ years of experience.
+              Electrical infrastructure and project execution backed by 38+ years of experience.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { ShieldCheck, Building2, CheckCircle2, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { SEOHead } from '../components/ui/SEOHead';
 import { Button } from '../components/ui/Button';
 import { Card, Badge } from '../components/ui/Card';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
-import { fetchApi } from '../api/apiClient';
+import { fetchApi, resolveMediaUrl } from '../api/apiClient';
+import { VERIFIED_CLIENTS } from '../data/companyData';
+
+const groupClients = (records) => records.reduce((groups, client) => {
+  const category = client.industrySector || client.sector || 'Other Clients';
+  const group = groups.find((item) => item.category === category);
+  const record = {
+    name: client.name,
+    location: client.location || 'New Delhi, India',
+    scope: client.scope || 'Electrical engineering services',
+    logo: client.logo,
+  };
+  if (group) group.clients.push(record);
+  else groups.push({ category, clients: [record] });
+  return groups;
+}, []);
 
 export const Clients = () => {
   const [sectors, setSectors] = useState([]);
@@ -13,21 +28,9 @@ export const Clients = () => {
   useEffect(() => {
     fetchApi('/clients')
       .then((response) => {
-        const grouped = (response.data || []).reduce((groups, client) => {
-          const category = client.industrySector || 'Other Clients';
-          const group = groups.find((item) => item.category === category);
-          const record = {
-            name: client.name,
-            location: client.location || 'Location not specified',
-            scope: client.scope || 'Electrical engineering services',
-          };
-          if (group) group.clients.push(record);
-          else groups.push({ category, clients: [record] });
-          return groups;
-        }, []);
-        setSectors(grouped);
+        setSectors(groupClients(response.data?.length ? response.data : VERIFIED_CLIENTS));
       })
-      .catch(() => setSectors([]));
+      .catch(() => setSectors(groupClients(VERIFIED_CLIENTS)));
   }, []);
 
   return (
@@ -45,7 +48,7 @@ export const Clients = () => {
               COMPANY PROFILE // CLIENTS & PROJECT REFERENCES
             </Badge>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-ekta-text tracking-tight mb-6">
-              Verified Client Directory
+              Client Directory
             </h1>
             <p className="text-base sm:text-lg text-ekta-secondary max-w-3xl leading-relaxed">
               Our company profile records work for healthcare facilities, showrooms, offices, exhibitions, warehouses, housing societies, banks, and other commercial sites.
@@ -72,13 +75,19 @@ export const Clients = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {sec.clients.map((client, cIdx) => (
                     <Card key={cIdx} className="p-6 border-l-2 border-l-brand-green">
-                      <div className="flex items-start justify-between mb-2">
+                      <div className="mb-2 flex items-center gap-3">
+                        {client.logo?.filePath && (
+                          <img
+                            src={resolveMediaUrl(client.logo.filePath)}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            className="h-10 w-10 rounded border border-ekta-border bg-white object-contain p-1"
+                          />
+                        )}
                         <h3 className="text-base font-bold text-ekta-text">
                           {client.name}
                         </h3>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-ekta-elevated text-ekta-muted border border-ekta-border">
-                          VERIFIED
-                        </span>
                       </div>
                       <div className="text-xs font-mono text-brand-green mb-3">
                         {client.location}

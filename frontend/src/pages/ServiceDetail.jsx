@@ -5,7 +5,7 @@ import { SEOHead } from '../components/ui/SEOHead';
 import { Badge } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
-import { COMPANY_INFO } from '../data/companyData';
+import { COMPANY_INFO, CORE_SERVICES } from '../data/companyData';
 import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 
 export const ServiceDetail = () => {
@@ -16,9 +16,9 @@ export const ServiceDetail = () => {
   useEffect(() => {
     fetchApi(`/services/slug/${slug}`)
       .then((res) => {
-        setService(res.data || null);
+        setService(res.data || CORE_SERVICES.find((item) => item.slug === slug) || null);
       })
-      .catch(() => setService(null))
+      .catch(() => setService(CORE_SERVICES.find((item) => item.slug === slug) || null))
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -88,12 +88,12 @@ export const ServiceDetail = () => {
             {service.shortDescription}
           </p>
           {primaryImage && (
-            <img src={resolveMediaUrl(primaryImage.filePath || primaryImage)} alt={primaryImage.altText || service.title} className="mt-8 h-64 w-full max-w-3xl rounded object-cover" />
+            <img src={resolveMediaUrl(primaryImage.filePath || primaryImage)} alt={primaryImage.altText || service.title} loading="eager" decoding="async" className="mt-8 h-64 w-full max-w-3xl rounded object-cover" />
           )}
           {serviceImages.length > 1 && (
             <div className="mt-6 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-3">
               {serviceImages.slice(1).map((image, index) => (
-                <img key={image._id || index} src={resolveMediaUrl(image.filePath || image)} alt={`${service.title} gallery ${index + 1}`} className="h-32 w-full rounded object-cover" />
+                <img key={image._id || index} src={resolveMediaUrl(image.filePath || image)} alt={`${service.title} gallery ${index + 1}`} loading="lazy" decoding="async" className="h-32 w-full rounded object-cover" />
               ))}
             </div>
           )}
@@ -108,7 +108,7 @@ export const ServiceDetail = () => {
               {/* Detailed Technical Scope */}
               <div className="ekta-card min-w-0 overflow-hidden p-8">
                 <h2 className="text-xl font-bold text-ekta-text mb-4">
-                  Engineering Scope & Technical Standards
+                  Engineering Scope & Standards
                 </h2>
                 <p className="break-all text-sm sm:text-base text-ekta-secondary leading-relaxed mb-6">
                   {service.technicalScope || service.specifications?.technicalScope || service.fullDescription || service.shortDescription}
@@ -118,7 +118,7 @@ export const ServiceDetail = () => {
                   <div className="text-brand-green font-bold uppercase">Contractor Authorization:</div>
                   <div className="text-ekta-text">{COMPANY_INFO.license}</div>
                   <div className="text-ekta-muted">
-                    Execution conforms to Indian Electricity Rules (1956/2005) and CEA Safety Regulations.
+                    Execution follows Indian Electricity Rules and CEA Safety Regulations.
                   </div>
                 </div>
               </div>
@@ -148,7 +148,7 @@ export const ServiceDetail = () => {
                   Request Technical BOQ
                 </h3>
                 <p className="text-xs text-ekta-secondary mb-6 leading-relaxed">
-                  Submit single-line diagrams (SLD) or load requirements to receive an itemized proposal with guaranteed statutory compliance.
+                  Submit SLDs or load requirements for an itemized, compliant proposal.
                 </p>
 
                 <div className="space-y-3">

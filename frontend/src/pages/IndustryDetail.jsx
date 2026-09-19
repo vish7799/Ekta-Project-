@@ -6,7 +6,16 @@ import { Badge } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { COMPANY_INFO } from '../data/companyData';
-import { fetchApi } from '../api/apiClient';
+import { fetchApi, resolveMediaUrl } from '../api/apiClient';
+import { INDUSTRIES_SERVED } from '../data/companyData';
+
+const normalizeIndustry = (record) => ({
+  ...record,
+  id: record.slug || record.id,
+  title: record.title || record.name,
+  description: record.description || record.shortDescription || record.overview,
+  specs: record.specs || (record.solutionsProvided || []).join(', '),
+});
 
 export const IndustryDetail = () => {
   const { slug } = useParams();
@@ -14,11 +23,12 @@ export const IndustryDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fallbackIndustry = INDUSTRIES_SERVED.find((item) => item.id === slug);
     fetchApi(`/industries/slug/${slug}`)
       .then((res) => {
-        setIndustry(res.data ? { ...res.data, id: res.data.slug, title: res.data.name, description: res.data.shortDescription, specs: (res.data.solutionsProvided || []).join(', ') } : null);
+        setIndustry(res.data ? normalizeIndustry(res.data) : fallbackIndustry ? normalizeIndustry(fallbackIndustry) : null);
       })
-      .catch(() => setIndustry(null))
+      .catch(() => setIndustry(fallbackIndustry ? normalizeIndustry(fallbackIndustry) : null))
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -63,9 +73,6 @@ export const IndustryDetail = () => {
 
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <Badge variant="green">SECTOR PROFILE // {industry.number || '01'}</Badge>
-            <span className="text-xs font-mono px-2 py-0.5 rounded bg-ekta-surface border border-ekta-border text-ekta-secondary">
-              CLASS-A LICENSED
-            </span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-bold text-ekta-text tracking-tight mb-4">
@@ -74,6 +81,15 @@ export const IndustryDetail = () => {
           <p className="text-base sm:text-lg text-ekta-secondary max-w-3xl leading-relaxed">
             {industry.description || industry.shortDescription}
           </p>
+          {industry.featuredImage?.filePath && (
+            <img
+              src={resolveMediaUrl(industry.featuredImage.filePath)}
+              alt={industry.featuredImage.altText || industry.title}
+              loading="eager"
+              decoding="async"
+              className="mt-8 h-64 w-full max-w-3xl rounded object-cover"
+            />
+          )}
         </div>
       </section>
 
@@ -101,7 +117,7 @@ export const IndustryDetail = () => {
               {industry.clients && (
                 <div className="ekta-card p-8">
                   <h3 className="text-lg font-bold text-ekta-text mb-3 font-mono">
-                    VERIFIED CLIENT DEPLOYMENTS IN THIS SECTOR
+                    CLIENT REFERENCES IN THIS SECTOR
                   </h3>
                   <p className="text-sm text-ekta-secondary leading-relaxed">
                     {industry.clients}

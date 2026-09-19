@@ -12,14 +12,14 @@ export const Button = ({
   iconPosition = 'right',
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-green/40 disabled:opacity-50 disabled:cursor-not-allowed group select-none';
+  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/30 disabled:opacity-50 disabled:cursor-not-allowed group select-none';
 
   const variants = {
-    primary: 'bg-[#0E7A4A] hover:bg-[#075E38] text-white font-semibold shadow-sm border border-[#0E7A4A]',
+    primary: 'bg-[#D92D2D] hover:bg-[#B71C1C] text-white font-semibold shadow-sm border border-[#D92D2D]',
     secondary: 'bg-ekta-surface hover:bg-ekta-elevated text-ekta-text border border-ekta-border shadow-sm',
-    outline: 'border border-brand-green text-brand-green hover:bg-brand-green/10',
+    outline: 'border border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10',
     ghost: 'text-ekta-secondary hover:text-ekta-text hover:bg-ekta-elevated',
-    accent: 'bg-brand-orange hover:bg-brand-orange-hover text-stone-950 font-semibold shadow-sm',
+    accent: 'bg-[#0F172A] hover:bg-[#1E3A8A] text-white font-semibold shadow-sm',
   };
 
   const sizes = {

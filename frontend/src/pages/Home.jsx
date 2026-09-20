@@ -33,7 +33,7 @@ import {
   INDUSTRIES_SERVED,
   VERIFIED_TESTIMONIALS,
 } from '../data/companyData';
-import { fetchApi, resolveMediaUrl } from '../api/apiClient';
+import { fetchApi } from '../api/apiClient';
 import { useSiteSettings, toTelHref } from '../context/SiteSettingsContext';
 
 export const Home = () => {
@@ -83,8 +83,14 @@ export const Home = () => {
       }))
     : VERIFIED_TESTIMONIALS;
 
-  const featuredService = displayServices[0];
-  const supportingServices = displayServices.slice(1, 5);
+  const homeServices = displayServices.slice(0, 3);
+  const latestProjects = [...displayProjects]
+    .sort((firstProject, secondProject) => {
+      const firstAddedAt = firstProject.createdAt ? new Date(firstProject.createdAt).getTime() : 0;
+      const secondAddedAt = secondProject.createdAt ? new Date(secondProject.createdAt).getTime() : 0;
+      return secondAddedAt - firstAddedAt;
+    })
+    .slice(0, 4);
   const engineeringFlow = [
     { step: '01', title: 'Design', icon: CircuitBoard, text: 'Load studies, one-line design, and switchgear sizing.' },
     { step: '02', title: 'Install', icon: Cable, text: 'Cable routing, busbars, panels, and field execution.' },
@@ -310,12 +316,12 @@ export const Home = () => {
             title="Electrical Systems Built for Continuity"
             description="Substations, switchgear, cable networks, automation, and emergency power."
             align="split"
-            linkText="View All 10 Engineering Services"
+            linkText="View All Engineering Services"
             linkTo="/services"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-            {[featuredService, ...supportingServices].filter(Boolean).map((service, idx) => (
+            {homeServices.map((service, idx) => (
               <ScrollReveal key={service.id || idx} animation="fade-up" delay={idx * 70} className="flex">
                 <Card className="flex h-full min-h-[250px] w-full flex-col justify-between p-6 hover:border-brand-green/40">
                   <div>
@@ -356,42 +362,11 @@ export const Home = () => {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {displayProjects.slice(0, 4).map((project, idx) => {
-              const projectImage = project.featuredImage?.filePath || project.gallery?.[0]?.filePath || project.gallery?.[0];
-              return (
+            {latestProjects.map((project, idx) => (
               <ScrollReveal key={project.id || idx} animation="fade-up" delay={idx * 80}>
-                <Card className="h-full flex flex-col justify-between overflow-hidden p-0 group">
-                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-red-600/10 via-slate-900 to-blue-900">
-                    <div className="absolute inset-0 opacity-80" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px)', backgroundSize: '18px 18px' }} />
-                    {projectImage && (
-                      <img
-                        src={resolveMediaUrl(projectImage)}
-                        alt={project.featuredImage?.altText || project.title}
-                        loading="lazy"
-                        decoding="async"
-                        className="absolute inset-0 z-10 h-full w-full object-cover"
-                        onError={(event) => {
-                          event.currentTarget.style.display = 'none';
-                        }}
-                      />
-                    )}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="relative h-20 w-20 rounded-full border border-red-400/70 bg-slate-950/60 shadow-[0_0_25px_rgba(239,68,68,0.3)]">
-                        <div className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full border border-slate-500" />
-                        <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-400" />
-                        <div className="absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-slate-400/70" />
-                      </div>
-                    </div>
-                    <div className="absolute left-4 top-4 inline-flex items-center rounded-sm border border-white/15 bg-slate-950/70 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white">{project.voltage || '415V'}</div>
-                  </div>
-
-                  <div className="p-6">
-                    <div className="mb-3 flex items-center justify-between gap-3">
-                      <span className="font-mono text-[10px] uppercase tracking-widest text-red-600 dark:text-red-400">{project.category || 'Infrastructure'}</span>
-                      <span className="font-mono text-[10px] text-ekta-muted">{project.year || '2025'}</span>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-ekta-text mb-2 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
+                <Card className="h-full flex flex-col justify-between p-6 group">
+                  <div>
+                    <h3 className="text-xl font-bold text-ekta-text mb-4 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
                       {project.title}
                     </h3>
 
@@ -412,8 +387,7 @@ export const Home = () => {
                   </div>
                 </Card>
               </ScrollReveal>
-              );
-            })}
+            ))}
           </div>
         </div>
       </section>

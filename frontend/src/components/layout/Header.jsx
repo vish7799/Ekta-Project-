@@ -48,16 +48,14 @@ export const Header = () => {
     >
       <div className="mx-auto max-w-7xl min-w-0 overflow-x-clip px-3 sm:px-5 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-2 sm:h-20 sm:gap-3">
-          <Link to="/" className="group flex min-w-0 max-w-[48vw] shrink items-center gap-2.5 sm:max-w-none sm:gap-3" aria-label="EKTA ELECTRICAL WORKS home">
+          <Link to="/" className="group flex items-center gap-2.5 sm:gap-3" aria-label="EKTA ELECTRICAL WORKS home">
             <img
               src="/logo.png"
               alt="EKTA ELECTRICAL WORKS logo"
               className="h-10 w-10 shrink-0 rounded-full border border-ekta-border bg-white object-contain shadow-sm transition-transform duration-200 group-hover:scale-105 sm:h-11 sm:w-11"
             />
-            <div className="min-w-0">
-              <div className="truncate text-sm font-black tracking-tight text-ekta-text sm:text-base lg:text-lg">
-                EKTA ELECTRICAL WORKS
-              </div>
+            <div className="text-sm font-black tracking-tight text-ekta-text whitespace-nowrap sm:text-base lg:text-lg">
+              EKTA ELECTRICAL WORKS
             </div>
           </Link>
 

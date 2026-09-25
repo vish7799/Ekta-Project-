@@ -44,6 +44,7 @@ const buildProjectVisual = (project, fallbackLabel = 'Project') => {
 
 export const Projects = () => {
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
@@ -52,10 +53,11 @@ export const Projects = () => {
       .then((res) => {
         setProjects(res.data || []);
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
-  const sourceProjects = projects.length ? projects : VERIFIED_PROJECTS;
+  const sourceProjects = loading ? [] : (projects.length ? projects : VERIFIED_PROJECTS);
   const deliverySignals = [
     { label: 'Design', value: 'Load + protection studies', icon: Zap },
     { label: 'Install', value: 'HT/LT field execution', icon: Activity },
@@ -105,8 +107,13 @@ export const Projects = () => {
           </div>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sourceProjects.map((project, idx) => {
+          {loading ? (
+            <div className="py-16 text-center text-ekta-muted font-mono text-xs">
+              RETRIEVING PROJECT PORTFOLIO...
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {sourceProjects.map((project, idx) => {
               const imageSrc = project.featuredImage?.filePath || project.gallery?.[0]?.filePath || project.gallery?.[0] || buildProjectVisual(project, project.title);
               return (
               <ScrollReveal key={project.id || idx} animation="fade-up" delay={idx * 70}>
@@ -175,8 +182,9 @@ export const Projects = () => {
                 </Card>
               </ScrollReveal>
               );
-            })}
-          </div>
+              })}
+            </div>
+          )}
         </div>
       </section>
 

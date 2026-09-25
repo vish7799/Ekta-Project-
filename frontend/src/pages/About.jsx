@@ -6,8 +6,10 @@ import { Card, Badge } from '../components/ui/Card';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { COMPANY_INFO, COMPANY_STATS } from '../data/companyData';
+import { useSiteSettings, toTelHref } from '../context/SiteSettingsContext';
 
 export const About = () => {
+  const settings = useSiteSettings();
   const milestones = [
     {
       year: '1983',
@@ -145,14 +147,18 @@ export const About = () => {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
-            {COMPANY_INFO.contacts.map((executive, idx) => (
+            {COMPANY_INFO.contacts.map((executive, idx) => {
+              const name = (idx === 0 ? settings.primaryContactName : settings.emergencyContactName) || executive.name;
+              const phone = (idx === 0 ? settings.primaryPhone : settings.emergencyPhone) || executive.phone;
+
+              return (
               <Card key={idx} className="p-8 border-l-4 border-l-brand-green">
                 <div className="flex items-center space-x-4 mb-4">
                   <div className="w-12 h-12 rounded-sm bg-brand-green/10 text-brand-green flex items-center justify-center font-mono font-bold text-lg">
-                    {executive.name[0]}
+                    {name[0]}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-ekta-text">{executive.name}</h3>
+                    <h3 className="text-xl font-bold text-ekta-text">{name}</h3>
                     <p className="text-xs font-mono text-brand-green">{executive.role}</p>
                   </div>
                 </div>
@@ -162,15 +168,16 @@ export const About = () => {
                 <div className="pt-4 border-t border-ekta-border flex items-center justify-between">
                   <span className="text-xs font-mono text-ekta-muted">Direct Phone:</span>
                   <a
-                    href={executive.telHref}
+                    href={toTelHref(phone)}
                     className="font-mono text-sm font-bold text-brand-green hover:underline flex items-center"
                   >
                     <PhoneCall className="w-3.5 h-3.5 mr-1.5" />
-                    {executive.phone}
+                    {phone}
                   </a>
                 </div>
               </Card>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

@@ -9,7 +9,9 @@ export const SettingsManager = () => {
     tagline: 'Turnkey Industrial Electrical & Power Engineering Solutions',
     corporateAddress: 'EKTA ELECTRICAL WORKS Complex, Industrial Zone',
     primaryPhone: '+91 (0) 1234 567 890',
+    primaryContactName: 'Naresh Kumar',
     emergencyPhone: '+91 (0) 9876 543 210',
+    emergencyContactName: '(Er.) Poonam Dogra',
     email: 'contact@ektaelectrical.com',
     secondaryEmail: '',
   });
@@ -79,12 +81,36 @@ export const SettingsManager = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300 mb-2">
+                Primary Contact Name
+              </label>
+              <input
+                type="text"
+                value={settings.primaryContactName || ''}
+                onChange={(e) => setSettings({ ...settings, primaryContactName: e.target.value })}
+                className="w-full bg-admin-950 border border-admin-700 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300 mb-2">
                 Primary Desk Phone
               </label>
               <input
                 type="text"
                 value={settings.primaryPhone || ''}
                 onChange={(e) => setSettings({ ...settings, primaryPhone: e.target.value })}
+                className="w-full bg-admin-950 border border-admin-700 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-admin-300 mb-2">
+                Emergency Contact Name
+              </label>
+              <input
+                type="text"
+                value={settings.emergencyContactName || ''}
+                onChange={(e) => setSettings({ ...settings, emergencyContactName: e.target.value })}
                 className="w-full bg-admin-950 border border-admin-700 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
               />
             </div>

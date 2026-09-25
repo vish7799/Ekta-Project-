@@ -22,7 +22,17 @@ const SiteSettingsSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    primaryContactName: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     emergencyPhone: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    emergencyContactName: {
       type: String,
       trim: true,
       default: '',

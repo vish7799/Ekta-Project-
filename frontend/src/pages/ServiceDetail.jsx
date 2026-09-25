@@ -7,9 +7,11 @@ import { Button } from '../components/ui/Button';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { COMPANY_INFO, CORE_SERVICES } from '../data/companyData';
 import { fetchApi, resolveMediaUrl } from '../api/apiClient';
+import { useSiteSettings, toTelHref } from '../context/SiteSettingsContext';
 
 export const ServiceDetail = () => {
   const { slug } = useParams();
+  const settings = useSiteSettings();
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -163,11 +165,11 @@ export const ServiceDetail = () => {
                   </Button>
 
                   <a
-                    href="tel:+919899442333"
+                    href={toTelHref(settings.primaryPhone)}
                     className="w-full flex items-center justify-center py-2.5 px-4 text-xs font-mono font-medium rounded-sm border border-ekta-border bg-ekta-elevated text-ekta-text hover:bg-ekta-surface transition-colors"
                   >
                     <PhoneCall className="w-3.5 h-3.5 mr-2 text-brand-green" />
-                    CALL DESK: +91 9899442333
+                    CALL DESK: {settings.primaryPhone}
                   </a>
                 </div>
 

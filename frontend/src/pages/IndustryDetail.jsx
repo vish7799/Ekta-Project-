@@ -8,6 +8,7 @@ import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { COMPANY_INFO } from '../data/companyData';
 import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 import { INDUSTRIES_SERVED } from '../data/companyData';
+import { useSiteSettings, toTelHref } from '../context/SiteSettingsContext';
 
 const normalizeIndustry = (record) => ({
   ...record,
@@ -19,6 +20,7 @@ const normalizeIndustry = (record) => ({
 
 export const IndustryDetail = () => {
   const { slug } = useParams();
+  const settings = useSiteSettings();
   const [industry, setIndustry] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -147,11 +149,11 @@ export const IndustryDetail = () => {
                     Request Sector Proposal
                   </Button>
                   <a
-                    href="tel:+919899442333"
+                    href={toTelHref(settings.primaryPhone)}
                     className="w-full flex items-center justify-center py-2.5 px-4 text-xs font-mono font-medium rounded-sm border border-ekta-border bg-ekta-elevated text-ekta-text hover:bg-ekta-surface transition-colors"
                   >
                     <PhoneCall className="w-3.5 h-3.5 mr-2 text-brand-green" />
-                    +91 9899442333
+                    {settings.primaryPhone}
                   </a>
                 </div>
               </div>

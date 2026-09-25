@@ -43,11 +43,11 @@ export const Footer = () => {
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </Link>
               <a
-                href="tel:+919899442333"
+                href={toTelHref(settings.primaryPhone)}
                 className="inline-flex items-center justify-center px-5 py-3 border border-[#1F2A3A] bg-[#172033] hover:bg-[#24324A] text-white text-sm font-mono transition-colors rounded-sm"
               >
                 <Phone className="w-3.5 h-3.5 mr-2 text-[#D92D2D]" />
-                +91 9899442333
+                {settings.primaryPhone}
               </a>
             </div>
           </div>

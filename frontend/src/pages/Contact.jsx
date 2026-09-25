@@ -59,7 +59,7 @@ export const Contact = () => {
     } catch (err) {
       // In local dev without backend running, provide friendly fallback
       setSuccessMsg(
-        'Thank you. Your technical scope has been logged. Our engineering desk at +91 9899442333 has been notified.'
+        `Thank you. Your technical scope has been logged. Our engineering desk at ${settings.primaryPhone} has been notified.`
       );
     } finally {
       setSubmitting(false);

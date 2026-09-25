@@ -544,11 +544,11 @@ export const Home = () => {
                 REQUEST TECHNICAL SURVEY & QUOTE
               </Button>
               <a
-                href="tel:+919899442333"
+                href={toTelHref(settings.primaryPhone)}
                 className="inline-flex items-center justify-center px-7 py-3.5 text-base font-mono font-medium rounded-sm border border-ekta-border bg-ekta-surface hover:bg-ekta-elevated text-ekta-text transition-colors shadow-sm min-h-[48px]"
               >
                 <PhoneCall className="w-4 h-4 mr-2 text-brand-green" />
-                CALL +91 9899442333
+                CALL {settings.primaryPhone}
               </a>
             </div>
 

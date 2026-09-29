@@ -122,6 +122,8 @@ const config = {
 
   // Email
   mail: {
+    resendApiKey: process.env.RESEND_API_KEY || '',
+
     host: process.env.SMTP_HOST || '',
 
     port: parseInt(

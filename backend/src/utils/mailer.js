@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const config = require('../config/env');
 
+const isResendConfigured = Boolean(config.mail.resendApiKey && config.mail.from);
 const isConfigured = Boolean(config.mail.host && config.mail.user && config.mail.password && config.mail.from);
 const transporter = isConfigured
   ? nodemailer.createTransport({
@@ -15,8 +16,32 @@ const transporter = isConfigured
   : null;
 
 const sendMail = async (message) => {
+  if (isResendConfigured) {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${config.mail.resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: config.mail.from,
+        to: message.to,
+        reply_to: message.replyTo,
+        subject: message.subject,
+        text: message.text,
+      }),
+    });
+
+    if (!response.ok) {
+      const responseBody = await response.text();
+      throw new Error(`Resend delivery failed (${response.status}): ${responseBody.slice(0, 300)}`);
+    }
+
+    return;
+  }
+
   if (!transporter) {
-    const error = new Error('SMTP is not configured; enquiry notifications cannot be delivered.');
+    const error = new Error('Email delivery is not configured; set RESEND_API_KEY or SMTP credentials.');
     if (config.env === 'development') console.warn(`[Mailer] ${error.message}`);
     throw error;
   }

@@ -29,6 +29,7 @@ A template file `.env.example` is committed to git.
 | `CLOUDINARY_API_KEY` | Empty | Cloudinary API key | No |
 | `CLOUDINARY_API_SECRET` | Empty | Cloudinary API secret | No |
 | `RESEND_API_KEY` | Empty | Resend API key for enquiry email delivery; preferred over SMTP | No |
+| `SEND_ENQUIRY_NOTIFICATION` | `false` | Send new enquiry notifications to the company inbox | No |
 
 ### Production media storage
 

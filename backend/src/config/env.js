@@ -146,6 +146,9 @@ const config = {
       process.env.ENQUIRY_NOTIFICATION_EMAIL ||
       'Ektaa.electrical@gmail.com',
 
+    sendCompanyNotification:
+      process.env.SEND_ENQUIRY_NOTIFICATION === 'true',
+
     sendCustomerAcknowledgement:
       process.env.SEND_CUSTOMER_ACKNOWLEDGEMENT === 'true',
   },

@@ -53,6 +53,8 @@ const sendMail = async (message) => {
 };
 
 const sendEnquiryNotifications = async (enquiry) => {
+  if (!config.mail.sendCompanyNotification) return;
+
   const details = [
     `Name: ${enquiry.fullName}`,
     `Email: ${enquiry.email}`,

@@ -28,8 +28,6 @@ const validateEnquiryInput = (data) => {
 
   if (validator.isEmpty(message)) {
     errors.push('Message body is required.');
-  } else if (message.length < 10) {
-    errors.push('Message body must be at least 10 characters long.');
   }
 
   return {

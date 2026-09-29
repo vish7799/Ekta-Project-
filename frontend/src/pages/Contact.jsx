@@ -371,7 +371,6 @@ export const Contact = () => {
                       name="message"
                       rows={5}
                       required
-                      minLength={10}
                       maxLength={3000}
                       value={formData.message}
                       onChange={handleChange}

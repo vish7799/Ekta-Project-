@@ -45,7 +45,7 @@ npm run dev:admin
 ## Testing API Endpoints
 
 You can verify the backend REST API health by opening:
-`https://ekta-project-backend.onrender.com/api/v1/health`
+`https://api.ektaelectricalworks.com/api/v1/health`
 
 Sample JSON Output:
 ```json

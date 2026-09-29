@@ -56,10 +56,9 @@ export const Contact = () => {
         subject: '',
         message: '',
       });
-    } catch (err) {
-      // In local dev without backend running, provide friendly fallback
-      setSuccessMsg(
-        `Thank you. Your technical scope has been logged. Our engineering desk at ${settings.primaryPhone} has been notified.`
+    } catch {
+      setErrorMsg(
+        'We could not submit your enquiry. Please try again shortly or contact us using the details on this page.'
       );
     } finally {
       setSubmitting(false);

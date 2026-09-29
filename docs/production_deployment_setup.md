@@ -16,9 +16,16 @@ Recommended production hosting pattern:
 - Database: MongoDB Atlas
 - Media storage: Cloudinary or persistent disk storage
 
+### Live URLs
+
+- Public website: `https://www.ektaelectricalworks.com/`
+- Admin dashboard: `https://admin.ektaelectricalworks.com/`
+- Backend API: `https://api.ektaelectricalworks.com/`
+- API v1 base URL for frontend configuration: `https://api.ektaelectricalworks.com/api/v1`
+
 ## 2. Backend production configuration
 
-Create a real production `.env` file for the backend based on the template in [backend/.env.production.example](../backend/.env.production.example).
+Create a real production `.env` file for the backend based on the template in [backend/.env.example](../backend/.env.example).
 
 ### Essential values
 
@@ -26,8 +33,10 @@ Create a real production `.env` file for the backend based on the template in [b
 - `MONGODB_URI` pointing to MongoDB Atlas or your production cluster
 - `JWT_SECRET` with at least 32 characters
 - `ADMIN_EMAIL` and `ADMIN_PASSWORD` for the initial admin account
-- `CORS_ORIGIN` including the live frontend and admin domains
-- `PUBLIC_SITE_URL`, `FRONTEND_URL`, `ADMIN_URL`
+- `CORS_ORIGIN=https://www.ektaelectricalworks.com,https://admin.ektaelectricalworks.com`
+- `PUBLIC_SITE_URL=https://www.ektaelectricalworks.com`
+- `FRONTEND_URL=https://www.ektaelectricalworks.com`
+- `ADMIN_URL=https://admin.ektaelectricalworks.com`
 - `SMTP_*` settings for enquiry email delivery
 
 ### Important production note
@@ -38,7 +47,7 @@ The backend will refuse to run in production without a valid `MONGODB_URI` and a
 
 Set the frontend environment variable:
 
-- `VITE_API_URL=https://your-backend-domain.com/api/v1`
+- `VITE_API_URL=https://api.ektaelectricalworks.com/api/v1`
 
 Make sure the public site is pointing to the correct backend host instead of the default Render URL.
 
@@ -46,9 +55,11 @@ Make sure the public site is pointing to the correct backend host instead of the
 
 Set the admin site environment variable:
 
-- `VITE_API_URL=https://your-backend-domain.com/api/v1`
+- `VITE_API_URL=https://api.ektaelectricalworks.com/api/v1`
 
 The admin app should also use the live backend and must not fall back to the wrong remote URL.
+
+Set `VITE_PUBLIC_SITE_URL=https://www.ektaelectricalworks.com` so the admin header links to the live public website.
 
 ## 5. Deployment checklist
 
@@ -92,7 +103,8 @@ Run one full live smoke test after deployment:
 
 Prepare and share:
 
-- Live URLs for frontend and admin panel
+- Public website: `https://www.ektaelectricalworks.com/`
+- Admin dashboard: `https://admin.ektaelectricalworks.com/`
 - Admin email and password
 - Backend API URL
 - Hosting credentials if required by the client

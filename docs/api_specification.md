@@ -2,7 +2,7 @@
 
 ## Base URL
 All API v1 endpoints are served under:
-`https://ekta-project-backend.onrender.com/api/v1`
+`https://api.ektaelectricalworks.com/api/v1`
 
 ---
 

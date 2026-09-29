@@ -14,8 +14,9 @@ This project is buildable and boots locally, but it is not yet fully client-read
 - [ ] Set `PORT` to the hosting platform value if required.
 - [ ] Set `ADMIN_EMAIL` and `ADMIN_PASSWORD` for the initial admin account.
 - [ ] Make sure the password is at least 12 characters long.
-- [ ] Set `CORS_ORIGIN` to the actual production frontend and admin domains.
-- [ ] Set `FRONTEND_URL` and `ADMIN_URL` to the live domains.
+- [ ] Set `CORS_ORIGIN` to `https://www.ektaelectricalworks.com,https://admin.ektaelectricalworks.com`.
+- [ ] Set `PUBLIC_SITE_URL` and `FRONTEND_URL` to `https://www.ektaelectricalworks.com`.
+- [ ] Set `ADMIN_URL` to `https://admin.ektaelectricalworks.com`.
 - [ ] Confirm the API responds correctly over HTTPS and not only localhost.
 
 ### Media and uploads
@@ -35,13 +36,13 @@ This project is buildable and boots locally, but it is not yet fully client-read
 
 ### Frontend deployment
 - [ ] Deploy the public website to the production domain.
-- [ ] Set `VITE_API_URL` to the live backend API URL if needed.
+- [ ] Set `VITE_API_URL` to `https://api.ektaelectricalworks.com/api/v1` if needed.
 - [ ] Confirm pages render on HTTPS.
 - [ ] Test all major routes: home, about, services, projects, industries, clients, contact.
 - [ ] Check all images, icons, and media load correctly.
 
 ### Admin deployment
-- [ ] Deploy the admin application to its production domain.
+- [ ] Deploy the admin application to `https://admin.ektaelectricalworks.com`.
 - [ ] Ensure login works with the live backend.
 - [ ] Verify role-based access works correctly for admin/editor roles.
 - [ ] Confirm media upload, create, update, delete flows work on production.
@@ -71,7 +72,9 @@ This project is buildable and boots locally, but it is not yet fully client-read
 ## 6. Client handover package
 
 The client should receive:
-- [ ] Live production URLs for the site and admin panel
+- [ ] Public website: `https://www.ektaelectricalworks.com/`
+- [ ] Backend API: `https://api.ektaelectricalworks.com/`
+- [ ] Admin dashboard: `https://admin.ektaelectricalworks.com/`
 - [ ] Admin login credentials
 - [ ] Database and hosting access credentials (only if required by the client)
 - [ ] Deployment notes and maintenance guide

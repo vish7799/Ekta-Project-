@@ -55,9 +55,10 @@ export const Contact = () => {
         subject: '',
         message: '',
       });
-    } catch {
+    } catch (requestError) {
       setErrorMsg(
-        'We could not submit your enquiry. Please try again shortly or contact us using the details on this page.'
+        requestError.message ||
+          'We could not submit your enquiry. Please try again shortly or contact us using the details on this page.'
       );
     } finally {
       setSubmitting(false);
@@ -370,6 +371,8 @@ export const Contact = () => {
                       name="message"
                       rows={5}
                       required
+                      minLength={10}
+                      maxLength={3000}
                       value={formData.message}
                       onChange={handleChange}
                       className="w-full bg-ekta-elevated border border-ekta-border rounded-sm px-3.5 py-2.5 text-sm text-ekta-text focus:outline-none focus:ring-1 focus:ring-brand-green focus:border-brand-green"

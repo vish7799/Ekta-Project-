@@ -12,6 +12,10 @@ const routes = require('./routes');
 
 const app = express();
 
+if (config.env === 'production') {
+  app.set('trust proxy', 1);
+}
+
 const normalizeOrigin = (origin) => String(origin || '').trim().replace(/\/$/, '');
 
 const publicSiteUrl =

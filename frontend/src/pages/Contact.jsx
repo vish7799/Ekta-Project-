@@ -37,14 +37,13 @@ export const Contact = () => {
     setErrorMsg(null);
 
     try {
-      const res = await fetchApi('/enquiries', {
+      await fetchApi('/enquiries', {
         method: 'POST',
         body: JSON.stringify(formData),
       });
 
       setSuccessMsg(
-        res.message ||
-          'Thank you. Your engineering inquiry has been received. A senior power systems engineer will contact you within 24 hours.'
+        'Your enquiry was submitted successfully and saved for the engineering team to review. No SMS or WhatsApp notification was sent.'
       );
       setFormData({
         fullName: '',
@@ -221,16 +220,6 @@ export const Contact = () => {
                 <p className="text-xs sm:text-sm text-ekta-secondary mb-6 leading-relaxed">
                   Share your project parameters for an engineering proposal. Required fields are marked *.
                 </p>
-
-                {successMsg && (
-                  <div
-                    className="mb-6 p-4 rounded-sm bg-brand-green/10 border border-brand-green/40 flex items-start space-x-3 text-brand-green text-sm"
-                    role="alert"
-                  >
-                    <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
-                    <span>{successMsg}</span>
-                  </div>
-                )}
 
                 {errorMsg && (
                   <div
@@ -441,6 +430,35 @@ export const Contact = () => {
           </div>
         </div>
       </section>
+
+      {successMsg && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4" role="presentation">
+          <div
+            className="w-full max-w-md rounded-sm border border-brand-green/40 border-t-4 border-t-brand-green bg-ekta-surface p-6 shadow-2xl"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="enquiry-success-title"
+          >
+            <div className="flex items-start gap-4">
+              <CheckCircle2 className="h-7 w-7 shrink-0 text-brand-green" aria-hidden="true" />
+              <div>
+                <h2 id="enquiry-success-title" className="text-lg font-bold text-ekta-text">
+                  Enquiry submitted successfully
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-ekta-secondary">{successMsg}</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              autoFocus
+              onClick={() => setSuccessMsg(null)}
+              className="mt-6 w-full rounded-sm bg-brand-green px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-green/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

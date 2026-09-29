@@ -6,7 +6,7 @@ import { Badge } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { LightboxModal } from '../components/ui/LightboxModal';
-import { COMPANY_INFO, VERIFIED_PROJECTS } from '../data/companyData';
+import { COMPANY_INFO } from '../data/companyData';
 import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 import { useSiteSettings, toTelHref } from '../context/SiteSettingsContext';
 
@@ -21,9 +21,9 @@ export const ProjectDetail = () => {
   useEffect(() => {
     fetchApi(`/projects/slug/${slug}`)
       .then((res) => {
-        setProject(res.data || VERIFIED_PROJECTS.find((item) => item.slug === slug) || null);
+        setProject(res.data || null);
       })
-      .catch(() => setProject(VERIFIED_PROJECTS.find((item) => item.slug === slug) || null))
+      .catch(() => setProject(null))
       .finally(() => setLoading(false));
   }, [slug]);
 

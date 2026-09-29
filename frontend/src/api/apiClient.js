@@ -1,6 +1,10 @@
-export const API_BASE_URL =
-  import.meta.env.VITE_API_URL ||
-  'https://ekta-project-backend.onrender.com/api/v1';
+const configuredApiUrl = import.meta.env.VITE_API_URL;
+
+export const API_BASE_URL = (
+  configuredApiUrl
+    ? configuredApiUrl.replace(/^VITE_API_URL\s*=\s*/i, '').trim()
+    : 'https://ekta-project-backend.onrender.com/api/v1'
+).replace(/\/+$/, '');
 
 export const resolveMediaUrl = (filePath) => {
   if (!filePath) return '';

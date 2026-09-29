@@ -7,7 +7,6 @@ import { Card, Badge } from '../components/ui/Card';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { LightboxModal } from '../components/ui/LightboxModal';
-import { VERIFIED_PROJECTS } from '../data/companyData';
 import { fetchApi, resolveMediaUrl } from '../api/apiClient';
 
 const buildProjectVisual = (project, fallbackLabel = 'Project') => {
@@ -57,7 +56,7 @@ export const Projects = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const sourceProjects = loading ? [] : (projects.length ? projects : VERIFIED_PROJECTS);
+  const sourceProjects = loading ? [] : projects;
   const deliverySignals = [
     { label: 'Design', value: 'Load + protection studies', icon: Zap },
     { label: 'Install', value: 'HT/LT field execution', icon: Activity },

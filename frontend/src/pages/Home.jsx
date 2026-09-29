@@ -28,7 +28,6 @@ import {
   COMPANY_INFO,
   COMPANY_STATS,
   CORE_SERVICES,
-  VERIFIED_PROJECTS,
   VERIFIED_CLIENTS,
   INDUSTRIES_SERVED,
   VERIFIED_TESTIMONIALS,
@@ -71,7 +70,7 @@ export const Home = () => {
   }, []);
 
   const displayServices = cmsServices.length ? cmsServices : CORE_SERVICES;
-  const displayProjects = cmsProjects.length ? cmsProjects : VERIFIED_PROJECTS;
+  const displayProjects = cmsProjects;
   const displayClients = cmsClients.length ? cmsClients : VERIFIED_CLIENTS;
   const displayTestimonials = cmsTestimonials.length
     ? cmsTestimonials.map((testimonial) => ({

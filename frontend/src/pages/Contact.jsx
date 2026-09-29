@@ -43,7 +43,7 @@ export const Contact = () => {
       });
 
       setSuccessMsg(
-        'Your enquiry was submitted successfully and saved for the engineering team to review. No SMS or WhatsApp notification was sent.'
+        'Thank you for contacting us. Your enquiry has been received and our team will get back to you shortly.'
       );
       setFormData({
         fullName: '',
@@ -442,7 +442,7 @@ export const Contact = () => {
             aria-labelledby="enquiry-success-title"
           >
             <div className="flex items-start gap-4">
-              <CheckCircle2 className="h-7 w-7 shrink-0 text-brand-green" aria-hidden="true" />
+              <CheckCircle2 className="h-7 w-7 shrink-0 text-emerald-600" aria-hidden="true" />
               <div>
                 <h2 id="enquiry-success-title" className="text-lg font-bold text-ekta-text">
                   Enquiry submitted successfully

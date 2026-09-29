@@ -16,10 +16,9 @@ const transporter = isConfigured
 
 const sendMail = async (message) => {
   if (!transporter) {
-    if (config.env === 'development') {
-      console.warn('[Mailer] SMTP is not configured; notification skipped.');
-    }
-    return;
+    const error = new Error('SMTP is not configured; enquiry notifications cannot be delivered.');
+    if (config.env === 'development') console.warn(`[Mailer] ${error.message}`);
+    throw error;
   }
 
   await transporter.sendMail({
@@ -57,6 +56,7 @@ const sendEnquiryNotifications = async (enquiry) => {
     }
   } catch (error) {
     console.error('[Mailer] Enquiry notification failed:', error.message);
+    throw error;
   }
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AdminLayout } from '../components/layout/AdminLayout';
-import { Image, RefreshCw, Trash2, Search, Folder, FolderOpen, ArrowLeft } from 'lucide-react';
-import { adminFetchApi, resolveMediaUrl } from '../api/adminApiClient';
+import { FileText, Image, RefreshCw, Trash2, Search, Folder, FolderOpen, ArrowLeft, Upload } from 'lucide-react';
+import { API_BASE_URL, adminFetchApi, resolveMediaUrl } from '../api/adminApiClient';
 
 export const MediaManager = () => {
   const [media, setMedia] = useState([]);
@@ -12,6 +12,7 @@ export const MediaManager = () => {
   const [usageFilter, setUsageFilter] = useState('all');
   const [selectedFolder, setSelectedFolder] = useState(null);
   const [error, setError] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const loadMedia = () => {
     setLoading(true);
@@ -54,7 +55,7 @@ export const MediaManager = () => {
   }, []);
 
   const handleDelete = async (item) => {
-    if (!window.confirm(`Delete image "${item.originalName}"? This cannot be undone.`)) return;
+    if (!window.confirm(`Delete media "${item.originalName}"? This cannot be undone.`)) return;
     setDeletingId(item._id);
     setError('');
     try {
@@ -64,6 +65,33 @@ export const MediaManager = () => {
       setError(requestError.message || 'Unable to delete image.');
     } finally {
       setDeletingId(null);
+    }
+  };
+
+  const handleUpload = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+
+    setUploading(true);
+    setError('');
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('altText', file.type === 'application/pdf' ? file.name : 'EKTA ELECTRICAL WORKS media');
+
+      const response = await fetch(`${API_BASE_URL}/media/upload`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${localStorage.getItem('ekta_admin_token')}` },
+        body: formData,
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || 'Unable to upload media.');
+      loadMedia();
+    } catch (requestError) {
+      setError(requestError.message || 'Unable to upload media.');
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -88,10 +116,13 @@ export const MediaManager = () => {
       return new Date(right.createdAt || 0) - new Date(left.createdAt || 0);
     });
 
-  const folderNames = Array.from(new Set(media.flatMap((item) => item.usage || []))).sort();
+  const folderNames = [
+    ...Array.from(new Set(media.flatMap((item) => item.usage || []))).sort(),
+    ...(media.some((item) => !item.usage?.length) ? ['Unused Media'] : []),
+  ];
   const folderCount = (folderName) => media.filter((item) => {
-    if (!matchesFilters({ ...item, usage: folderName === 'Unused Images' ? [] : item.usage })) return false;
-    return folderName === 'Unused Images' ? !item.usage?.length : item.usage?.includes(folderName);
+    if (!matchesFilters({ ...item, usage: folderName === 'Unused Media' ? [] : item.usage })) return false;
+    return folderName === 'Unused Media' ? !item.usage?.length : item.usage?.includes(folderName);
   }).length;
 
   return (
@@ -99,12 +130,18 @@ export const MediaManager = () => {
       <div className="space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-bold text-white">Uploaded Images</h2>
-            <p className="mt-0.5 text-xs text-admin-400">Review and remove images uploaded through the CMS.</p>
+            <h2 className="text-xl font-bold text-white">Media Library</h2>
+            <p className="mt-0.5 text-xs text-admin-400">Upload and manage images and PDF documents used by the CMS.</p>
           </div>
-          <button onClick={loadMedia} className="inline-flex items-center rounded border border-admin-800 bg-admin-900 px-3 py-2 text-xs font-semibold text-admin-300">
-            <RefreshCw className={`mr-1.5 h-4 w-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
-          </button>
+          <div className="flex gap-2">
+            <label className={`inline-flex cursor-pointer items-center rounded bg-amber-500 px-3 py-2 text-xs font-semibold text-admin-950 ${uploading ? 'pointer-events-none opacity-60' : ''}`}>
+              <Upload className="mr-1.5 h-4 w-4" /> {uploading ? 'Uploading...' : 'Upload Media'}
+              <input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={handleUpload} className="sr-only" disabled={uploading} />
+            </label>
+            <button onClick={loadMedia} className="inline-flex items-center rounded border border-admin-800 bg-admin-900 px-3 py-2 text-xs font-semibold text-admin-300">
+              <RefreshCw className={`mr-1.5 h-4 w-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row">
@@ -139,8 +176,8 @@ export const MediaManager = () => {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {filteredMedia.map((item) => (
                 <div key={item._id} className="overflow-hidden rounded-lg border border-admin-800 bg-admin-900">
-                  <div className="flex aspect-video items-center justify-center bg-admin-950 p-2"><img src={resolveMediaUrl(item.filePath)} alt={item.altText || item.originalName} className="h-full w-full object-contain" /></div>
-                  <div className="space-y-3 p-4"><div className="min-w-0"><p className="truncate text-xs font-semibold text-white" title={item.originalName}>{item.originalName}</p><p className="mt-1 text-[10px] font-mono text-admin-500">{Math.ceil((item.sizeBytes || 0) / 1024)} KB</p></div><button onClick={() => handleDelete(item)} disabled={deletingId === item._id} className="inline-flex w-full items-center justify-center rounded border border-rose-500/30 px-3 py-2 text-xs font-semibold text-rose-400 hover:bg-rose-500/10 disabled:opacity-50"><Trash2 className="mr-1.5 h-4 w-4" />{deletingId === item._id ? 'Deleting...' : 'Delete Image'}</button></div>
+                  <div className="flex aspect-video items-center justify-center bg-admin-950 p-2">{item.mimeType === 'application/pdf' ? <a href={resolveMediaUrl(item.filePath)} target="_blank" rel="noreferrer" className="flex flex-col items-center gap-2 text-xs text-amber-400"><FileText className="h-10 w-10" />Open PDF</a> : <img src={resolveMediaUrl(item.filePath)} alt={item.altText || item.originalName} className="h-full w-full object-contain" />}</div>
+                  <div className="space-y-3 p-4"><div className="min-w-0"><p className="truncate text-xs font-semibold text-white" title={item.originalName}>{item.originalName}</p><p className="mt-1 text-[10px] font-mono text-admin-500">{Math.ceil((item.sizeBytes || 0) / 1024)} KB</p></div><button onClick={() => handleDelete(item)} disabled={deletingId === item._id} className="inline-flex w-full items-center justify-center rounded border border-rose-500/30 px-3 py-2 text-xs font-semibold text-rose-400 hover:bg-rose-500/10 disabled:opacity-50"><Trash2 className="mr-1.5 h-4 w-4" />{deletingId === item._id ? 'Deleting...' : 'Delete Media'}</button></div>
                 </div>
               ))}
             </div>
